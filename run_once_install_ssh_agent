@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -euxo pipefail;
-echo "TEST1";
 sudo loginctl enable-linger $USER;
 systemctl --user daemon-reload;
 systemctl --user enable ssh-agent.service --now;
