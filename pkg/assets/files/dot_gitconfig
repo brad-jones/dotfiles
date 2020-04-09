@@ -1,0 +1,39 @@
+[core]
+    eol = lf
+    autocrlf = false
+
+[push]
+	default = simple
+
+[pull]
+	rebase = true
+
+[includeIf "gitdir:~/Projects/Personal/"]
+	path = ~/Projects/Personal/.gitconfig
+
+[includeIf "gitdir:~/Projects/Xero/"]
+	path = ~/Projects/Xero/.gitconfig
+
+[includeIf "gitdir:~/.password-store/"]
+	path = ~/Projects/Personal/.gitconfig
+
+[includeIf "gitdir:~/.local/share/chezmoi/"]
+	path = ~/Projects/Personal/.gitconfig
+
+[includeIf "gitdir:/mnt/C/Users/brad.jones/Projects/Personal/"]
+	path = /mnt/C/Users/brad.jones/Projects/Personal/.gitconfig
+
+[includeIf "gitdir:/mnt/C/Users/brad.jones/Projects/Xero/"]
+	path = /mnt/C/Users/brad.jones/Projects/Xero/.gitconfig
+
+[credential]
+	helper = manager
+
+[gpg]
+	program = C:\\Users\\brad.jones\\.scoop\\apps\\gpg\\current\\bin\\gpg.exe
+
+[commit]
+	gpgSign = true
+
+[tag]
+	forceSignAnnotated = true

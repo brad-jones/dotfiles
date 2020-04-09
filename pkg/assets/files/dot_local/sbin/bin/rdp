@@ -1,0 +1,3 @@
+#!/usr/bin/env dart
+import 'package:scripts/rdp.dart' as rdp;
+Future<void> main(List<String> argv) => rdp.main(argv);
