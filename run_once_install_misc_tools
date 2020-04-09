@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euxo pipefail;
-sudo dnf install -y jq tree bash-completion;
+sudo dnf install -y jq tree bash-completion mlocate;
 
 # ssh-agent/gpg-agent systemd user session
 # git config - Work/Personal
