@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail;
+keyid="$1";
+passphrase="$2";
+echo "" | gpg --batch --yes --passphrase="$passphrase" --pinentry-mode loopback -u "$keyid" -as;

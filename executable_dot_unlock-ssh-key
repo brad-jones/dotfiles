@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail;
+keyFile="$1";
+passphrase="$2";
+tmpFile="/tmp/$(uuidgen)";
+function finish {
+    rm -f $tmpFile;
+}
+trap finish EXIT;
+echo "echo \"$passphrase\";" > $tmpFile && chmod 700 $tmpFile;
+cat $keyFile | SSH_ASKPASS=$tmpFile DISPLAY= ssh-add -;
