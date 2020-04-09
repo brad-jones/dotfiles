@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# .path - Set your PATH in here, this ensures PATH is idempotent.
+
+PATH="$PATH_INITIAL";
+PATH="$PATH:$HOME/.local/bin";
+

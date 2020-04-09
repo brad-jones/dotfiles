@@ -1,18 +1,21 @@
-# .bashrc
+#!/usr/bin/env bash
+# .bashrc - This runs for every non-login interactive shell.
+
+# We do pretty much all the work to configure our shell inside our rc file,
+# this means some of the work will be duplicated for any given login session
+# everytime a new non-login interactive shell is started. In practical terms I
+# can't see this being a major issue.
 
 # Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+[ -f /etc/bashrc ] && . /etc/bashrc;
 
-# User specific environment
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-fi
-export PATH
+# The only consideration is the PATH, as this is a variable that gets "added"
+# to, if every shell kept adding to it, it would get very long. So we will have
+# a seperate file that handles this for us.
+. $HOME/.path;
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
+# Then because we like to keep things nice and neat we will
+# have another file for all other environment variables.
+. $HOME/.env;
 
-# User specific aliases and functions
+source <(gopass completion bash);

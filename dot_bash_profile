@@ -1,9 +1,6 @@
-# .bash_profile
+#!/usr/bin/env bash
+# .bash_profile - This runs for login shell.
+# We capture the initial PATH and then defer the remaining setup to our RC file.
 
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
-fi
-
-# User specific environment and startup programs
-source <(gopass completion bash);
+[ -z "$PATH_INITIAL" ] && export PATH_INITIAL="$PATH";
+. $HOME/.bashrc;

@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 set -euxo pipefail;
-sudo dnf install -y dnf-plugins-core;
 sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo;
 sudo dnf install -y docker-ce docker-ce-cli containerd.io grubby;
 sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0";
-sudo systemctl enable docker --now;
+sudo systemctl enable docker;
 sudo usermod -aG docker $USER;
 sudo sh -c "echo '{\"experimental\": true}' > /etc/docker/daemon.json";

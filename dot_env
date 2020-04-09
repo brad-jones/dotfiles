@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# .env - Set all simple (key:value) environment variables here.
+# The PATH should be set in .path to ensure it is idempotent.
+
+# Setup the ssh-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket";
+
+# Standardise UID & GID, UID is normally set but GID is not.
+# So we just do both here which makes writting scripts easier.
+export UID="$(id -u)" &> /dev/null || true;
+export GID="$(id -g)" &> /dev/null || true;
