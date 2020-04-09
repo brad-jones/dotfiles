@@ -1,0 +1,27 @@
+[core]
+    eol = lf
+    autocrlf = false
+
+[push]
+	default = simple
+
+[includeIf "gitdir:~/Projects/Personal/"]
+	path = ~/Projects/Personal/.gitconfig
+
+[includeIf "gitdir:~/.local/share/chezmoi/"]
+	path = ~/Projects/Personal/.gitconfig
+
+[includeIf "gitdir:~/Projects/Xero/"]
+	path = ~/Projects/Xero/.gitconfig
+
+[credential]
+	helper = store
+
+[gpg]
+	program = /usr/bin/gpg
+
+[commit]
+	gpgSign = true
+
+[tag]
+	forceSignAnnotated = true
