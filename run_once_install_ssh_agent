@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euxo pipefail;
+set -exo pipefail;
 
 # On desktop systems, ssh-agent is already taken care of for us.
 # We only need to set this up on headless systems.
