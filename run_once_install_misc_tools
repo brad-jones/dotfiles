@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+sudo dnf install -y jq tree bash-completion;
+
+# ssh-agent/gpg-agent systemd user session
+# git config - Work/Personal
+# https://sdkman.io/
+# https://dotnet.microsoft.com/download/dotnet-core/scripts
+# https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install
+# https://github.com/pyenv/pyenv
+# https://github.com/rbenv/rbenv
+# https://github.com/syndbg/goenv
+# https://github.com/tfutils/tfenv
+# https://github.com/iamhsa/pkenv
+# https://github.com/nodenv/nodenv
+# https://yarnpkg.com/
+# https://pnpm.js.org/
+# https://dart.dev/
+# https://github.com/phpbrew/phpbrew
