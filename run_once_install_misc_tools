@@ -1,9 +1,3 @@
 #!/usr/bin/env bash
 set -euxo pipefail;
-sudo dnf install -y jq tree bash-completion mlocate;
-
-# ssh-agent/gpg-agent systemd user session
-# git config - Work/Personal
-# https://sdkman.io/
-# https://dart.dev/
-# https://github.com/phpbrew/phpbrew
+sudo dnf install -y wget jq tree bash-completion mlocate;

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+source ~/.sdkman/bin/sdkman-init.sh;
+sdk selfupdate;
+sdk update;
+jdkV="$(sdk list java | awk '{for(i=1;i<=NF;i++){if($i~/(.*?)-adpt/){print $i}}}' | grep -v 'j9' | head -n1)";
+sdk install java $jdkV;
+sdk install kotlin;

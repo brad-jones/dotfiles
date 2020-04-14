@@ -6,18 +6,36 @@
 # everytime a new non-login interactive shell is started. In practical terms I
 # can't see this being a major issue.
 
+# Define our path as early as possible
+PATH="/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin";
+PATH="$PATH:$HOME/.local/bin";
+PATH="$PATH:$HOME/.nodenv/bin";
+PATH="$PATH:$HOME/.pyenv/bin";
+PATH="$PATH:$HOME/.rbenv/bin";
+PATH="$PATH:$HOME/.goenv/bin";
+PATH="$PATH:$HOME/.tfenv/bin";
+PATH="$PATH:$HOME/.pkenv/bin";
+PATH="$PATH:$HOME/.dotnet";
+
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc;
 
-# The only consideration is the PATH, as this is a variable that gets "added"
-# to, if every shell kept adding to it, it would get very long. So we will have
-# a seperate file that handles this for us.
-. $HOME/.path;
+# Setup the ssh-agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket";
 
-# Then because we like to keep things nice and neat we will
-# have another file for all other environment variables.
-. $HOME/.env;
+# Standardise UID & GID, UID is normally set but GID is not.
+# So we just do both here which makes writting scripts easier.
+export UID="$(id -u)" &> /dev/null || true;
+export GID="$(id -g)" &> /dev/null || true;
 
+# Tell goenv where to install go, personally I prefer all my tools and
+# config to be hidden (ie: start with a dot) and all my actual data
+# folders/files to unhidden.
+export GOENV_GOPATH_PREFIX="$HOME/.go";
+
+#export SDKMAN_DIR="$HOME/.sdkman";
+
+source "$HOME/.sdkman/bin/sdkman-init.sh";
 eval "$(gopass completion bash)";
 eval "$(nodenv init -)";
 eval "$(pyenv init -)";

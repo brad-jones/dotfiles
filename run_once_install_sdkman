@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.sdkman;
+curl "https://get.sdkman.io?rcupdate=false" | bash;
+bash ~/.local/bin/update-sdkman;

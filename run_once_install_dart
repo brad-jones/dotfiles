@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.dart;
+mkdir ~/.dart;
+tmpFolder="/tmp/$(uuidgen)";
+mkdir -p $tmpFolder;
+function finish {
+    rm -rf $tmpFolder;
+}
+curl "https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip" -o "$tmpFolder/dartsdk.zip";
+unzip "$tmpFolder/dartsdk.zip" -d "$tmpFolder/extracted";
+dartV="$(cat "$tmpFolder/extracted/dart-sdk/version")";
+mv "$tmpFolder/extracted/dart-sdk" "$HOME/.dart/$dartV";
+ln -s "$HOME/.dart/$dartV" "$HOME/.dart/current";
