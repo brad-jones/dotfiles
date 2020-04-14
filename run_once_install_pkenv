@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.pkenv;
+git clone https://github.com/iamhsa/pkenv.git ~/.pkenv;
+packerV="$(echo "$(~/.pkenv/bin/pkenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+~/.pkenv/bin/pkenv install $packerV;
+~/.pkenv/bin/pkenv use $packerV;

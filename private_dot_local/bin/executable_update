@@ -42,3 +42,21 @@ cd ~/.tfenv && git pull && cd -;
 tfV="$(echo "$(tfenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
 tfenv install $tfV;
 tfenv use $tfV;
+
+cd ~/.pkenv && git pull && cd -;
+packerV="$(echo "$(pkenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+pkenv install $packerV;
+pkenv use $packerV;
+
+tmpFolder="/tmp/$(uuidgen)";
+mkdir -p $tmpFolder;
+function finish {
+    rm -rf $tmpFolder;
+}
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolder/awscliv2.zip";
+unzip "$tmpFolder/awscliv2.zip" -d "$tmpFolder/extracted";
+$tmpFolder/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin;
+aws --version;
+
+curl https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh | bash;
+dotnet --info;

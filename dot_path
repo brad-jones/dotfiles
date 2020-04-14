@@ -8,3 +8,5 @@ PATH="$PATH:$HOME/.pyenv/bin";
 PATH="$PATH:$HOME/.rbenv/bin";
 PATH="$PATH:$HOME/.goenv/bin";
 PATH="$PATH:$HOME/.tfenv/bin";
+PATH="$PATH:$HOME/.pkenv/bin";
+PATH="$PATH:$HOME/.dotnet";

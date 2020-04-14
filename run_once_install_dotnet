@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.dotnet;
+sudo rpm --import "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF";
+sudo dnf config-manager --add-repo https://download.mono-project.com/repo/centos8-stable.repo;
+sudo dnf install -y krb5-libs libcurl libgdiplus libicu libunwind libuuid lttng-ust openssl-libs zlib;
+curl https://dotnet.microsoft.com/download/dotnet-core/scripts/v1/dotnet-install.sh | bash;
+~/.dotnet/dotnet --info;
