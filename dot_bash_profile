@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 # .bash_profile - This runs for login shell.
-# We capture the initial PATH and then defer the remaining setup to our RC file.
 
-[ -z "$PATH_INITIAL" ] && export PATH_INITIAL="$PATH";
 . $HOME/.bashrc;

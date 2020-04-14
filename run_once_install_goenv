@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.goenv;
+git clone https://github.com/syndbg/goenv.git ~/.goenv;
+cd ~/.goenv && src/configure && make -C src && cd -;
+goV="$(echo "$(~/.goenv/bin/goenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+~/.goenv/bin/goenv install $goV;
+~/.goenv/bin/goenv global $goV;
+~/.goenv/bin/goenv rehash;

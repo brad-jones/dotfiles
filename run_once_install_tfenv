@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.tfenv;
+git clone https://github.com/tfutils/tfenv.git ~/.tfenv;
+tfV="$(echo "$(~/.tfenv/bin/tfenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+~/.tfenv/bin/tfenv install $tfV;
+~/.tfenv/bin/tfenv use $tfV;

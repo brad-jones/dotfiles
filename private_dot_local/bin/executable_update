@@ -3,13 +3,42 @@ set -euxo pipefail;
 
 sudo dnf -y update;
 
-rm -rf /tmp/node-build*
-sudo mount -o remount,size=300M,noatime /tmp;
+rm -rf /tmp/node-build*;
 nodenv update;
 nodenv update-version-defs;
-nodeV="$(echo "$(nodenv install --list)" | grep '^[0-9]' | grep -v 'x' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+nodeV="$(echo "$(nodenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
 nodenv install -f $nodeV;
 nodenv global $nodeV;
 npm install --global yarn;
 npm install --global pnpm;
 nodenv rehash;
+
+rm -rf /tmp/go-build* /tmp/*install_goenv;
+cd ~/.goenv && git pull && cd -;
+cd ~/.goenv && src/configure && make -C src && cd -;
+goV="$(echo "$(goenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+goenv install -f $goV;
+goenv global $goV;
+goenv rehash;
+
+rm -rf /tmp/python-build*;
+cd ~/.pyenv && git pull && cd -;
+cd ~/.pyenv && src/configure && make -C src && cd -;
+pythonV="$(echo "$(pyenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+pyenv install -f $pythonV;
+pyenv global $pythonV;
+pyenv rehash;
+
+rm -rf /tmp/ruby-build*;
+cd ~/.rbenv && git pull && cd -;
+cd ~/.rbenv && src/configure && make -C src && cd -;
+cd ~/.rbenv/plugins/ruby-build && git pull && cd -;
+rubyV="$(echo "$(rbenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+rbenv install -f $rubyV;
+rbenv global $rubyV;
+rbenv rehash;
+
+cd ~/.tfenv && git pull && cd -;
+tfV="$(echo "$(tfenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+tfenv install $tfV;
+tfenv use $tfV;

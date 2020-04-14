@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+sudo dnf install -y make gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel;
+rm -rf ~/.pyenv;
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv;
+cd ~/.pyenv && src/configure && make -C src && cd -;
+pythonV="$(echo "$(~/.pyenv/bin/pyenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+~/.pyenv/bin/pyenv install $pythonV;
+~/.pyenv/bin/pyenv global $pythonV;
+~/.pyenv/bin/pyenv rehash;

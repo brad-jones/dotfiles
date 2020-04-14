@@ -20,3 +20,8 @@
 
 eval "$(gopass completion bash)";
 eval "$(nodenv init -)";
+eval "$(pyenv init -)";
+eval "$(rbenv init -)";
+eval "$(goenv init -)";
+PATH="$PATH:$GOROOT/bin";
+PATH="$PATH:$GOPATH/bin";

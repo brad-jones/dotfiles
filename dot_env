@@ -9,3 +9,8 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket";
 # So we just do both here which makes writting scripts easier.
 export UID="$(id -u)" &> /dev/null || true;
 export GID="$(id -g)" &> /dev/null || true;
+
+# Tell goenv where to install go, personally I prefer all my tools and
+# config to be hidden (ie: start with a dot) and all my actual data
+# folders/files to unhidden.
+export GOENV_GOPATH_PREFIX="$HOME/.go";
