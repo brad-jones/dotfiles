@@ -18,4 +18,5 @@
 # have another file for all other environment variables.
 . $HOME/.env;
 
-source <(gopass completion bash);
+eval "$(gopass completion bash)";
+eval "$(nodenv init -)";

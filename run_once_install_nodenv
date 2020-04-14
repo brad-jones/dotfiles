@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+rm -rf ~/.nodenv;
+sudo mount -o remount,size=300M,noatime /tmp;
+git clone https://github.com/nodenv/nodenv.git ~/.nodenv;
+mkdir -p ~/.nodenv/plugins;
+git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build;
+git clone https://github.com/nodenv/nodenv-update.git ~/.nodenv/plugins/nodenv-update;
+git clone https://github.com/nodenv/node-build-update-defs.git ~/.nodenv/plugins/node-build-update-defs;
+cd ~/.nodenv && src/configure && make -C src && cd -;
+nodeV="$(echo "$(nodenv install --list)" | grep '^[0-9]' | grep -v 'x' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+nodenv install $nodeV;
+nodenv global $nodeV;

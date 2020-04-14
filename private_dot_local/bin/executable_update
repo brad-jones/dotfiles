@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+
+sudo dnf -y update;
+
+rm -rf /tmp/node-build*
+sudo mount -o remount,size=300M,noatime /tmp;
+nodenv update;
+nodenv update-version-defs;
+nodeV="$(echo "$(nodenv install --list)" | grep '^[0-9]' | grep -v 'x' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
+nodenv install -f $nodeV;
+nodenv global $nodeV;
+npm install --global yarn;
+npm install --global pnpm;
+nodenv rehash;

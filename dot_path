@@ -3,3 +3,4 @@
 
 [ ! -z "$PATH_INITIAL" ] && PATH="$PATH_INITIAL";
 PATH="$PATH:$HOME/.local/bin";
+PATH="$PATH:$HOME/.nodenv/bin";

@@ -12,8 +12,5 @@ sudo dnf install -y jq tree bash-completion mlocate;
 # https://github.com/syndbg/goenv
 # https://github.com/tfutils/tfenv
 # https://github.com/iamhsa/pkenv
-# https://github.com/nodenv/nodenv
-# https://yarnpkg.com/
-# https://pnpm.js.org/
 # https://dart.dev/
 # https://github.com/phpbrew/phpbrew
