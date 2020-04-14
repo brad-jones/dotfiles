@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euxo pipefail;
+eval "$(~/.linuxbrew/bin/brew shellenv)";
+~/.linuxbrew/bin/brew install aws-vault;

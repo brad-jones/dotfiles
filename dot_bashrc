@@ -8,14 +8,15 @@
 
 # Define our path as early as possible
 PATH="/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin";
+PATH="$PATH:$HOME/.dotnet";
+PATH="$PATH:$HOME/.goenv/bin";
+PATH="$PATH:$HOME/.linuxbrew/bin";
 PATH="$PATH:$HOME/.local/bin";
 PATH="$PATH:$HOME/.nodenv/bin";
+PATH="$PATH:$HOME/.pkenv/bin";
 PATH="$PATH:$HOME/.pyenv/bin";
 PATH="$PATH:$HOME/.rbenv/bin";
-PATH="$PATH:$HOME/.goenv/bin";
 PATH="$PATH:$HOME/.tfenv/bin";
-PATH="$PATH:$HOME/.pkenv/bin";
-PATH="$PATH:$HOME/.dotnet";
 
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc;
@@ -33,10 +34,19 @@ export GID="$(id -g)" &> /dev/null || true;
 # folders/files to unhidden.
 export GOENV_GOPATH_PREFIX="$HOME/.go";
 
-#export SDKMAN_DIR="$HOME/.sdkman";
+# Configure aws-vault to use gopass to store our idenities
+export AWS_VAULT_BACKEND="pass";
+export AWS_VAULT_PASS_CMD="gopass";
+export AWS_VAULT_PASS_PREFIX="aws-vault";
+export AWS_VAULT_PASS_PASSWORD_STORE_DIR="$HOME/.password-store";
 
-source "$HOME/.sdkman/bin/sdkman-init.sh";
+# Setup some bash auto completion
+eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
+
+# Setup all our tool version managers
+source "$HOME/.sdkman/bin/sdkman-init.sh";
+eval "$(brew shellenv)";
 eval "$(nodenv init -)";
 eval "$(pyenv init -)";
 eval "$(rbenv init -)";

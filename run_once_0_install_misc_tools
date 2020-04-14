@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 set -euxo pipefail;
+sudo dnf groupinstall -y 'Development Tools';
 sudo dnf install -y wget jq tree bash-completion mlocate;

@@ -4,6 +4,10 @@ set -euxo pipefail;
 # Update the base system
 sudo dnf -y update;
 
+# Update homebrew
+brew update;
+brew upgrade aws-vault;
+
 # Update dart
 latestDartV="$(curl -s https://storage.googleapis.com/dart-archive/channels/stable/release/latest/VERSION | jq -j '.version')";
 if [ ! -d "$HOME/.dart/$latestDartV" ];
