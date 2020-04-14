@@ -41,6 +41,7 @@ export AWS_VAULT_PASS_PREFIX="aws-vault";
 export AWS_VAULT_PASS_PASSWORD_STORE_DIR="$HOME/.password-store";
 
 # Setup some bash auto completion
+complete -C "$HOME/.local/bin/aws_completer" aws;
 eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
 
