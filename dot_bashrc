@@ -8,12 +8,14 @@
 
 # Define our path as early as possible
 PATH="/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin";
+PATH="$PATH:$HOME/.dart/current/bin";
 PATH="$PATH:$HOME/.dotnet";
 PATH="$PATH:$HOME/.goenv/bin";
 PATH="$PATH:$HOME/.linuxbrew/bin";
 PATH="$PATH:$HOME/.local/bin";
 PATH="$PATH:$HOME/.nodenv/bin";
 PATH="$PATH:$HOME/.pkenv/bin";
+PATH="$PATH:$HOME/.pub-cache/bin";
 PATH="$PATH:$HOME/.pyenv/bin";
 PATH="$PATH:$HOME/.rbenv/bin";
 PATH="$PATH:$HOME/.tfenv/bin";
@@ -54,3 +56,6 @@ eval "$(rbenv init -)";
 eval "$(goenv init -)";
 PATH="$PATH:$GOROOT/bin";
 PATH="$PATH:$GOPATH/bin";
+
+# We have some scripts which add additional funcitonality to existing tools
+PATH="$HOME/.local/sbin:$PATH";
