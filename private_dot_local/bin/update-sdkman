@@ -5,3 +5,4 @@ sdk update;
 jdkV="$(sdk list java | awk '{for(i=1;i<=NF;i++){if($i~/(.*?)-adpt/){print $i}}}' | grep -v 'j9' | head -n1)";
 sdk install java $jdkV;
 sdk install kotlin;
+sdk install maven;

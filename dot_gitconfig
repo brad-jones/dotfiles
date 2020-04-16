@@ -8,6 +8,9 @@
 [includeIf "gitdir:~/Projects/Personal/"]
 	path = ~/Projects/Personal/.gitconfig
 
+[includeIf "gitdir:~/.password-store"]
+	path = ~/Projects/Personal/.gitconfig
+
 [includeIf "gitdir:~/.local/share/chezmoi/"]
 	path = ~/Projects/Personal/.gitconfig
 
