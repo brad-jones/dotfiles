@@ -3,6 +3,9 @@
 		"https://index.docker.io/v1/": {
 			"auth": "{{ gopass "docker/token" }}"
 		}
+		"payroll-docker-common.artifactory.xero-support.com": {
+			"auth": "{{ gopass "docker/payroll-docker-common.artifactory.xero-support.com/payroll_deployer/token" }}"
+		}
 	},
 	"HttpHeaders": {
 		"User-Agent": "Docker-Client/19.03.8 ({{ .chezmoi.os }})"
