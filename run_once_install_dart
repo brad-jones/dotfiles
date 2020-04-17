@@ -12,3 +12,4 @@ unzip "$tmpFolder/dartsdk.zip" -d "$tmpFolder/extracted";
 dartV="$(cat "$tmpFolder/extracted/dart-sdk/version")";
 mv "$tmpFolder/extracted/dart-sdk" "$HOME/.dart/$dartV";
 ln -s "$HOME/.dart/$dartV" "$HOME/.dart/current";
+cd ~/.local/sbin && ~/.dart/current/bin/pub get && cd -;

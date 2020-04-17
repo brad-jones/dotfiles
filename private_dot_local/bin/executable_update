@@ -22,6 +22,7 @@ then
 	mv "$HOME/.dart/dart-sdk" "$HOME/.dart/$latestDartV";
 	rm -f "$HOME/.dart/current";
 	ln -s "$HOME/.dart/$latestDartV" "$HOME/.dart/current";
+	cd ~/.local/sbin && pub get && cd -;
 	rm -f /tmp/dartsdk.zip;
 fi
 

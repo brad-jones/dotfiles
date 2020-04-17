@@ -58,4 +58,4 @@ PATH="$PATH:$GOROOT/bin";
 PATH="$PATH:$GOPATH/bin";
 
 # We have some scripts which add additional funcitonality to existing tools
-PATH="$HOME/.local/sbin:$PATH";
+PATH="$HOME/.local/sbin/bin:$PATH";
