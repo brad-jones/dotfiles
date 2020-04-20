@@ -50,6 +50,16 @@ Future<String> runMfaProvider(String provider) async {
   return proc.stdout.trim();
 }
 
+Future<bool> runningAsGuest() async {
+  var hostsFile = File('/etc/hosts');
+  if (await hostsFile.exists()) {
+    if ((await hostsFile.readAsString()).contains('dom0.hyper-v.local')) {
+      return true;
+    }
+  }
+  return false;
+}
+
 Future<void> main(List<String> argv) async {
   var action = argv.isNotEmpty ? argv[0] : '';
 
@@ -72,11 +82,25 @@ Future<void> main(List<String> argv) async {
           if (action == 'login') {
             args.add('-s');
             args.addAll(argv.sublist(1));
-            var res = await dexeca(originalAwsVaultExe, args,
-                inheritStdio: false, environment: env);
-            dexecve('firefox', [
-              'ext+container:name=${argv[1]}&url=${Uri.encodeFull(res.stdout)}',
-            ]);
+            var res = await dexeca(
+              originalAwsVaultExe,
+              args,
+              inheritStdio: false,
+              environment: env,
+            );
+            var ffArg =
+                'ext+container:name=${argv[1]}&url=${Uri.encodeQueryComponent(res.stdout)}';
+            if (await runningAsGuest()) {
+              dexecve('ssh', [
+                '-o',
+                'StrictHostKeyChecking=no',
+                'dom0.hyper-v.local',
+                'firefox',
+                ffArg,
+              ]);
+            } else {
+              dexecve('firefox', [ffArg]);
+            }
           }
         }
       }
