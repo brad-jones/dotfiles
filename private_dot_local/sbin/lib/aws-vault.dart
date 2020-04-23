@@ -3,6 +3,7 @@ import 'package:ini/ini.dart';
 import 'package:dexeca/dexeca.dart';
 import 'package:dexecve/dexecve.dart';
 import 'package:scripts/src/dir.dart';
+import 'package:scripts/src/guest.dart';
 
 final originalAwsVaultExe = normalizeDir('~/.linuxbrew/bin/aws-vault');
 
@@ -50,16 +51,6 @@ Future<String> runMfaProvider(String provider) async {
   return proc.stdout.trim();
 }
 
-Future<bool> runningAsGuest() async {
-  var hostsFile = File('/etc/hosts');
-  if (await hostsFile.exists()) {
-    if ((await hostsFile.readAsString()).contains('dom0.hyper-v.local')) {
-      return true;
-    }
-  }
-  return false;
-}
-
 Future<void> main(List<String> argv) async {
   var action = argv.isNotEmpty ? argv[0] : '';
 
@@ -88,19 +79,9 @@ Future<void> main(List<String> argv) async {
               inheritStdio: false,
               environment: env,
             );
-            var ffArg =
-                'ext+container:name=${argv[1]}&url=${Uri.encodeQueryComponent(res.stdout)}';
-            if (await runningAsGuest()) {
-              dexecve('ssh', [
-                '-o',
-                'StrictHostKeyChecking=no',
-                'dom0.hyper-v.local',
-                'firefox',
-                ffArg,
-              ]);
-            } else {
-              dexecve('firefox', [ffArg]);
-            }
+            await execOnHostIfGuest('firefox', [
+              'ext+container:name=${argv[1]}&url=${Uri.encodeQueryComponent(res.stdout)}'
+            ]);
           }
         }
       }

@@ -59,3 +59,35 @@ PATH="$PATH:$GOPATH/bin";
 
 # We have some scripts which add additional funcitonality to existing tools
 PATH="$HOME/.local/sbin/bin:$PATH";
+
+# Rdp shortcuts fro Xero Pod Servers
+alias rdp-pod1="rdp --profile xero-payroll-test --ec2 podserver-pod1-B26-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod2="rdp --profile xero-payroll-test --ec2 podserver-pod2-B40-branch15 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod3="rdp --profile xero-payroll-test --ec2 podserver-pod3-B44-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod4="rdp --profile xero-payroll-test --ec2 podserver-pod4-B18-branch48 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod5="rdp --profile xero-payroll-test --ec2 podserver-pod5-B30-pod5 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod6="rdp --profile xero-payroll-test --ec2 podserver-pod6-B34-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod7="rdp --profile xero-payroll-test --ec2 podserver-pod7-B94-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod8="rdp --profile xero-payroll-test --ec2 podserver-pod8-B32-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod9="rdp --profile xero-payroll-test --ec2 podserver-pod9-B29-branch48 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod10="rdp --profile xero-payroll-test --ec2 podserver-pod10-B81-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod11="rdp --profile xero-payroll-test --ec2 podserver-pod11-B14-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod12="rdp --profile xero-payroll-test --ec2 podserver-pod12-B76-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod13="rdp --profile xero-payroll-test --ec2 podserver-pod13-B11-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod15="rdp --profile xero-payroll-test --ec2 podserver-pod15-B3-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
+alias rdp-pod16='rdp --profile xero-payroll-test --ec2 "podserver-pod16-B33-<default>" --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem';
+alias rdp-pod1-db="rdp --profile xero-payroll-test --ec2 pod1-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod2-db="rdp --profile xero-payroll-test --ec2 pod2-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod3-db="rdp --profile xero-payroll-test --ec2 pod3-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod4-db="rdp --profile xero-payroll-test --ec2 pod4-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod5-db="rdp --profile xero-payroll-test --ec2 pod5-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod6-db="rdp --profile xero-payroll-test --ec2 pod6-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod7-db="rdp --profile xero-payroll-test --ec2 pod7-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod8-db="rdp --profile xero-payroll-test --ec2 pod8-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod9-db="rdp --profile xero-payroll-test --ec2 pod9-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod10-db="rdp --profile xero-payroll-test --ec2 pod10-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod11-db="rdp --profile xero-payroll-test --ec2 pod11-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod12-db="rdp --profile xero-payroll-test --ec2 pod12-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod13-db="rdp --profile xero-payroll-test --ec2 pod13-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod15-db="rdp --profile xero-payroll-test --ec2 pod15-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-pod16-db="rdp --profile xero-payroll-test --ec2 pod16-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
