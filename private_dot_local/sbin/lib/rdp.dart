@@ -64,7 +64,7 @@ Future<void> login(
     print(st);
     exitCode = -1;
   } finally {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 10));
 
     await powershell('Remove-Item -Path "${rdpFile}" -Force;');
 
