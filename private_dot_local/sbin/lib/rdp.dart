@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 import 'package:args/args.dart';
+import 'package:uuid/uuid.dart';
 import 'package:dexeca/dexeca.dart';
 import 'package:path/path.dart' as p;
 import 'package:scripts/src/guest.dart';
@@ -31,15 +32,12 @@ Future<void> login(
 }) async {
   var exitCode = 0;
 
-  var addArg = '/add:"${host}"';
-  if (isIpAddress(host)) {
-    addArg = '/generic:"TERMSRV/${host}"';
-  }
-  await runOnHostIfGuest('cmdkey', [
-    addArg,
-    '/user:"${username}"',
-    '/pass:"${password}"',
-  ]);
+  var rdpFile =
+      'C:\\\\Users\\\\brad.jones\\\\AppData\\\\Local\\\\Temp\\\\${Uuid().v4()}.rdp';
+  await powershell('''
+  \$p = ('${password}' | ConvertTo-SecureString -AsPlainText -Force) | ConvertFrom-SecureString;
+  Set-Content -Path "${rdpFile}" -Value "username:s:${username}`r`npassword 51:b:\$p";
+  ''');
 
   if (gateway?.isNotEmpty ?? false) {
     var addArg = '/add:"${gateway}"';
@@ -53,8 +51,14 @@ Future<void> login(
     ]);
   }
 
+  await Future.delayed(Duration(seconds: 1));
+
   try {
-    await runOnHostIfGuest('mstsc.exe', ['/v:"${host}"']);
+    var args = [rdpFile, '/v:"${host}"'];
+    if (gateway?.isNotEmpty ?? false) {
+      args.add('/g:"${gateway}"');
+    }
+    await runOnHostIfGuest('mstsc.exe', args);
   } catch (e, st) {
     print(e);
     print(st);
@@ -62,15 +66,7 @@ Future<void> login(
   } finally {
     await Future.delayed(Duration(seconds: 1));
 
-    if (isIpAddress(host)) {
-      await runOnHostIfGuest('cmdkey', [
-        '/delete:"TERMSRV/${host}"',
-      ]);
-    } else {
-      await runOnHostIfGuest('cmdkey', [
-        '/delete:"${host}"',
-      ]);
-    }
+    await powershell('Remove-Item -Path "${rdpFile}" -Force;');
 
     if (gateway?.isNotEmpty ?? false) {
       if (isIpAddress(gateway)) {
