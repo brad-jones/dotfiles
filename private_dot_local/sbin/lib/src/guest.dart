@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:convert';
+import 'package:utf/utf.dart';
 import 'package:dexeca/dexeca.dart';
 import 'package:dexecve/dexecve.dart';
 
@@ -42,4 +44,20 @@ Future<void> execOnHostIfGuest(String exe, List<String> args) async {
   }
 
   dexecve(exe, args);
+}
+
+Future<ProcessResult> powershell(String script) {
+  return runOnHostIfGuest(
+    'powershell',
+    [
+      '-NoLogo',
+      '-NoProfile',
+      '-WindowStyle',
+      'Hidden',
+      '-Output',
+      'XML',
+      '-EncodedCommand',
+      base64.encode(encodeUtf16le(script)),
+    ],
+  );
 }
