@@ -18,13 +18,41 @@ void displayHelp(ArgParser parser, {String errorMessage, int exitCode = 0}) {
   exit(exitCode);
 }
 
-Future<void> login(String host, String username, String password) async {
+bool isIpAddress(String value) {
+  return RegExp(r'^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$')
+      .hasMatch(value);
+}
+
+Future<void> login(
+  String host,
+  String username,
+  String password, {
+  String gateway,
+}) async {
   var exitCode = 0;
+
+  var addArg = '/add:"${host}"';
+  if (isIpAddress(host)) {
+    addArg = '/generic:"TERMSRV/${host}"';
+  }
   await runOnHostIfGuest('cmdkey', [
-    '/generic:"TERMSRV/${host}"',
+    addArg,
     '/user:"${username}"',
     '/pass:"${password}"',
   ]);
+
+  if (gateway?.isNotEmpty ?? false) {
+    var addArg = '/add:"${gateway}"';
+    if (isIpAddress(host)) {
+      addArg = '/generic:"TERMSRV/${gateway}"';
+    }
+    await runOnHostIfGuest('cmdkey', [
+      addArg,
+      '/user:"${username}"',
+      '/pass:"${password}"',
+    ]);
+  }
+
   try {
     await runOnHostIfGuest('mstsc.exe', ['/v:"${host}"']);
   } catch (e, st) {
@@ -33,10 +61,30 @@ Future<void> login(String host, String username, String password) async {
     exitCode = -1;
   } finally {
     await Future.delayed(Duration(seconds: 1));
-    await runOnHostIfGuest('cmdkey', [
-      '/delete:"TERMSRV/${host}"',
-    ]);
+
+    if (isIpAddress(host)) {
+      await runOnHostIfGuest('cmdkey', [
+        '/delete:"TERMSRV/${host}"',
+      ]);
+    } else {
+      await runOnHostIfGuest('cmdkey', [
+        '/delete:"${host}"',
+      ]);
+    }
+
+    if (gateway?.isNotEmpty ?? false) {
+      if (isIpAddress(gateway)) {
+        await runOnHostIfGuest('cmdkey', [
+          '/delete:"TERMSRV/${gateway}"',
+        ]);
+      } else {
+        await runOnHostIfGuest('cmdkey', [
+          '/delete:"${gateway}"',
+        ]);
+      }
+    }
   }
+
   exit(exitCode);
 }
 
@@ -121,6 +169,12 @@ Future<void> main(List<String> argv) async {
     valueHelp: 'hostname-or-ip',
   );
   parser.addOption(
+    'gateway',
+    abbr: 'g',
+    help: 'The RD Gateway to tunnel this connection through.',
+    valueHelp: 'hostname-or-ip',
+  );
+  parser.addOption(
     'username',
     abbr: 'u',
     help: 'The username used to authenticate with the remote system.',
@@ -162,7 +216,12 @@ Future<void> main(List<String> argv) async {
     } else {
       password = parsedArgv['password'];
     }
-    await login(parsedArgv['host'], parsedArgv['username'], password);
+    await login(
+      parsedArgv['host'],
+      parsedArgv['username'],
+      password,
+      gateway: parsedArgv.wasParsed('gateway') ? parsedArgv['gateway'] : null,
+    );
   }
 
   if (parsedArgv.wasParsed('ec2') && parsedArgv.wasParsed('key')) {
@@ -182,7 +241,12 @@ Future<void> main(List<String> argv) async {
       parsedArgv['key'],
       profile,
     );
-    await login(meta['PrivateIpAddress'], username, pwd);
+    await login(
+      meta['PrivateIpAddress'],
+      username,
+      pwd,
+      gateway: parsedArgv.wasParsed('gateway') ? parsedArgv['gateway'] : null,
+    );
   }
 
   displayHelp(parser,
