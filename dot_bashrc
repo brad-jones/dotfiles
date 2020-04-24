@@ -61,7 +61,9 @@ PATH="$PATH:$GOPATH/bin";
 PATH="$HOME/.local/sbin/bin:$PATH";
 
 # Rdp shortcuts fro Xero Pod Servers
+alias rdp-bastion-xero-payroll-prod="rdp -g 'rdgw-prod.xero-support.com' -h 'msrds.vpc-89263bee.inbound.xero-support.com' -u 'XOAWSMAN\brad.jones' -p '$(gopass websites/xero.okta.com/brad.jones@xero.com)'";
 alias rdp-bastion-xero-payroll-test="rdp -g 'rdgw-test.xero-support.com' -h 'msrds.vpc-94dd34f0.inbound.xero-support.com' -u 'XOAWSMAN\brad.jones' -p '$(gopass websites/xero.okta.com/brad.jones@xero.com)'";
+alias rdp-bastion-xero-payroll-uat="rdp -g 'rdgw-uat.xero-support.com' -h 'msrds.vpc-95b542f2.inbound.xero-support.com' -u 'XOAWSMAN\brad.jones' -p '$(gopass websites/xero.okta.com/brad.jones@xero.com)'";
 alias rdp-pod1="rdp --profile xero-payroll-test --ec2 podserver-pod1-B26-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
 alias rdp-pod2="rdp --profile xero-payroll-test --ec2 podserver-pod2-B40-branch15 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
 alias rdp-pod3="rdp --profile xero-payroll-test --ec2 podserver-pod3-B44-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
