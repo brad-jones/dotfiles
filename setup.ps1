@@ -54,6 +54,8 @@ Function ModuleExists {
 # Remove Linux specfic stuff
 # ------------------------------------------------------------------------------
 RmIfExists -Path ~/.config/systemd;
+RmIfExists -Path ~/.bash_profile;
+RmIfExists -Path ~/.bashrc;
 
 # Install a semi-sensible readline for powershell
 # ------------------------------------------------------------------------------

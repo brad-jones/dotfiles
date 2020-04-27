@@ -1,4 +1,3 @@
-{{ if ne .chezmoi.os "windows" -}}
 #!/usr/bin/env bash
 # .bashrc - This runs for every non-login interactive shell.
 
@@ -113,4 +112,3 @@ alias rdp-xero-payroll-test-pod12-db-admin="rdp --profile xero-payroll-test --ec
 alias rdp-xero-payroll-test-pod13-db-admin="rdp --profile xero-payroll-test --ec2 pod13-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
 alias rdp-xero-payroll-test-pod15-db-admin="rdp --profile xero-payroll-test --ec2 pod15-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
 alias rdp-xero-payroll-test-pod16-db-admin="rdp --profile xero-payroll-test --ec2 pod16-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-{{ end -}}
