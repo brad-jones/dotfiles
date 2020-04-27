@@ -89,27 +89,29 @@ echo "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ localhost";
 # NOTE: The windows ssh-agent is implemented through the Windows registry and
 # thus once the keys are added they do not need to be added again, even after reboot.
 
-# The following will wait untill our dev-server has started
-echo "Wait for dev-server.hyper-v.local";
-RetryCommand -Verbose -ScriptBlock {
-	ssh dev-server true;
-	if ($LastExitCode -ne 0) {
-		throw "failed";
+if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+	# The following will wait untill our dev-server has started
+	echo "Wait for dev-server.hyper-v.local";
+	RetryCommand -Verbose -ScriptBlock {
+		ssh dev-server true;
+		if ($LastExitCode -ne 0) {
+			throw "failed";
+		}
 	}
-}
 
-# Now unlock all the keys inside our dev-server
-Exec -ScriptBlock { ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'"; }
-Exec -ScriptBlock { ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'"; }
-Exec -ScriptBlock { ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'"; }
-echo "Unlocked: 83D182028C7F2DF102F09E61FF308BBB10F539D8 @ dev-server.hyper-v.local";
-Exec -ScriptBlock { ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'"; }
-echo "Unlocked: F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB @ dev-server.hyper-v.local";
-Exec -ScriptBlock { ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'"; }
-echo "Unlocked: 1A8059A4CC0F06F670492ABBD0053F0772B75829 @ dev-server.hyper-v.local";
-Exec -ScriptBlock { ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'"; }
-echo "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ dev-server.hyper-v.local";
-Exec -ScriptBlock { ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'"; }
-echo "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ dev-server.hyper-v.local";
-Exec -ScriptBlock { ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'"; }
-echo "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ dev-server.hyper-v.local";
+	# Now unlock all the keys inside our dev-server
+	Exec -ScriptBlock { ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'"; }
+	Exec -ScriptBlock { ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'"; }
+	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'"; }
+	echo "Unlocked: 83D182028C7F2DF102F09E61FF308BBB10F539D8 @ dev-server.hyper-v.local";
+	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'"; }
+	echo "Unlocked: F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB @ dev-server.hyper-v.local";
+	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'"; }
+	echo "Unlocked: 1A8059A4CC0F06F670492ABBD0053F0772B75829 @ dev-server.hyper-v.local";
+	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'"; }
+	echo "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ dev-server.hyper-v.local";
+	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'"; }
+	echo "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ dev-server.hyper-v.local";
+	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'"; }
+	echo "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ dev-server.hyper-v.local";
+}
