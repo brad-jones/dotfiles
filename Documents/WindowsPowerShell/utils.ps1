@@ -7,6 +7,6 @@ function SetEnv {
 function AddToPath {
     param($Path);
     if (-Not ($env:PATH -like "*$Path*")) {
-        SetEnv -Key "PATH" -Value "$env:PATH;$Path";
+        SetEnv -Key "PATH" -Value "$Path;$env:PATH";
     }
 }
