@@ -95,21 +95,21 @@ RmIfExists -Path "$env:TEMP\vault-key";
 Exec -ScriptBlock { git clone https://github.com/brad-jones/vault.git "$env:USERPROFILE\.password-store"; }
 Exec -ScriptBlock { git --git-dir "$env:USERPROFILE\.password-store\.git" remote set-url origin git@github.com:brad-jones/vault.git; }
 
-# Install my personal and work SSH keys
+# Install my personal keys
 Exec -ScriptBlock { gopass bin cp "keys/ssh/brad@bjc.id.au" "$env:USERPROFILE\.ssh\brad@bjc.id.au"; }
-Exec -ScriptBlock { gopass bin cp "keys/ssh/brad.jones@xero.com" "$env:USERPROFILE\.ssh\brad.jones@xero.com"; }
-
-# Install my personal GPG key
-Exec -ScriptBlock { gopass bin cp "keys/gpg/brad@bjc.id.au" "$env:TEMP/brad@bjc.id.au"; }
-Exec -ScriptBlock { gpg --import "$env:TEMP/brad@bjc.id.au"; }
+Exec -ScriptBlock { gopass bin cp "keys/gpg/brad@bjc.id.au" "$env:TEMP\brad@bjc.id.au"; }
+Exec -ScriptBlock { gpg --import "$env:TEMP\brad@bjc.id.au"; }
 Exec -ScriptBlock { echo "5`r`ny" | gpg --command-fd 0 --edit-key "Brad Jones <brad@bjc.id.au>" trust; }
-RmIfExists -Path "$env:TEMP/brad@bjc.id.au";
+RmIfExists -Path "$env:TEMP\brad@bjc.id.au";
 
-# Install my work GPG key
-Exec -ScriptBlock { gopass bin cp "keys/gpg/brad.jones@xero.com" "$env:TEMP/brad.jones@xero.com"; }
-Exec -ScriptBlock { gpg --import "$env:TEMP/brad.jones@xero.com"; }
-Exec -ScriptBlock { echo "5`r`ny" | gpg --command-fd 0 --edit-key "Brad Jones <brad.jones@xero.com>" trust; }
-RmIfExists -Path "$env:TEMP/brad.jones@xero.com";
+# Install my professional keys
+if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+	Exec -ScriptBlock { gopass bin cp "keys/ssh/brad.jones@xero.com" "$env:USERPROFILE\.ssh\brad.jones@xero.com"; }
+	Exec -ScriptBlock { gopass bin cp "keys/gpg/brad.jones@xero.com" "$env:TEMP\brad.jones@xero.com"; }
+	Exec -ScriptBlock { gpg --import "$env:TEMP\brad.jones@xero.com"; }
+	Exec -ScriptBlock { echo "5`r`ny" | gpg --command-fd 0 --edit-key "Brad Jones <brad.jones@xero.com>" trust; }
+	RmIfExists -Path "$env:TEMP\brad.jones@xero.com";
+}
 
 # Install my dotfiles
 Exec -ScriptBlock { chezmoi init https://github.com/brad-jones/dotfiles.git; }
@@ -125,9 +125,11 @@ Exec -ScriptBlock {
 	$personalPassphrase = Read-Host 'What is the passphrase for brad@bjc.id.au?';
 	cmdkey /generic:"passphrase:brad@bjc.id.au" /user:"brad@bjc.id.au" /pass:$personalPassphrase;
 }
-Exec -ScriptBlock {
-	$professionalPasspharse = Read-Host 'What is the passphrase for brad.jones@xero.com?';
-	cmdkey /generic:"passphrase:brad.jones@xero.com" /user:"brad.jones@xero.com" /pass:$professionalPasspharse;
+if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+	Exec -ScriptBlock {
+		$professionalPasspharse = Read-Host 'What is the passphrase for brad.jones@xero.com?';
+		cmdkey /generic:"passphrase:brad.jones@xero.com" /user:"brad.jones@xero.com" /pass:$professionalPasspharse;
+	}
 }
 
 # Reboot to make sure things like kernels are updated etc
