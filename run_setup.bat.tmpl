@@ -1,4 +1,4 @@
 {{ if eq .chezmoi.os "windows" -}}
 @ECHO OFF
-pwsh %UserProfile%\.local\share\chezmoi\setup.ps1 %*
+pwsh -Command Start-Process pwsh -ArgumentList "-File %UserProfile%\.local\share\chezmoi\setup.ps1" -Verb RunAs 
 {{ end -}}
