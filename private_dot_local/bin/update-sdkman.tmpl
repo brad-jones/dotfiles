@@ -1,4 +1,4 @@
-{{ if not eq .chezmoi.os "windows" -}}
+{{ if nq .chezmoi.os "windows" -}}
 #!/usr/bin/env bash
 source ~/.sdkman/bin/sdkman-init.sh;
 sdk selfupdate;
