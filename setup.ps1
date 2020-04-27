@@ -43,5 +43,5 @@ RmIfExists -Path ~/.config/systemd;
 # Install a semi-sensible readline for powershell
 # ------------------------------------------------------------------------------
 # see: <https://github.com/PowerShell/PSReadLine>
-Exec -ScriptBlock { Import-Module PowerShellGet; Install-Module PSReadLine -Force; }
-powershell.exe -Command '& { Import-Module PowerShellGet; Install-Module PSReadLine -Force; }';
+Exec -ScriptBlock { Import-Module PowerShellGet -Force; Install-Module PSReadLine -Force; }
+powershell.exe -Command '& { Import-Module PowerShellGet -Force; Install-Module PSReadLine -Force; }';
