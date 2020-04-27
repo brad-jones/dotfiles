@@ -1,6 +1,6 @@
 function SetEnv {
     param($Key, $Value);
-    New-Item env:\$Key -Value $Value;
+    Set-Item env:\$Key -Value $Value;
     [Environment]::SetEnvironmentVariable($Key, $Value, "User");
 }
 
