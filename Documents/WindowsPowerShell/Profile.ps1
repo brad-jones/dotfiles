@@ -1,4 +1,15 @@
-. $env:USERPROFILE\Documents\WindowsPowerShell\utils.ps1;
+function SetEnv {
+    param($Key, $Value);
+    Set-Item env:\$Key -Value $Value;
+    [Environment]::SetEnvironmentVariable($Key, $Value, "User");
+}
+
+function AddToPath {
+    param($Path);
+    if (-Not ($env:PATH -like "*$Path*")) {
+        SetEnv -Key "PATH" -Value "$env:PATH;$Path";
+    }
+}
 
 # Define our path as early as possible
 AddToPath -Path "$env:USERPROFILE\.local\bin";
