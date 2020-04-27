@@ -51,7 +51,7 @@ if ($PSVersionTable.PSVersion.Major -le 5) {
 }
 
 # Install some tools
-Exec -ScriptBlock { scoop install 7zip jq wget grep sed git gpg win32-openssh gopass }
+Exec -ScriptBlock { scoop install sudo 7zip jq wget grep sed git gpg win32-openssh gopass }
 
 # Install chezmoi
 RmIfExists -Path $env:TEMP\chezmoi;
