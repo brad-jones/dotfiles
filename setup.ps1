@@ -132,6 +132,12 @@ scoop install `
 	wavebox10-pro `
 	yarn;
 
+# Install our script deps
+# ------------------------------------------------------------------------------
+cd $env:USERPROFILE\.local\sbin;
+pub get;
+cd $env:USERPROFILE;
+
 # Install additional SSH Keys
 # ------------------------------------------------------------------------------
 # TODO: Would be nice use gopass as an actual ssh-agent?
