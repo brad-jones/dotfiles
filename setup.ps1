@@ -67,6 +67,12 @@ if (-Not (ModuleExists -Module PSReadLine)) {
 	# Install the CredentialManager module
 	# --------------------------------------------------------------------------
 	# see: <https://www.powershellgallery.com/packages/CredentialManager/1.0>
+	# 
+	# NOTE: We did this hack because it's hard to check to see if the
+	# CredentialManager is installed from inside powershell core. It's not
+	# impossible I'm just being lazy here. The assumption is if PSReadLine
+	# is installed then so too will be CredentialManager because we installed
+	# it at the same time.
 	Exec -ScriptBlock {
 		powershell.exe -Command '& { Import-Module PowerShellGet -Force; Install-Module CredentialManager -Force; }';
 	}
@@ -78,6 +84,25 @@ if ((Get-Service -Name ssh-agent).Status -ne "Running") {
 	Exec -ScriptBlock { sudo "$env:USERPROFILE\scoop\apps\win32-openssh\current\install-sshd.ps1"; }
 	Exec -ScriptBlock { sudo Set-Service -Name ssh-agent -StartupType Automatic; }
 	Exec -ScriptBlock { sudo Start-Service -Name ssh-agent; }
+}
+
+# Install our run at login script
+# ------------------------------------------------------------------------------
+if (-Not (Get-ScheduledTask -TaskName "Run at Logon" -ErrorAction Ignore)) {
+	$Stt = New-ScheduledTaskTrigger -AtLogOn;
+	
+	$Sta = New-ScheduledTaskAction `
+		-Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
+		-Argument "-NoLogo -NoProfile -File .\run-at-logon.ps1" `
+		-WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";
+	
+	$u = whoami;
+	$STPrincipal = New-ScheduledTaskPrincipal -UserID "$u";
+	
+	Register-ScheduledTask "Run at Logon" `
+		-Principal $STPrincipal `
+		-Trigger $Stt `
+		-Action $Sta;
 }
 
 # Install Docker
