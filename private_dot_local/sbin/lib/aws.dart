@@ -57,8 +57,16 @@ Future<Map<String, String>> getEnvFromAwsVault(String profile) async {
   ProcessResult result;
   if (Platform.isWindows) {
     result = await dexeca(
-      'aws-vault',
-      ['exec', profile, '--', 'cmd.exe', '/C', 'SET'],
+      'dart',
+      [
+        normalizeDir('~/.local/sbin/bin/aws-vault'),
+        'exec',
+        profile,
+        '--',
+        'cmd.exe',
+        '/C',
+        'SET'
+      ],
       inheritStdio: false,
     );
   } else {
