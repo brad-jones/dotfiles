@@ -5,7 +5,7 @@ set -euxo pipefail;
 # ------------------------------------------------------------------------------
 # On desktop systems, ssh/gpg-agent is already taken care of for us.
 # We only need to set this up on headless systems.
-if [ -z "$XDG_SESSION_DESKTOP" ];
+if [ -z ${XDG_SESSION_DESKTOP+x} ];
 then
 	sudo loginctl enable-linger $USER;
 	systemctl --user daemon-reload;
@@ -194,8 +194,7 @@ fi
 
 # Install Java / Kotlin
 # ------------------------------------------------------------------------------
-if ! [ -x "$(command -v sdk)" ]; then
-    rm -rf ~/.sdkman;
+if ! [ -d ~/.sdkman ]; then
     curl "https://get.sdkman.io?rcupdate=false" | bash;
     bash ~/.local/bin/update-sdkman;
 fi
