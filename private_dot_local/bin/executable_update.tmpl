@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 set -euxo pipefail;
 
@@ -94,3 +95,4 @@ dotnet --info;
 
 # Update sdkman, java and kotlin
 bash ~/.local/bin/update-sdkman;
+{{ end -}}

@@ -1,0 +1,3 @@
+{{ if eq .chezmoi.os "windows" -}}
+Set-PSReadLineKeyHandler -Key Tab -Function Complete;
+{{ end -}}

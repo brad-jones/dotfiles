@@ -12,8 +12,12 @@ sudo dnf install -y https://github.com/twpayne/chezmoi/releases/download/v$chezm
 rm -rf /tmp/vault-key;
 rm -rf ~/.password-store;
 rm -f /tmp/brad@bjc.id.au;
-rm -f /tmp/brad.jones@xero.com;
+rm -f ~/.ssh/brad@bjc.id.au;
 rm -rf ~/.local/share/chezmoi;
+rm -f /tmp/brad.jones@xero.com;
+rm -f ~/.ssh/brad@bjc.id.au.pub;
+rm -f ~/.ssh/brad.jones@xero.com;
+rm -f ~/.ssh/brad.jones@xero.com.pub;
 
 git clone https://gitlab.com/brad-jones/vault-key.git /tmp/vault-key;
 gpg --import /tmp/vault-key/private.pem;

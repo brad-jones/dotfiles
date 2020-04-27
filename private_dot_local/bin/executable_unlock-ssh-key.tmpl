@@ -1,3 +1,4 @@
+{{ if eq .chezmoi.os "linux" -}}
 #!/usr/bin/env bash
 set -euo pipefail;
 keyFile="$1";
@@ -9,3 +10,4 @@ function finish {
 trap finish EXIT;
 echo "echo \"$passphrase\";" > $tmpFile && chmod 700 $tmpFile;
 cat $keyFile | SSH_ASKPASS=$tmpFile DISPLAY= ssh-add -;
+{{ end -}}

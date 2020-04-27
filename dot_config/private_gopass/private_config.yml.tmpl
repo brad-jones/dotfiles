@@ -12,7 +12,11 @@ root:
   noconfirm: true
   nopager: false
   notifications: true
+  {{ if eq .chezmoi.os "windows" -}}
+  path: gpgcli-gitcli-fs+file:///C:%5CUsers%5Cbrad.jones%5C.password-store
+  {{ else -}}
   path: gpgcli-gitcli-fs+file:///home/brad.jones/.password-store
+  {{ end -}}
   recipient_hash: {}
   safecontent: false
   usesymbols: false
