@@ -40,7 +40,8 @@ Function CommandExists {
 # ------------------------------------------------------------------------------
 RmIfExists -Path ~/.config/systemd;
 
-Exec -ScriptBlock { scoop update; }
-
-Install-Module PSReadLine -Force;
-powershell.exe -Command '& { Install-Module PSReadLine -Force; }';
+# Install a semi-sensible readline for powershell
+# ------------------------------------------------------------------------------
+# see: <https://github.com/PowerShell/PSReadLine>
+Exec -ScriptBlock { Import-Module PowerShellGet; Install-Module PSReadLine -Force; }
+powershell.exe -Command '& { Import-Module PowerShellGet; Install-Module PSReadLine -Force; }';
