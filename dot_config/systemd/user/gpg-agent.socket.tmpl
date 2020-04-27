@@ -1,4 +1,4 @@
-{{ if nq .chezmoi.os "windows" -}}
+{{ if ne .chezmoi.os "windows" -}}
 [Unit]
 Description=GnuPG cryptographic agent and passphrase cache
 Documentation=man:gpg-agent(1)
