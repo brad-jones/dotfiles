@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -euxo pipefail;
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc;
-sudo dnf config-manager --add-repo https://packages.microsoft.com/config/rhel/7/prod.repo
-sudo dnf install -y compat-openssl10;
-sudo dnf install -y powershell;
