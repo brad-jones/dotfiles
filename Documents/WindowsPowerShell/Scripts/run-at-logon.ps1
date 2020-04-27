@@ -1,30 +1,5 @@
-# Get our passphrases from the windows cred store
-$passwordWork = Get-StoredCredential -Target "passphrase:brad.jones@xero.com";
-$unsecurePasswordWork = [System.Net.NetworkCredential]::new('', $passwordWork.Password).Password;
-$passwordPersonal = Get-StoredCredential -Target "passphrase:brad@bjc.id.au";
-$unsecurePasswordPersonal = [System.Net.NetworkCredential]::new('', $passwordPersonal.Password).Password;
-
-# Make sure the windows GPG agent is running
-Retry-Command -Verbose -ScriptBlock {
-	gpg-connect-agent /bye;
-	if ($LastExitCode -ne 0) {
-		throw "failed";
-	}
-}
-
-# Add the GPG keys to the windows agent
-gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "83D182028C7F2DF102F09E61FF308BBB10F539D8";
-gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB";
-gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "1A8059A4CC0F06F670492ABBD0053F0772B75829";
-gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B";
-gpg-preset-passphrase --passphrase "$unsecurePasswordWork" --preset "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86";
-gpg-preset-passphrase --passphrase "$unsecurePasswordWork" --preset "5C31B095A9E5904D20A547DCF7E5096196D54909";
-
-# NOTE: The windows ssh-agent is implemented through the Windows registry and
-# thus once the keys are added they do not need to be added again, even after reboot.
-
-# The following will wait untill our dev-server has started
-function Retry-Command {
+# Retry a given script block until success
+function RetryCommand {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory, ValueFromPipeline)] 
@@ -46,9 +21,6 @@ function Retry-Command {
 				$ErrorActionPreference = 'Stop'
 				Invoke-Command -ScriptBlock $ScriptBlock -OutVariable Result              
 				$ErrorActionPreference = $PreviousPreference
-
-				# flow control will execute the next line only if the command in the scriptblock executed without any errors
-				# if an error is thrown, flow control will go to the 'catch' block
 				Write-Verbose "$SuccessMessage `n"
 				$Flag = $false
 			}
@@ -69,6 +41,33 @@ function Retry-Command {
 		
 	}
 }
+
+# Make sure the windows GPG agent is running
+RetryCommand -Verbose -ScriptBlock {
+	gpg-connect-agent /bye;
+	if ($LastExitCode -ne 0) {
+		throw "failed";
+	}
+}
+
+# Get our passphrases from the windows cred store
+$passwordPersonal = Get-StoredCredential -Target "passphrase:brad@bjc.id.au";
+$unsecurePasswordPersonal = [System.Net.NetworkCredential]::new('', $passwordPersonal.Password).Password;
+$passwordProfessional = Get-StoredCredential -Target "passphrase:brad.jones@xero.com";
+$unsecurePasswordProfessional = [System.Net.NetworkCredential]::new('', $passwordProfessional.Password).Password;
+
+# Add the GPG keys to the windows agent
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "83D182028C7F2DF102F09E61FF308BBB10F539D8";
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB";
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "1A8059A4CC0F06F670492ABBD0053F0772B75829";
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B";
+gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86";
+gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "5C31B095A9E5904D20A547DCF7E5096196D54909";
+
+# NOTE: The windows ssh-agent is implemented through the Windows registry and
+# thus once the keys are added they do not need to be added again, even after reboot.
+
+# The following will wait untill our dev-server has started
 Retry-Command -Verbose -ScriptBlock {
 	ssh dev-server true;
 	if ($LastExitCode -ne 0) {
@@ -78,10 +77,10 @@ Retry-Command -Verbose -ScriptBlock {
 
 # Now unlock all the keys inside our dev-server
 ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'";
-ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordWork'";
+ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'";
 ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'";
 ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'";
 ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'";
 ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'";
-ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordWork'";
-ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordWork'";
+ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'";
+ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'";
