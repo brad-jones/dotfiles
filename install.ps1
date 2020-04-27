@@ -113,12 +113,22 @@ RmIfExists -Path "$env:TEMP/brad.jones@xero.com";
 
 # Install my dotfiles
 Exec -ScriptBlock { chezmoi init https://github.com/brad-jones/dotfiles.git; }
-Exec -ScriptBlock { cmdkey /delete:"git:https://github.com"; }
-Exec -ScriptBlock { cmdkey /delete:"git:https://gitlab.com"; }
-Exec -ScriptBlock { cmdkey /delete:"git:https://brad@bjc.id.au@gitlab.com"; }
 $gDir = chezmoi source-path;
 Exec -ScriptBlock { git --git-dir "$gDir\.git" remote set-url origin git@github.com:brad-jones/dotfiles.git; }
 Exec -ScriptBlock { chezmoi apply --debug; }
+
+# Configure the windows cred store
+Exec -ScriptBlock { cmdkey /delete:"git:https://github.com"; }
+Exec -ScriptBlock { cmdkey /delete:"git:https://gitlab.com"; }
+Exec -ScriptBlock { cmdkey /delete:"git:https://brad@bjc.id.au@gitlab.com"; }
+Exec -ScriptBlock {
+	$personalPassphrase = Read-Host 'What is the passphrase for brad@bjc.id.au?';
+	cmdkey /generic:"passphrase:brad@bjc.id.au" /user:"brad@bjc.id.au" /pass:$personalPassphrase;
+}
+Exec -ScriptBlock {
+	$professionalPasspharse = Read-Host 'What is the passphrase for brad.jones@xero.com?';
+	cmdkey /generic:"passphrase:brad.jones@xero.com" /user:"brad.jones@xero.com" /pass:$professionalPasspharse;
+}
 
 # Reboot to make sure things like kernels are updated etc
 #Restart-Computer;

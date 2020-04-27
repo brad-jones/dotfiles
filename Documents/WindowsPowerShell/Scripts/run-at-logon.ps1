@@ -1,11 +1,16 @@
 # Get our passphrases from the windows cred store
-$passwordWork = Get-StoredCredential -Target gpg-keyphrase;
+$passwordWork = Get-StoredCredential -Target "passphrase:brad.jones@xero.com";
 $unsecurePasswordWork = [System.Net.NetworkCredential]::new('', $passwordWork.Password).Password;
-$passwordPersonal = Get-StoredCredential -Target gpg-keyphrase-gopass;
+$passwordPersonal = Get-StoredCredential -Target "passphrase:brad@bjc.id.au";
 $unsecurePasswordPersonal = [System.Net.NetworkCredential]::new('', $passwordPersonal.Password).Password;
 
 # Make sure the windows GPG agent is running
-gpg-connect-agent /bye;
+Retry-Command -Verbose -ScriptBlock {
+	gpg-connect-agent /bye;
+	if ($LastExitCode -ne 0) {
+		throw "failed";
+	}
+}
 
 # Add the GPG keys to the windows agent
 gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "83D182028C7F2DF102F09E61FF308BBB10F539D8";
