@@ -101,7 +101,7 @@ if (-Not (Get-ScheduledTask -TaskName "Run at Logon" -ErrorAction Ignore)) {
 	$u = whoami;
 	$STPrincipal = New-ScheduledTaskPrincipal -UserID "$u";
 	
-	Register-ScheduledTask "Run at Logon" `
+	sudo Register-ScheduledTask "Run at Logon" `
 		-Principal $STPrincipal `
 		-Trigger $Stt `
 		-Action $Sta;
