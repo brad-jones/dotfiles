@@ -8,7 +8,7 @@ AddToPath -Path "$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin";
 # Tell goenv where to install go, personally I prefer all my tools and
 # config to be hidden (ie: start with a dot) and all my actual data
 # folders/files to unhidden.
-SetEnv -Key "GOENV_GOPATH_PREFIX" -Value "$env:USERPROFILE\.go";
+SetEnv -Key "GOPATH" -Value "$env:USERPROFILE\.go";
 
 # Configure aws-vault to use gopass to store our idenities
 SetEnv -Key "AWS_VAULT_BACKEND" -Value "pass";
