@@ -110,22 +110,22 @@ if ((Get-Service -Name ssh-agent).Status -ne "Running") {
 # Install additional SSH Keys
 # ------------------------------------------------------------------------------
 # TODO: Would be nice use gopass as an actual ssh-agent?
-RmIfExists -Path ~/.ssh/keys;
+RmIfExists -Path $env:USERPROFILE/.ssh/keys;
 
-mkdir ~/.ssh/keys/xero-payroll-prod;
-gopass bin cp keys/ssh/xero-payroll-prod/payroll-checkpoint.pem ~/.ssh/keys/xero-payroll-prod/payroll-checkpoint.pem;
-gopass bin cp keys/ssh/xero-payroll-prod/payroll-dev-public.pem ~/.ssh/keys/xero-payroll-prod/payroll-dev-public.pem;
-gopass bin cp keys/ssh/xero-payroll-prod/payroll-devops.pem ~/.ssh/keys/xero-payroll-prod/payroll-devops.pem;
+mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-prod;
+gopass bin cp keys/ssh/xero-payroll-prod/payroll-checkpoint.pem $env:USERPROFILE/.ssh/keys/xero-payroll-prod/payroll-checkpoint.pem;
+gopass bin cp keys/ssh/xero-payroll-prod/payroll-dev-public.pem $env:USERPROFILE/.ssh/keys/xero-payroll-prod/payroll-dev-public.pem;
+gopass bin cp keys/ssh/xero-payroll-prod/payroll-devops.pem $env:USERPROFILE/.ssh/keys/xero-payroll-prod/payroll-devops.pem;
 
-mkdir ~/.ssh/keys/xero-payroll-test;
-gopass bin cp keys/ssh/xero-payroll-test/payroll-checkpoint.pem ~/.ssh/keys/xero-payroll-test/payroll-checkpoint.pem;
-gopass bin cp keys/ssh/xero-payroll-test/payroll-dev-public.pem ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem;
-gopass bin cp keys/ssh/xero-payroll-test/payroll-devops.pem ~/.ssh/keys/xero-payroll-test/payroll-devops.pem;
+mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-test;
+gopass bin cp keys/ssh/xero-payroll-test/payroll-checkpoint.pem $env:USERPROFILE/.ssh/keys/xero-payroll-test/payroll-checkpoint.pem;
+gopass bin cp keys/ssh/xero-payroll-test/payroll-dev-public.pem $env:USERPROFILE/.ssh/keys/xero-payroll-test/payroll-dev-public.pem;
+gopass bin cp keys/ssh/xero-payroll-test/payroll-devops.pem $env:USERPROFILE/.ssh/keys/xero-payroll-test/payroll-devops.pem;
 
-mkdir ~/.ssh/keys/xero-payroll-uat;
-gopass bin cp keys/ssh/xero-payroll-uat/payroll-checkpoint.pem ~/.ssh/keys/xero-payroll-uat/payroll-checkpoint.pem;
-gopass bin cp keys/ssh/xero-payroll-uat/payroll-dev-public.pem ~/.ssh/keys/xero-payroll-uat/payroll-dev-public.pem;
-gopass bin cp keys/ssh/xero-payroll-uat/payroll-devops.pem ~/.ssh/keys/xero-payroll-uat/payroll-devops.pem;
+mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-uat;
+gopass bin cp keys/ssh/xero-payroll-uat/payroll-checkpoint.pem $env:USERPROFILE/.ssh/keys/xero-payroll-uat/payroll-checkpoint.pem;
+gopass bin cp keys/ssh/xero-payroll-uat/payroll-dev-public.pem $env:USERPROFILE/.ssh/keys/xero-payroll-uat/payroll-dev-public.pem;
+gopass bin cp keys/ssh/xero-payroll-uat/payroll-devops.pem $env:USERPROFILE/.ssh/keys/xero-payroll-uat/payroll-devops.pem;
 
-mkdir ~/.ssh/keys/xero-ps-paas-svc;
-gopass bin cp keys/ssh/xero-ps-paas-svc/payroll-devops.pem ~/.ssh/keys/xero-ps-paas-svc/payroll-devops.pem;
+mkdir $env:USERPROFILE/.ssh/keys/xero-ps-paas-svc;
+gopass bin cp keys/ssh/xero-ps-paas-svc/payroll-devops.pem $env:USERPROFILE/.ssh/keys/xero-ps-paas-svc/payroll-devops.pem;
