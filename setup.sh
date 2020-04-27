@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euxo pipefail;
 
+# Remove Windows specfic stuff
+# ------------------------------------------------------------------------------
+rm -rf ~/Documents;
+
 # Install SSH/GPG Agent
 # ------------------------------------------------------------------------------
 # On desktop systems, ssh/gpg-agent is already taken care of for us.

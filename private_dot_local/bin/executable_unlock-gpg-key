@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail;
+keygrip="$1";
+passphrase="$2";
+/usr/libexec/gpg-preset-passphrase --passphrase "$passphrase" --preset "$keygrip";

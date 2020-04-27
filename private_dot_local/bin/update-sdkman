@@ -1,4 +1,3 @@
-{{ if ne .chezmoi.os "windows" -}}
 #!/usr/bin/env bash
 source ~/.sdkman/bin/sdkman-init.sh;
 sdk selfupdate;
@@ -7,4 +6,3 @@ jdkV="$(sdk list java | awk '{for(i=1;i<=NF;i++){if($i~/(.*?)-adpt/){print $i}}}
 sdk install java $jdkV;
 sdk install kotlin;
 sdk install maven;
-{{ end -}}
