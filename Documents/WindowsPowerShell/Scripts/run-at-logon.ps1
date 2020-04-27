@@ -1,17 +1,3 @@
-# Make sure this script dies when something bad happens
-# A really crappy version of bash set -e;
-$ErrorActionPreference = 'stop';
-function Exec {
-    param (
-        [scriptblock]$ScriptBlock,
-        [string]$ErrorAction = $ErrorActionPreference
-    )
-    & @ScriptBlock
-    if (($lastexitcode -ne 0) -and $ErrorAction -eq "Stop") {
-        exit $lastexitcode
-    }
-}
-
 # Retry a given script block until success
 function RetryCommand {
 	[CmdletBinding()]
@@ -69,13 +55,13 @@ RetryCommand -Verbose -ScriptBlock {
 echo "Getting passphrase:brad@bjc.id.au";
 $passwordPersonal = Get-StoredCredential -Target "passphrase:brad@bjc.id.au";
 $unsecurePasswordPersonal = [System.Net.NetworkCredential]::new('', $passwordPersonal.Password).Password;
-Exec -ScriptBlock { gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "83D182028C7F2DF102F09E61FF308BBB10F539D8"; }
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "83D182028C7F2DF102F09E61FF308BBB10F539D8";
 echo "Unlocked: 83D182028C7F2DF102F09E61FF308BBB10F539D8 @ localhost";
-Exec -ScriptBlock { gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB"; }
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB";
 echo "Unlocked: F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB @ localhost";
-Exec -ScriptBlock { gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "1A8059A4CC0F06F670492ABBD0053F0772B75829"; }
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "1A8059A4CC0F06F670492ABBD0053F0772B75829";
 echo "Unlocked: 1A8059A4CC0F06F670492ABBD0053F0772B75829 @ localhost";
-Exec -ScriptBlock { gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B"; }
+gpg-preset-passphrase --passphrase "$unsecurePasswordPersonal" --preset "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B";
 echo "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ localhost";
 
 # NOTE: The windows ssh-agent is implemented through the Windows registry and
@@ -86,9 +72,9 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	echo "Getting passphrase:brad.jones@xero.com";
 	$passwordProfessional = Get-StoredCredential -Target "passphrase:brad.jones@xero.com";
 	$unsecurePasswordProfessional = [System.Net.NetworkCredential]::new('', $passwordProfessional.Password).Password;
-	Exec -ScriptBlock { gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86"; }
+	gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86";
 	echo "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ localhost";
-	Exec -ScriptBlock { gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "5C31B095A9E5904D20A547DCF7E5096196D54909"; }
+	gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "5C31B095A9E5904D20A547DCF7E5096196D54909";
 	echo "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ localhost";
 	echo "Wait for dev-server.hyper-v.local";
 	RetryCommand -Verbose -ScriptBlock {
@@ -97,18 +83,18 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 			throw "failed";
 		}
 	}
-	Exec -ScriptBlock { ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'"; }
-	Exec -ScriptBlock { ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'"; }
-	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'"; }
+	ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'";
+	ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'";
+	ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'";
 	echo "Unlocked: 83D182028C7F2DF102F09E61FF308BBB10F539D8 @ dev-server.hyper-v.local";
-	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'"; }
+	ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'";
 	echo "Unlocked: F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB @ dev-server.hyper-v.local";
-	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'"; }
+	ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'";
 	echo "Unlocked: 1A8059A4CC0F06F670492ABBD0053F0772B75829 @ dev-server.hyper-v.local";
-	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'"; }
+	ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'";
 	echo "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ dev-server.hyper-v.local";
-	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'"; }
+	ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'";
 	echo "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ dev-server.hyper-v.local";
-	Exec -ScriptBlock { ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'"; }
+	ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'";
 	echo "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ dev-server.hyper-v.local";
 }
