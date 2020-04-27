@@ -155,7 +155,7 @@ Exec -ScriptBlock {
 # Install additional SSH Keys
 # ------------------------------------------------------------------------------
 # TODO: Would be nice use gopass as an actual ssh-agent?
-if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	RmIfExists -Path $env:USERPROFILE/.ssh/keys;
 
 	Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-prod; }

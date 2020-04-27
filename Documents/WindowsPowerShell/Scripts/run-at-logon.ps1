@@ -82,7 +82,7 @@ echo "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ localhost";
 # thus once the keys are added they do not need to be added again, even after reboot.
 
 # Unlock professional keys
-if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	echo "Getting passphrase:brad.jones@xero.com";
 	$passwordProfessional = Get-StoredCredential -Target "passphrase:brad.jones@xero.com";
 	$unsecurePasswordProfessional = [System.Net.NetworkCredential]::new('', $passwordProfessional.Password).Password;

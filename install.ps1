@@ -103,7 +103,7 @@ Exec -ScriptBlock { echo "5`r`ny" | gpg --command-fd 0 --edit-key "Brad Jones <b
 RmIfExists -Path "$env:TEMP\brad@bjc.id.au";
 
 # Install my professional keys
-if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	Exec -ScriptBlock { gopass bin cp "keys/ssh/brad.jones@xero.com" "$env:USERPROFILE\.ssh\brad.jones@xero.com"; }
 	Exec -ScriptBlock { gopass bin cp "keys/gpg/brad.jones@xero.com" "$env:TEMP\brad.jones@xero.com"; }
 	Exec -ScriptBlock { gpg --import "$env:TEMP\brad.jones@xero.com"; }
@@ -125,7 +125,7 @@ Exec -ScriptBlock {
 	$personalPassphrase = Read-Host 'What is the passphrase for brad@bjc.id.au?';
 	cmdkey /generic:"passphrase:brad@bjc.id.au" /user:"brad@bjc.id.au" /pass:$personalPassphrase;
 }
-if ($env:COMPUTERNAME == "XLW-5CD936CWNQ") {
+if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	Exec -ScriptBlock {
 		$professionalPasspharse = Read-Host 'What is the passphrase for brad.jones@xero.com?';
 		cmdkey /generic:"passphrase:brad.jones@xero.com" /user:"brad.jones@xero.com" /pass:$professionalPasspharse;
