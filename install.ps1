@@ -108,6 +108,8 @@ Exec -ScriptBlock { echo "5`r`ny" | gpg --command-fd 0 --edit-key "Brad Jones <b
 RmIfExists -Path "$env:TEMP/brad.jones@xero.com";
 
 # Install my dotfiles
+Exec -ScriptBlock { git config --global core.eol lf; }
+Exec -ScriptBlock { git config --global core.autocrlf false; }
 Exec -ScriptBlock { chezmoi init https://github.com/brad-jones/dotfiles.git; }
 $gDir = chezmoi source-path;
 Exec -ScriptBlock { git --git-dir "$gDir\.git" remote set-url origin git@github.com:brad-jones/dotfiles.git; }
