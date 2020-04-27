@@ -91,20 +91,22 @@ if ((Get-Service -Name ssh-agent).Status -ne "Running") {
 # Install our run at login script
 # ------------------------------------------------------------------------------
 if (-Not (Get-ScheduledTask -TaskName "Run at Logon" -ErrorAction Ignore)) {
-	$Stt = New-ScheduledTaskTrigger -AtLogOn;
-	
-	$Sta = New-ScheduledTaskAction `
-		-Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
-		-Argument "-NoLogo -NoProfile -File .\run-at-logon.ps1" `
-		-WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";
-	
-	$u = whoami;
-	$STPrincipal = New-ScheduledTaskPrincipal -UserID "$u";
-	
-	sudo Register-ScheduledTask "Run at Logon" `
-		-Principal $STPrincipal `
-		-Trigger $Stt `
-		-Action $Sta;
+	Exec -ScriptBlock {
+		$Stt = New-ScheduledTaskTrigger -AtLogOn;
+		
+		$Sta = New-ScheduledTaskAction `
+			-Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
+			-Argument "-NoLogo -NoProfile -File .\run-at-logon.ps1" `
+			-WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";
+		
+		$u = whoami;
+		$STPrincipal = New-ScheduledTaskPrincipal -UserID "$u" -LogonType Password;
+		
+		sudo Register-ScheduledTask "Run at Logon" `
+			-Principal $STPrincipal `
+			-Trigger $Stt `
+			-Action $Sta;
+	}
 }
 
 # Install the rest of our apps
