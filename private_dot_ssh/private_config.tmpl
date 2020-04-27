@@ -1,0 +1,9 @@
+AddKeysToAgent yes
+
+{{ if eq .chezmoi.os "windows" -}}
+Host dev-server
+  HostName dev-server.hyper-v.local
+  User brad.jones
+  IdentityFile C:\Users\brad.jones\.ssh\id_rsa
+  StrictHostKeyChecking no
+{{ end -}}
