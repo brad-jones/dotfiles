@@ -1,0 +1,4 @@
+{{ if eq .chezmoi.os "windows" -}}
+@ECHO OFF
+powershell %UserProfile%\.local\share\chezmoi\setup.ps1 %*
+{{ end -}}
