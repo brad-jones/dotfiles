@@ -113,6 +113,9 @@ RmIfExists -Path "$env:TEMP/brad.jones@xero.com";
 
 # Install my dotfiles
 Exec -ScriptBlock { chezmoi init https://github.com/brad-jones/dotfiles.git; }
+Exec -ScriptBlock { cmdkey /delete:"git:https://github.com"; }
+Exec -ScriptBlock { cmdkey /delete:"git:https://gitlab.com"; }
+Exec -ScriptBlock { cmdkey /delete:"git:https://brad@bjc.id.au@gitlab.com"; }
 $gDir = chezmoi source-path;
 Exec -ScriptBlock { git --git-dir "$gDir\.git" remote set-url origin git@github.com:brad-jones/dotfiles.git; }
 Exec -ScriptBlock { chezmoi apply --debug; }
