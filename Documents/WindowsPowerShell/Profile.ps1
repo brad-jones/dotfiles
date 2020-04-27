@@ -1,19 +1,8 @@
-function SetEnv {
-    param($Key, $Value);
-    Set-Item env:\$Key -Value $Value;
-    [Environment]::SetEnvironmentVariable($Key, $Value, "User");
-}
-
-function AddToPath {
-    param($Path);
-    if (-Not ($env:PATH -like "*$Path*")) {
-        SetEnv -Key "PATH" -Value "$env:PATH;$Path";
-    }
-}
+. $env:USERPROFILE\Documents\WindowsPowerShell\utils.ps1;
 
 # Define our path as early as possible
-AddToPath -Path "$env:USERPROFILE\.local\bin";
 AddToPath -Path "$env:USERPROFILE\.local\sbin\bin";
+AddToPath -Path "$env:USERPROFILE\.local\bin";
 AddToPath -Path "$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin";
 
 # Tell goenv where to install go, personally I prefer all my tools and
