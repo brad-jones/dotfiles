@@ -59,8 +59,17 @@ RmIfExists -Path ~/.config/systemd;
 # ------------------------------------------------------------------------------
 # see: <https://github.com/PowerShell/PSReadLine>
 if (-Not (ModuleExists -Module PSReadLine)) {
-	Exec -ScriptBlock { Import-Module PowerShellGet -Force; Install-Module PSReadLine -Force; }
-	powershell.exe -Command '& { Import-Module PowerShellGet -Force; Install-Module PSReadLine -Force; }';
+	Exec -ScriptBlock {
+		Import-Module PowerShellGet -Force;
+		Install-Module PSReadLine -Force;
+	}
+}
+
+# Install the CredentialManager module to allow ineraction with the credstore
+# ------------------------------------------------------------------------------
+# see: <https://github.com/PowerShell/PSReadLine>
+Exec -ScriptBlock {
+	powershell.exe -Command '& { function ModuleExists{param($Module);$oldPreference=$ErrorActionPreference;$ErrorActionPreference="stop";try{if(Get-InstalledModule-Name$Module){return $true;}}catch{return $false;}finally{$ErrorActionPreference = $oldPreference;}} if (-Not (ModuleExists -Module CredentialManager)) { Import-Module PowerShellGet -Force; Install-Module CredentialManager -Force; }}';
 }
 
 # Install SSH Agent
