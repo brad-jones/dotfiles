@@ -3,7 +3,7 @@ import 'package:dexeca/dexeca.dart';
 import 'package:dexecve/dexecve.dart';
 import 'package:scripts/src/dir.dart';
 
-final originalAwsExe = normalizeDir('~/.local/bin/aws');
+final originalAwsExe = normalizeDir(Platform.isLinux ? '~/.local/bin/aws' : '~/scoop/apps/aws/current/bin/aws.exe');
 
 String getAwsProfile(List<String> argv) {
   var k = 0;
