@@ -18,14 +18,18 @@
 	path = ~/Projects/Xero/.gitconfig
 
 [credential]
+	{{ if eq .chezmoi.os "windows" -}}
+	helper = manager
+	{{ else -}}
 	helper = cache
+	{{ end }}
 
 [gpg]
 	{{ if eq .chezmoi.os "windows" -}}
 	program = C:\\Users\\brad.jones\\scoop\\apps\\gpg\\current\\bin\\gpg.exe
 	{{ else -}}
 	program = /usr/bin/gpg
-	{{ end -}}
+	{{ end }}
 
 [commit]
 	gpgSign = true
