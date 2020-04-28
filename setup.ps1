@@ -92,18 +92,18 @@ if ((Get-Service -Name ssh-agent).Status -ne "Running") {
 # ------------------------------------------------------------------------------
 if (-Not (Get-ScheduledTask -TaskName "Run at Logon" -ErrorAction Ignore)) {
 	Exec -ScriptBlock {
-		$Stt = New-ScheduledTaskTrigger -AtLogOn;
+		$u = whoami;
+
+		$Stt = New-ScheduledTaskTrigger -AtLogOn -User "$u";
 
 		$Sta = New-ScheduledTaskAction `
 			-Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
-			-Argument "-NoLogo -NoProfile -File .\run-at-logon.ps1" `
+			-Argument "-NoLogo .\run-at-logon.ps1" `
 			-WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";
-
-		$u = whoami;
+		
 		$STPrincipal = New-ScheduledTaskPrincipal `
 			-UserID "$u" `
-			-LogonType Interactive `
-			-RunLevel Highest;
+			-LogonType Interactive;
 
 		Register-ScheduledTask "Run at Logon" `
 			-Principal $STPrincipal `
@@ -141,6 +141,7 @@ Exec -ScriptBlock {
 		terraform `
 		vscode `
 		wavebox10-pro `
+		windows-terminal `
 		yarn;
 }
 
