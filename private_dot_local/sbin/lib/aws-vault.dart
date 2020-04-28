@@ -91,6 +91,9 @@ Future<void> main(List<String> argv) async {
       }
 
       args.addAll(argv.sublist(1));
+      if (action == 'exec') {
+        args.insert(4, '--');
+      }
       dexecve(originalAwsVaultExe, args, environment: env);
       break;
 
