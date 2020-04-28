@@ -2,6 +2,7 @@
 
 # Define our path as early as possible
 AddToPath -Path "$env:USERPROFILE\.local\bin";
+AddToPath -Path "$env:USERPROFILE\.go\bin";
 AddToPath -Path "$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin";
 AddToPath -Path "$env:USERPROFILE\.local\sbin\bin";
 
