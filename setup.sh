@@ -4,6 +4,7 @@ set -euxo pipefail;
 # Remove Windows specfic stuff
 # ------------------------------------------------------------------------------
 rm -rf ~/Documents;
+rm -rf ~/AppData;
 
 # Install SSH/GPG Agent
 # ------------------------------------------------------------------------------
