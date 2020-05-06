@@ -10,7 +10,7 @@ Future<bool> runningAsGuest() async {
   if (!_runningAsGuestChecked) {
     var hostsFile = File('/etc/hosts');
     if (await hostsFile.exists()) {
-      if ((await hostsFile.readAsString()).contains('dom0.hyper-v.local')) {
+      if ((await hostsFile.readAsString()).contains('dev-server.wslhv.local')) {
         __runningAsGuestValue = true;
       }
     }
@@ -23,7 +23,7 @@ Future<ProcessResult> runOnHostIfGuest(String exe, List<String> args) async {
     return await dexeca('ssh', [
       '-o',
       'StrictHostKeyChecking=no',
-      'dom0.hyper-v.local',
+      'dev-server.wslhv.local',
       exe,
       ...args,
     ]);
@@ -37,7 +37,7 @@ Future<void> execOnHostIfGuest(String exe, List<String> args) async {
     dexecve('ssh', [
       '-o',
       'StrictHostKeyChecking=no',
-      'dom0.hyper-v.local',
+      'dev-server.wslhv.local',
       exe,
       ...args,
     ]);
