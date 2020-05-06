@@ -156,26 +156,19 @@ if ! [ -x "$(command -v pyenv)" ]; then
     ~/.pyenv/bin/pyenv rehash;
 fi
 
-# Install awscli
+# Install awscli / aws-vault
 # ------------------------------------------------------------------------------
-if ! [ -x "$(command -v aws)" ]; then
-    rm -rf ~/.local/aws-cli ~/.local/bin/aws;
-    tmpFolder="/tmp/$(uuidgen)";
-    mkdir -p $tmpFolder;
-    function finish {
-        rm -rf $tmpFolder;
-    }
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolder/awscliv2.zip";
-    unzip "$tmpFolder/awscliv2.zip" -d "$tmpFolder/extracted";
-    $tmpFolder/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin;
-    ~/.local/bin/aws --version;
-fi
-
-# Install aws-vault
-# ------------------------------------------------------------------------------
-if ! [ -x "$(command -v aws-vault)" ]; then
-    ~/.linuxbrew/bin/brew install aws-vault;
-fi
+rm -rf ~/.local/aws-cli ~/.local/bin/aws;
+tmpFolder="/tmp/$(uuidgen)";
+mkdir -p $tmpFolder;
+function finish {
+    rm -rf $tmpFolder;
+}
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolder/awscliv2.zip";
+unzip "$tmpFolder/awscliv2.zip" -d "$tmpFolder/extracted";
+$tmpFolder/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin;
+~/.local/bin/aws --version;
+~/.linuxbrew/bin/brew install aws-vault;
 
 # Install Packer
 # ------------------------------------------------------------------------------
