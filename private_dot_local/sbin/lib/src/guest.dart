@@ -21,7 +21,7 @@ Future<bool> runningAsGuest() async {
 Future<ProcessResult> runOnHostIfGuest(String exe, List<String> args) async {
   if (await runningAsGuest()) {
     return await dexeca('ssh', [
-      '-p', '2223',
+      '-p', '2222',
       '-o', 'StrictHostKeyChecking=no',
       'localhost',
       exe,
@@ -35,7 +35,7 @@ Future<ProcessResult> runOnHostIfGuest(String exe, List<String> args) async {
 Future<void> execOnHostIfGuest(String exe, List<String> args) async {
   if (await runningAsGuest()) {
     dexecve('ssh', [
-      '-p', '2223',
+      '-p', '2222',
       '-o', 'StrictHostKeyChecking=no',
       'localhost',
       exe,
