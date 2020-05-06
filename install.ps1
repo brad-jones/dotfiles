@@ -133,4 +133,4 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 }
 
 # Reboot to make sure things like kernels are updated etc
-#Restart-Computer;
+Restart-Computer;

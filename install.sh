@@ -24,6 +24,7 @@ rm -f ~/.ssh/brad.jones@xero.com;
 rm -f ~/.ssh/brad.jones@xero.com.pub;
 
 # Install the GPG key from gitlab that is used to decrypt my gopass vault
+git config --global credential.helper 'cache';
 git clone https://gitlab.com/brad-jones/vault-key.git /tmp/vault-key;
 gpg --import /tmp/vault-key/private.pem;
 expect -c "spawn gpg --edit-key \"Brad Jones (vault) <brad@bjc.id.au>\" trust quit; send \"5\ry\r\"; expect eof";

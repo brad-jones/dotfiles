@@ -57,7 +57,8 @@ eval "$(goenv init -)";
 PATH="$PATH:$GOROOT/bin";
 PATH="$PATH:$GOPATH/bin";
 
-# We have some scripts which add additional funcitonality to existing tools
+# We have some scripts which add additional functionality to existing tools
+# so we ensure these tools appear on the PATH first.
 PATH="$HOME/.local/sbin/bin:$PATH";
 
 # Rdp shortcuts

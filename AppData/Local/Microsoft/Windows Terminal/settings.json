@@ -1,6 +1,6 @@
 {
   "$schema": "https://aka.ms/terminal-profiles-schema",
-  "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+  "defaultProfile": "{53f57c9f-435c-4b7c-b04d-abf79b801afe}",
   "copyOnSelect": false,
   "copyFormatting": false,
   "profiles": {
@@ -10,12 +10,9 @@
     },
     "list": [
       {
-        "guid": "{9d3fa215-fe25-48db-9b00-4a028382abba}",
-        "name": "dev-server-hv",
-        "commandline": "ssh dev-server-hv",
-        "hidden": false,
-        "fontSize": 10,
-        "padding": "1",
+        "guid": "{53f57c9f-435c-4b7c-b04d-abf79b801afe}",
+        "name": "bash",
+        "commandline": "ssh dev-server",
         "icon": "C:\\Users\\brad.jones\\Projects\\Personal\\hyperv-dev-vm\\bash-icon.png"
       },
       {

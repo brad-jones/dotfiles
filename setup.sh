@@ -32,32 +32,32 @@ fi
 
 # Install Docker
 # ------------------------------------------------------------------------------
-if ! [ -x "$(command -v docker)" ]; then
-    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo;
-    sudo dnf install -y docker-ce docker-ce-cli containerd.io grubby;
-    sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0";
-    sudo systemctl enable docker;
-    sudo usermod -aG docker $USER;
-
-    # When running docker inside a hyper-v vm sometimes we get IP clashes because
-    # the default switch for hyper-v also likes to make use of the 172.x range.
-    # see: https://stackoverflow.com/questions/44003663
-    # also: https://github.com/moby/moby/pull/29376
-    dockerConfig=$(cat <<'EOF'
-{
-    "experimental": true,
-    "default-address-pools": [
-        {
-            "base": "10.10.0.0/16",
-            "size": 24
-        }
-    ]
-}
-EOF
-)
-
-    sudo sh -c "echo '$dockerConfig' > /etc/docker/daemon.json";
-fi
+#if ! [ -x "$(command -v docker)" ]; then
+#    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo;
+#    sudo dnf install -y docker-ce docker-ce-cli containerd.io grubby;
+#    sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0";
+#    sudo systemctl enable docker;
+#    sudo usermod -aG docker $USER;
+#
+#    # When running docker inside a hyper-v vm sometimes we get IP clashes because
+#    # the default switch for hyper-v also likes to make use of the 172.x range.
+#    # see: https://stackoverflow.com/questions/44003663
+#    # also: https://github.com/moby/moby/pull/29376
+#    dockerConfig=$(cat <<'EOF'
+#{
+#    "experimental": true,
+#    "default-address-pools": [
+#        {
+#            "base": "10.10.0.0/16",
+#            "size": 24
+#        }
+#    ]
+#}
+#EOF
+#)
+#
+#    sudo sh -c "echo '$dockerConfig' > /etc/docker/daemon.json";
+#fi
 
 # Install Dartlang
 # ------------------------------------------------------------------------------
