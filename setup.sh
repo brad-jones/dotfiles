@@ -56,6 +56,7 @@ if ! [ -x "$(command -v docker)" ]; then
 EOF
 )
 
+    mkdir -p /etc/docker;
     sudo sh -c "echo '$dockerConfig' > /etc/docker/daemon.json";
 fi
 
