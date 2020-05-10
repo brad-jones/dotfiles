@@ -112,45 +112,56 @@ if (-Not (Get-ScheduledTask -TaskName "Run at Logon" -ErrorAction Ignore)) {
 	}
 }
 
-# Install the rest of our apps
-# ------------------------------------------------------------------------------
-Exec -ScriptBlock { scoop bucket add java; }
-Exec -ScriptBlock { scoop bucket add extras; }
-Exec -ScriptBlock { scoop bucket add brad-jones https://github.com/brad-jones/scoop-bucket.git; }
-Exec -ScriptBlock {
-	scoop install `
-		adoptopenjdk-hotspot`
-		aws `
-		aws-vault `
-		dart `
-		dotnet-sdk `
-		drun `
-		firefox `
-		gitkraken `
-		go `
-		googlechrome `
-		kotlin `
-		ktlint `
-		maven `
-		nodejs `
-		nssm `
-		nuget `
-		packer `
-		python `
-		ruby `
-		terraform `
-		vscode `
-		wavebox10-pro `
-		windows-terminal `
-		yarn;
-}
-
 # Install our script deps
 # ------------------------------------------------------------------------------
 Exec -ScriptBlock {
+	scoop install dart;
 	cd $env:USERPROFILE\.local\sbin;
 	pub get;
 	cd $env:USERPROFILE;
+}
+
+# Install the rest of our apps
+# ------------------------------------------------------------------------------
+Exec -ScriptBlock { scoop bucket add extras; }
+if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
+	Exec -ScriptBlock { scoop bucket add java; }
+	Exec -ScriptBlock { scoop bucket add brad-jones https://github.com/brad-jones/scoop-bucket.git; }
+	Exec -ScriptBlock {
+		scoop install `
+			adoptopenjdk-hotspot`
+			aws `
+			aws-vault `
+			dotnet-sdk `
+			drun `
+			firefox `
+			gitkraken `
+			go `
+			googlechrome `
+			kotlin `
+			ktlint `
+			maven `
+			nodejs `
+			nssm `
+			nuget `
+			packer `
+			python `
+			ruby `
+			terraform `
+			vscode `
+			wavebox10-pro `
+			windows-terminal `
+			yarn;
+	}
+} else {
+	Exec -ScriptBlock {
+		scoop install `
+			firefox `
+			googlechrome `
+			vscode `
+			wavebox10-pro `
+			windows-terminal;
+	}
 }
 
 # Install additional SSH Keys

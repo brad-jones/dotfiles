@@ -62,6 +62,7 @@ $chezmoiV = wget https://github.com/twpayne/chezmoi/releases/latest -O /dev/null
 $ErrorActionPreference = 'stop';
 Exec -ScriptBlock { wget https://github.com/twpayne/chezmoi/releases/download/v${chezmoiV}/chezmoi_${chezmoiV}_windows_amd64.zip -O $env:TEMP\chezmoi.zip; }
 Exec -ScriptBlock { 7z x $env:TEMP\chezmoi.zip "-o${env:TEMP}\chezmoi"; }
+New-Item -ItemType Directory -Force -Path $env:USERPROFILE\.local\bin;
 Copy-Item -Path $env:TEMP\chezmoi\chezmoi.exe -Destination $env:USERPROFILE\.local\bin\chezmoi.exe;
 RmIfExists -Path $env:TEMP\chezmoi.zip; RmIfExists -Path $env:TEMP\chezmoi;
 if (!($env:PATH -like "*$env:UserProfile\.local\bin*")) {
@@ -96,6 +97,7 @@ Exec -ScriptBlock { git clone https://github.com/brad-jones/vault.git "$env:USER
 Exec -ScriptBlock { git --git-dir "$env:USERPROFILE\.password-store\.git" remote set-url origin git@github.com:brad-jones/vault.git; }
 
 # Install my personal keys
+New-Item -ItemType Directory -Force -Path $env:USERPROFILE\.ssh;
 Exec -ScriptBlock { gopass bin cp "keys/ssh/brad@bjc.id.au" "$env:USERPROFILE\.ssh\brad@bjc.id.au"; }
 Exec -ScriptBlock { gopass bin cp "keys/gpg/brad@bjc.id.au" "$env:TEMP\brad@bjc.id.au"; }
 Exec -ScriptBlock { gpg --import "$env:TEMP\brad@bjc.id.au"; }

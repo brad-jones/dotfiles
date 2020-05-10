@@ -1,6 +1,10 @@
 {
   "$schema": "https://aka.ms/terminal-profiles-schema",
+  {{ if eq .chezmoi.hostname "XLW-5CD936CWNQ" -}}
   "defaultProfile": "{53f57c9f-435c-4b7c-b04d-abf79b801afe}",
+  {{ else -}}
+  "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+  {{ end -}}
   "copyOnSelect": false,
   "copyFormatting": false,
   "profiles": {
@@ -9,12 +13,14 @@
       "padding": "1"
     },
     "list": [
+      {{ if eq .chezmoi.hostname "XLW-5CD936CWNQ" -}}
       {
         "guid": "{53f57c9f-435c-4b7c-b04d-abf79b801afe}",
         "name": "bash",
         "commandline": "ssh dev-server",
         "icon": "C:\\Users\\brad.jones\\Projects\\Personal\\hyperv-dev-vm\\bash-icon.png"
       },
+      {{ end -}}
       {
         "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
         "hidden": false,
