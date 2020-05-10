@@ -6,6 +6,8 @@ AddToPath -Path "$env:USERPROFILE\.go\bin";
 AddToPath -Path "$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin";
 AddToPath -Path "$env:USERPROFILE\.local\sbin\bin";
 
+SetEnv -Key "GIT_SSH" -Value "$env:USERPROFILE\scoop\apps\win32-openssh\current\ssh.exe";
+
 # Tell goenv where to install go, personally I prefer all my tools and
 # config to be hidden (ie: start with a dot) and all my actual data
 # folders/files to unhidden.
