@@ -151,6 +151,7 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 			vscode `
 			wavebox10-pro `
 			windows-terminal `
+			putty `
 			yarn;
 	}
 } else {
