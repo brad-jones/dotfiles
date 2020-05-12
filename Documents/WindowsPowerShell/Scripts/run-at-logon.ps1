@@ -24,6 +24,11 @@ Write-Output "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ localhost";
 
 # NOTE: The windows ssh-agent is implemented through the Windows registry and
 # thus once the keys are added they do not need to be added again, even after reboot.
+# However some windows apps (looking at you GitKraken) do not integrate with
+# the OpenSSH agent at all and prefer using Putty's pageant.exe
+gopass bin cp "keys/ssh/brad@bjc.id.au.ppk" "$env:USERPROFILE\.ssh\brad@bjc.id.au.ppk";
+pageant "$env:USERPROFILE\.ssh\brad@bjc.id.au.ppk";
+rm -Force "$env:USERPROFILE\.ssh\brad@bjc.id.au.ppk";
 
 # Unlock professional keys
 if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
@@ -34,6 +39,10 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	Write-Output "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ localhost";
 	gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "5C31B095A9E5904D20A547DCF7E5096196D54909";
 	Write-Output "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ localhost";
+
+	gopass bin cp "keys/ssh/brad.jones@xero.com.ppk" "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
+	pageant "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
+	rm -Force "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
 
 	Write-Output "Wait for dev-server";
 	RetryCommand -Verbose -ScriptBlock {
