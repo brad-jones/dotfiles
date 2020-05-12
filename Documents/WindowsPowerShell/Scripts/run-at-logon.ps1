@@ -26,7 +26,7 @@ Write-Output "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ localhost";
 # thus once the keys are added they do not need to be added again, even after reboot.
 # However some windows apps (looking at you GitKraken) do not integrate with
 # the OpenSSH agent at all and prefer using Putty's pageant.exe
-gopass bin cp "keys/ssh/brad@bjc.id.au.ppk" ".ssh\brad@bjc.id.au.ppk";
+gopass bin cp "keys/ssh/brad@bjc.id.au.ppk" "$env:USERPROFILE\.ssh\brad@bjc.id.au.ppk";
 pageant "$env:USERPROFILE\.ssh\brad@bjc.id.au.ppk";
 Start-Sleep -s 1;
 rm -Force "$env:USERPROFILE\.ssh\brad@bjc.id.au.ppk";
@@ -41,7 +41,7 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	gpg-preset-passphrase --passphrase "$unsecurePasswordProfessional" --preset "5C31B095A9E5904D20A547DCF7E5096196D54909";
 	Write-Output "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ localhost";
 
-	gopass bin cp "keys/ssh/brad.jones@xero.com.ppk" ".ssh\brad.jones@xero.com.ppk";
+	gopass bin cp "keys/ssh/brad.jones@xero.com.ppk" "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
 	pageant "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
 	Start-Sleep -s 1;
 	rm -Force "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
