@@ -159,7 +159,7 @@ fi
 
 # Install awscli
 # ------------------------------------------------------------------------------
-if ! [ -f "~/.local/bin/aws" ]; then
+if ! [ -f "$HOME/.local/bin/aws" ]; then
     rm -rf ~/.local/aws-cli ~/.local/bin/aws;
     tmpFolder="/tmp/$(uuidgen)";
     mkdir -p $tmpFolder;
@@ -174,7 +174,7 @@ fi
 
 # Install aws-vault
 # ------------------------------------------------------------------------------
-if ! [ -f "~/.linuxbrew/bin/aws-vault" ]; then
+if ! [ -f "$HOME/.linuxbrew/bin/aws-vault" ]; then
     ~/.linuxbrew/bin/brew install aws-vault;
 fi
 
@@ -200,7 +200,7 @@ fi
 
 # Install Java / Kotlin
 # ------------------------------------------------------------------------------
-if ! [ -d ~/.sdkman ]; then
+if ! [ -d "$HOME/.sdkman" ]; then
     curl "https://get.sdkman.io?rcupdate=false" | bash;
     bash ~/.local/bin/update-sdkman;
 fi
