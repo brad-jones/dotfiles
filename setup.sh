@@ -46,6 +46,7 @@ if ! [ -x "$(command -v docker)" ]; then
     dockerConfig=$(cat <<'EOF'
 {
     "experimental": true,
+    "max-concurrent-uploads": 1,
     "default-address-pools": [
         {
             "base": "10.10.0.0/16",
@@ -156,19 +157,26 @@ if ! [ -x "$(command -v pyenv)" ]; then
     ~/.pyenv/bin/pyenv rehash;
 fi
 
-# Install awscli / aws-vault
+# Install awscli
 # ------------------------------------------------------------------------------
-rm -rf ~/.local/aws-cli ~/.local/bin/aws;
-tmpFolder="/tmp/$(uuidgen)";
-mkdir -p $tmpFolder;
-function finish {
-    rm -rf $tmpFolder;
-}
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolder/awscliv2.zip";
-unzip "$tmpFolder/awscliv2.zip" -d "$tmpFolder/extracted";
-$tmpFolder/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin;
-~/.local/bin/aws --version;
-~/.linuxbrew/bin/brew install aws-vault;
+if ! [ -f "~/.local/bin/aws" ]; then
+    rm -rf ~/.local/aws-cli ~/.local/bin/aws;
+    tmpFolder="/tmp/$(uuidgen)";
+    mkdir -p $tmpFolder;
+    function finish {
+        rm -rf $tmpFolder;
+    }
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolder/awscliv2.zip";
+    unzip "$tmpFolder/awscliv2.zip" -d "$tmpFolder/extracted";
+    $tmpFolder/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin;
+    ~/.local/bin/aws --version;
+fi
+
+# Install aws-vault
+# ------------------------------------------------------------------------------
+if ! [ -f "~/.linuxbrew/bin/aws-vault" ]; then
+    ~/.linuxbrew/bin/brew install aws-vault;
+fi
 
 # Install Packer
 # ------------------------------------------------------------------------------
@@ -189,7 +197,6 @@ if ! [ -x "$(command -v tfenv)" ]; then
     ~/.tfenv/bin/tfenv install $tfV;
     ~/.tfenv/bin/tfenv use $tfV;
 fi
-
 
 # Install Java / Kotlin
 # ------------------------------------------------------------------------------

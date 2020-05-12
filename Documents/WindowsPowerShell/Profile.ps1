@@ -1,10 +1,41 @@
 . $env:USERPROFILE\Documents\WindowsPowerShell\utils.ps1;
 
 # Define our path as early as possible
-AddToPath -Path "$env:USERPROFILE\.local\bin";
-AddToPath -Path "$env:USERPROFILE\.go\bin";
-AddToPath -Path "$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin";
-AddToPath -Path "$env:USERPROFILE\.local\sbin\bin";
+SetEnv -Key "Path" -Value (-join("C:\Windows\System32;",
+"C:\Windows;",
+"C:\Windows\System32\wbem;",
+"C:\Windows\System32\WindowsPowerShell\v1.0;",
+"C:\Program Files\Docker\Docker\resources\bin;",
+"C:\ProgramData\DockerDesktop\version-bin;",
+"$env:USERPROFILE\scoop\apps\7zip\current;",
+"$env:USERPROFILE\scoop\apps\adoptopenjdk-hotspot\current\bin;",
+"$env:USERPROFILE\scoop\apps\aws-vault\current;",
+"$env:USERPROFILE\scoop\apps\aws\current\bin;",
+"$env:USERPROFILE\scoop\apps\dart\current\bin;",
+"$env:USERPROFILE\scoop\apps\dotnet-sdk\current;",
+"$env:USERPROFILE\scoop\apps\drun\current;",
+"$env:USERPROFILE\scoop\apps\git\current\bin;",
+"$env:USERPROFILE\scoop\apps\gpg\current\bin;",
+"$env:USERPROFILE\scoop\apps\go\current\bin;",
+"$env:USERPROFILE\scoop\apps\gopass\current;",
+"$env:USERPROFILE\scoop\apps\nodejs\current;",
+"$env:USERPROFILE\scoop\apps\nodejs\current\bin;",
+"$env:USERPROFILE\scoop\apps\nssm\current;",
+"$env:USERPROFILE\scoop\apps\nuget\current;",
+"$env:USERPROFILE\scoop\apps\packer\current;",
+"$env:USERPROFILE\scoop\apps\pwsh\current;",
+"$env:USERPROFILE\scoop\apps\python\current;",
+"$env:USERPROFILE\scoop\apps\ruby\current\bin;",
+"$env:USERPROFILE\scoop\apps\sed\current\bin;",
+"$env:USERPROFILE\scoop\apps\terraform\current;",
+"$env:USERPROFILE\scoop\apps\vscode\current\bin;",
+"$env:USERPROFILE\scoop\apps\wget\current;",
+"$env:USERPROFILE\scoop\apps\win32-openssh\current;",
+"$env:USERPROFILE\scoop\shims;",
+"$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin;",
+"$env:USERPROFILE\.local\bin;",
+"$env:USERPROFILE\.go\bin;",
+"$env:USERPROFILE\.local\sbin\bin;"));
 
 SetEnv -Key "GIT_SSH" -Value "$env:USERPROFILE\scoop\apps\win32-openssh\current\ssh.exe";
 
