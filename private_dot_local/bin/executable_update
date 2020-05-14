@@ -26,6 +26,9 @@ then
 	rm -f /tmp/dartsdk.zip;
 fi
 
+# Update drun
+pub global activate drun;
+
 # Update nodenv and install latest version of node
 rm -rf /tmp/node-build*;
 nodenv update;
