@@ -4,7 +4,7 @@ set -euxo pipefail;
 # Apply any changes from chezmoi
 chezmoiV="$(wget https://github.com/twpayne/chezmoi/releases/latest -O /dev/null 2>&1 | grep Location: | sed -r 's~^.*tag/v(.*?) \[.*~\1~g')";
 sudo dnf install -y https://github.com/twpayne/chezmoi/releases/download/v$chezmoiV/chezmoi-$chezmoiV-x86_64.rpm;
-chezmoi apply;
+chezmoi update;
 
 # Update the base system
 sudo dnf -y update;
