@@ -1,7 +1,7 @@
 . $env:USERPROFILE\Documents\WindowsPowerShell\utils.ps1;
 
 # Define our path as early as possible
-SetEnv -Key "Path" -Value (-join("C:\Windows\System32;",
+SetEnv -Key "Path" -Value ( -join ("C:\Windows\System32;",
 "C:\Windows;",
 "C:\Windows\System32\wbem;",
 "C:\Windows\System32\WindowsPowerShell\v1.0;",
@@ -24,6 +24,7 @@ SetEnv -Key "Path" -Value (-join("C:\Windows\System32;",
 "$env:USERPROFILE\scoop\apps\nssm\current;",
 "$env:USERPROFILE\scoop\apps\nuget\current;",
 "$env:USERPROFILE\scoop\apps\packer\current;",
+"$env:USERPROFILE\scoop\apps\maven\current\bin;",
 "$env:USERPROFILE\scoop\apps\putty\current;",
 "$env:USERPROFILE\scoop\apps\pwsh\current;",
 "$env:USERPROFILE\scoop\apps\python\current;",
