@@ -1,7 +1,8 @@
 . $env:USERPROFILE\Documents\WindowsPowerShell\utils.ps1;
 
 # Define our path as early as possible
-SetEnv -Key "Path" -Value ( -join ("C:\Windows\System32;",
+SetEnv -Key "Path" -Value ( -join ("$env:USERPROFILE\.local\sbin\bin;",
+"C:\Windows\System32;",
 "C:\Windows;",
 "C:\Windows\System32\wbem;",
 "C:\Windows\System32\WindowsPowerShell\v1.0;",
@@ -38,8 +39,7 @@ SetEnv -Key "Path" -Value ( -join ("C:\Windows\System32;",
 "$env:USERPROFILE\scoop\shims;",
 "$env:USERPROFILE\AppData\Roaming\Pub\Cache\bin;",
 "$env:USERPROFILE\.local\bin;",
-"$env:USERPROFILE\.go\bin;",
-"$env:USERPROFILE\.local\sbin\bin;"));
+"$env:USERPROFILE\.go\bin;"));
 
 SetEnv -Key "GIT_SSH" -Value "$env:USERPROFILE\scoop\apps\win32-openssh\current\ssh.exe";
 
