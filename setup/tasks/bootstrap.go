@@ -35,8 +35,8 @@ func installChezmoi() error {
 	g := github.NewClient(nil)
 
 	fmt.Println("getting latest release from github.com/twpayne/chezmoi")
-	r, _, err := g.Repositories.GetLatestRelease(
-		context.Background(), "twpayne", "chezmoi",
+	r, _, err := g.Repositories.GetReleaseByTag(
+		context.Background(), "twpayne", "chezmoi", "v1.8.7",
 	)
 	if err != nil {
 		return goerr.Wrap(err)
