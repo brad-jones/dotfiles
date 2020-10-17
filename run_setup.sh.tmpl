@@ -1,0 +1,3 @@
+{{ if ne .chezmoi.os "windows" -}}
+exec ~/.local/share/chezmoi/setup/bin/setup_{{ .chezmoi.os }}_amd64;
+{{ end -}}
