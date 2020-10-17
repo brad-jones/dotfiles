@@ -1,4 +1,7 @@
 README.md
+go.mod
+go.sum
+setup/
 
 {{- if ne .chezmoi.os "linux" }}
 .config/systemd/
