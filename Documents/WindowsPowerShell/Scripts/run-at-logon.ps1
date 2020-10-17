@@ -46,26 +46,26 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	Start-Sleep -s 1;
 	rm -Force "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
 
-	Write-Output "Wait for dev-server";
-	RetryCommand -Verbose -ScriptBlock {
-		ssh dev-server true;
-		if ($LastExitCode -ne 0) {
-			throw "failed";
-		}
-	}
-	
-	ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'";
-	ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'";
-	ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'";
-	Write-Output "Unlocked: 83D182028C7F2DF102F09E61FF308BBB10F539D8 @ dev-server";
-	ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'";
-	Write-Output "Unlocked: F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB @ dev-server";
-	ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'";
-	Write-Output "Unlocked: 1A8059A4CC0F06F670492ABBD0053F0772B75829 @ dev-server";
-	ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'";
-	Write-Output "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ dev-server";
-	ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'";
-	Write-Output "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ dev-server";
-	ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'";
-	Write-Output "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ dev-server";
+	#Write-Output "Wait for dev-server";
+	#RetryCommand -Verbose -ScriptBlock {
+	#	ssh dev-server true;
+	#	if ($LastExitCode -ne 0) {
+	#		throw "failed";
+	#	}
+	#}
+	#
+	#ssh dev-server unlock-ssh-key "~/.ssh/brad@bjc.id.au" "'$unsecurePasswordPersonal'";
+	#ssh dev-server unlock-ssh-key "~/.ssh/brad.jones@xero.com" "'$unsecurePasswordProfessional'";
+	#ssh dev-server unlock-gpg-key "83D182028C7F2DF102F09E61FF308BBB10F539D8" "'$unsecurePasswordPersonal'";
+	#Write-Output "Unlocked: 83D182028C7F2DF102F09E61FF308BBB10F539D8 @ dev-server";
+	#ssh dev-server unlock-gpg-key "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB" "'$unsecurePasswordPersonal'";
+	#Write-Output "Unlocked: F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB @ dev-server";
+	#ssh dev-server unlock-gpg-key "1A8059A4CC0F06F670492ABBD0053F0772B75829" "'$unsecurePasswordPersonal'";
+	#Write-Output "Unlocked: 1A8059A4CC0F06F670492ABBD0053F0772B75829 @ dev-server";
+	#ssh dev-server unlock-gpg-key "F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B" "'$unsecurePasswordPersonal'";
+	#Write-Output "Unlocked: F1C1E6443BB1B7AA8062DF0E085C64B391E94D5B @ dev-server";
+	#ssh dev-server unlock-gpg-key "7F2D9FFF2E1D3A21299052552E7F68C82CD71C86" "'$unsecurePasswordProfessional'";
+	#Write-Output "Unlocked: 7F2D9FFF2E1D3A21299052552E7F68C82CD71C86 @ dev-server";
+	#ssh dev-server unlock-gpg-key "5C31B095A9E5904D20A547DCF7E5096196D54909" "'$unsecurePasswordProfessional'";
+	#Write-Output "Unlocked: 5C31B095A9E5904D20A547DCF7E5096196D54909 @ dev-server";
 }

@@ -1,5 +1,17 @@
 README.md
-install.sh
-install.ps1
-setup.ps1
-setup.sh
+
+{{- if ne .chezmoi.os "linux" }}
+.config/systemd/
+{{- end }}
+
+{{- if eq .chezmoi.os "windows" }}
+.bash_profile
+.bashrc
+.gnupg/
+{{- end }}
+
+{{- if ne .chezmoi.os "windows" }}
+AppData/
+Documents/PowerShell/
+Documents/WindowsPowerShell/
+{{- end }}

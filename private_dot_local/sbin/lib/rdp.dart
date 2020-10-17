@@ -54,7 +54,7 @@ Future<void> login(
   await Future.delayed(Duration(seconds: 1));
 
   try {
-    var args = [rdpFile, '/v:"${host}"'];
+    var args = [rdpFile, '/v:${host}'];
     if (gateway?.isNotEmpty ?? false) {
       args.add('/g:"${gateway}"');
     }
@@ -237,6 +237,8 @@ Future<void> main(List<String> argv) async {
       parsedArgv['key'],
       profile,
     );
+    print(pwd);
+    exit(1);
     await login(
       meta['PrivateIpAddress'],
       username,

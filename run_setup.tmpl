@@ -1,5 +1,0 @@
-{{ if ne .chezmoi.os "windows" -}}
-#!/usr/bin/env bash
-set -euxo pipefail;
-bash ~/.local/share/chezmoi/setup.sh $@
-{{ end -}}

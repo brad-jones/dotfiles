@@ -4,9 +4,7 @@ import 'package:dexecve/dexecve.dart';
 import 'package:scripts/src/dir.dart';
 
 final originalAwsExe = normalizeDir(
-  Platform.isLinux
-      ? '~/.local/bin/aws'
-      : '~/scoop/apps/aws/current/bincompat/aws.cmd',
+  Platform.isLinux ? '~/.local/bin/aws' : '~/scoop/apps/aws/current/aws.exe',
 );
 
 String getAwsProfile(List<String> argv) {

@@ -53,3 +53,51 @@ function RetryCommand {
 		
 	}
 }
+
+function Exec {
+    param (
+        [scriptblock]$ScriptBlock,
+        [string]$ErrorAction = $ErrorActionPreference
+    )
+    & @ScriptBlock
+    if (($lastexitcode -ne 0) -and $ErrorAction -eq "Stop") {
+        exit $lastexitcode
+    }
+}
+
+Function RmIfExists {
+	Param ($Path);
+	if (Test-Path -Path $Path) {
+		Remove-Item -Path $Path -Recurse -Force;
+	}
+}
+
+Function CommandExists {
+	Param ($Command);
+	$oldPreference = $ErrorActionPreference;
+	$ErrorActionPreference = 'stop';
+	try {
+		if (Get-Command $Command) {
+			return $true;
+		}
+	} catch {
+		return $false;
+	} finally {
+		$ErrorActionPreference = $oldPreference;
+	}
+}
+
+Function ModuleExists {
+	Param ($Module);
+	$oldPreference = $ErrorActionPreference;
+	$ErrorActionPreference = 'stop';
+	try {
+		if (Get-InstalledModule -Name $Module) {
+			return $true;
+		}
+	} catch {
+		return $false;
+	} finally {
+		$ErrorActionPreference = $oldPreference;
+	}
+}
