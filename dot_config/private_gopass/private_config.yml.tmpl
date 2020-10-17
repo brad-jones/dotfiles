@@ -13,9 +13,9 @@ root:
   nopager: false
   notifications: true
   {{ if eq .chezmoi.os "windows" -}}
-  path: gpgcli-gitcli-fs+file:///C:%5CUsers%5Cbrad.jones%5C.password-store
+  path: C:\\Users\\brad.jones\\.password-store
   {{ else -}}
-  path: gpgcli-gitcli-fs+file:///home/brad.jones/.password-store
+  path: ~/.password-store
   {{ end -}}
   recipient_hash: {}
   safecontent: false

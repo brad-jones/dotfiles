@@ -3,10 +3,8 @@
 <https://github.com/twpayne/chezmoi>
 
 These dotfiles have been developed on a Fedora system, other redhat based
-distros may work but using anything else is certianly unsupported.
+distros may work but using anything else is certainly unsupported.
 
-## Bootstrap Script
+## Bootstrap
 
-```
-curl https://raw.githubusercontent.com/brad-jones/dotfiles/master/install.sh?token=AAVARVDUU2OO4R2OWDZTYFC6SWKXQ | bash
-```
+Just download `./setup/bin/setup_{{ YOUR OS }}_amd64` and run it.

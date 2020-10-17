@@ -1,0 +1,51 @@
+version: '3'
+
+silent: true
+output: prefixed
+
+tasks:
+  build:
+    desc: Builds binaries for all 3 major operating systems.
+    deps:
+      - build-linux
+      - build-darwin
+      - build-windows
+
+  build-linux:
+    desc: Builds the linux binary
+    env:
+      CGO_ENABLED: 0
+      GOOS: linux
+      GOARCH: amd64
+    sources:
+      - ./**/*.go
+    generates:
+      - ./bin/setup_linux_amd64
+    cmds:
+      - go build -v -o ./bin/setup_linux_amd64
+
+  build-darwin:
+    desc: Builds the darwin binary
+    env:
+      CGO_ENABLED: 0
+      GOOS: darwin
+      GOARCH: amd64
+    sources:
+      - ./**/*.go
+    generates:
+      - ./bin/setup_darwin_amd64
+    cmds:
+      - go build -v -o ./bin/setup_darwin_amd64
+
+  build-windows:
+    desc: Builds the windows binary
+    env:
+      CGO_ENABLED: 0
+      GOOS: windows
+      GOARCH: amd64
+    sources:
+      - ./**/*.go
+    generates:
+      - ./bin/setup_windows_amd64.exe
+    cmds:
+      - go build -v -o ./bin/setup_windows_amd64.exe
