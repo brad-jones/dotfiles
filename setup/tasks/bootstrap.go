@@ -126,8 +126,8 @@ func installGoPass() error {
 	g := github.NewClient(nil)
 
 	fmt.Println("getting latest release from github.com/gopasspw/gopass")
-	r, _, err := g.Repositories.GetLatestRelease(
-		context.Background(), "gopasspw", "gopass",
+	r, _, err := g.Repositories.GetReleaseByTag(
+		context.Background(), "gopasspw", "gopass", "v1.9.2",
 	)
 	if err != nil {
 		return goerr.Wrap(err)
@@ -176,40 +176,35 @@ func installGoPass() error {
 		return goerr.Wrap(err)
 	}
 
-	for _, bin := range []string{
-		"gopass", "gopass-git-credentials", "gopass-hibp",
-		"gopass-jsonapi", "gopass-summon-provider",
-	} {
-		src := filepath.Join(extracted, bin)
-		dst := filepath.Join(home, ".local", "bin", bin)
-		if runtime.GOOS == "windows" {
-			dst = dst + ".exe"
-			src = src + ".exe"
-		}
+	src := filepath.Join(extracted, "gopass")
+	dst := filepath.Join(home, ".local", "bin", "gopass")
+	if runtime.GOOS == "windows" {
+		dst = dst + ".exe"
+		src = src + ".exe"
+	}
 
-		fmt.Println("moving", src, "to", dst)
+	fmt.Println("moving", src, "to", dst)
 
-		if err := os.MkdirAll(filepath.Dir(dst), 0644); err != nil {
+	if err := os.MkdirAll(filepath.Dir(dst), 0644); err != nil {
+		return goerr.Wrap(err)
+	}
+
+	if err := os.Rename(src, dst); err != nil {
+		return goerr.Wrap(err)
+	}
+
+	if runtime.GOOS != "windows" {
+		fmt.Println("setting execute bit for", dst)
+
+		permissions, err := permbits.Stat(dst)
+		if err != nil {
 			return goerr.Wrap(err)
 		}
-
-		if err := os.Rename(src, dst); err != nil {
+		permissions.SetUserExecute(true)
+		permissions.SetGroupExecute(true)
+		permissions.SetOtherExecute(true)
+		if err := permbits.Chmod(dst, permissions); err != nil {
 			return goerr.Wrap(err)
-		}
-
-		if runtime.GOOS != "windows" {
-			fmt.Println("setting execute bit for", dst)
-
-			permissions, err := permbits.Stat(dst)
-			if err != nil {
-				return goerr.Wrap(err)
-			}
-			permissions.SetUserExecute(true)
-			permissions.SetGroupExecute(true)
-			permissions.SetOtherExecute(true)
-			if err := permbits.Chmod(dst, permissions); err != nil {
-				return goerr.Wrap(err)
-			}
 		}
 	}
 
