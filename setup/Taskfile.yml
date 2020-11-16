@@ -8,7 +8,6 @@ tasks:
     desc: Builds binaries for all 3 major operating systems.
     deps:
       - build-linux
-      - build-darwin
       - build-windows
 
   build-linux:
@@ -23,19 +22,6 @@ tasks:
       - ./bin/setup_linux_amd64
     cmds:
       - go build -v -o ./bin/setup_linux_amd64
-
-  build-darwin:
-    desc: Builds the darwin binary
-    env:
-      CGO_ENABLED: 0
-      GOOS: darwin
-      GOARCH: amd64
-    sources:
-      - ./**/*.go
-    generates:
-      - ./bin/setup_darwin_amd64
-    cmds:
-      - go build -v -o ./bin/setup_darwin_amd64
 
   build-windows:
     desc: Builds the windows binary
