@@ -1,8 +1,6 @@
 package tasks
 
 import (
-	"runtime"
-
 	"github.com/brad-jones/dotfiles/setup/tasks/steps"
 	"github.com/brad-jones/goasync/v2/await"
 	"github.com/brad-jones/goasync/v2/task"
@@ -20,10 +18,6 @@ func Bootstrap() (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
 	answers := steps.BootstrapSurvey()
-
-	if runtime.GOOS == "windows" {
-		steps.InstallScoop()
-	}
 
 	await.MustFastAllOrError(
 		task.New(func() { steps.InstallGitGpg(answers.SudoPassword) }),

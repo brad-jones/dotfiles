@@ -14,6 +14,7 @@ func InstallGitGpg(password string) {
 	prefix := colorchooser.Sprint("install-git-gpg")
 
 	if runtime.GOOS == "windows" {
+		InstallScoop()
 		goexec.MustRunPrefixed(prefix, "powershell",
 			"-Command", "scoop install git gpg",
 		)
