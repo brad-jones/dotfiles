@@ -50,5 +50,12 @@ func DownloadVaultKey(repoPassword, keyPassword string) {
 			"--passphrase", keyPassword,
 			"--preset", "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB", // keygrip
 		)
+
+		fmt.Println(prefix, "storing the vault key passphrase into local wincred store")
+		goexec.MustRunPrefixed(prefix, "cmdkey",
+			"/generic:passphrase:vault",
+			"/user:gpg",
+			"/pass:"+keyPassword,
+		)
 	}
 }
