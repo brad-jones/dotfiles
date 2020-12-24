@@ -24,8 +24,8 @@ func Bootstrap() (err error) {
 
 	await.MustFastAllOrError(
 		task.New(func() { steps.InstallGitGpg(answers.SudoPassword) }),
-		task.New(func() { steps.InstallGithubPkg("gopasspw", "gopass", "v1.9.2") }),
-		task.New(func() { steps.InstallGithubPkg("twpayne", "chezmoi", "v1.8.8") }),
+		task.New(func() { steps.InstallGithubPkg("gopasspw", "gopass", "v1.9.2", "gopass") }),
+		task.New(func() { steps.InstallGithubPkg("twpayne", "chezmoi", "v1.8.8", "chezmoi") }),
 	)
 
 	await.MustFastAllOrError(

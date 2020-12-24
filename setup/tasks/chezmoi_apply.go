@@ -11,7 +11,7 @@ func ChezmoiApply() (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
 	steps.InstallSSHGpgKeys()
-	steps.InstallGithubPkg("brad-jones", "ssh-add-with-pass", "v1.0.1")
+	steps.InstallGithubPkg("brad-jones", "ssh-add-with-pass", "v1.0.1", "ssh_add_with_pass")
 
 	return nil
 }

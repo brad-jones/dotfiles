@@ -18,7 +18,7 @@ import (
 )
 
 // InstallGithubPkg will download, extract and place into your home dir a binary from a github release
-func InstallGithubPkg(owner, repo, tag string) {
+func InstallGithubPkg(owner, repo, tag, exeName string) {
 	g := github.NewClient(nil)
 	prefix := colorchooser.Sprint("install-"+repo) + " |"
 
@@ -54,8 +54,8 @@ func InstallGithubPkg(owner, repo, tag string) {
 	home, err := os.UserHomeDir()
 	goerr.Check(err)
 
-	src := filepath.Join(extracted, repo)
-	dst := filepath.Join(home, ".local", "bin", repo)
+	src := filepath.Join(extracted, exeName)
+	dst := filepath.Join(home, ".local", "bin", exeName)
 	if runtime.GOOS == "windows" {
 		dst = dst + ".exe"
 		src = src + ".exe"
