@@ -20,6 +20,7 @@ func InstallGitGpg(password string) {
 		)
 		goexec.MustRunPrefixed(prefix, "git", "config", "--global", "core.eol", "lf")
 		goexec.MustRunPrefixed(prefix, "git", "config", "--global", "core.autocrlf", "false")
+		goexec.MustRunPrefixed(prefix, "git", "config", "--global", "credential.helper", "manager")
 		return
 	}
 
