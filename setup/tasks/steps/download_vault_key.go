@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 
 	"github.com/avast/retry-go"
 	"github.com/brad-jones/goerr/v2"
@@ -31,16 +30,7 @@ func DownloadVaultKey(repoPassword, keyPassword string) {
 	goexec.MustRunPrefixed(prefix, "gpg", "--import", filepath.Join(cloneDir, "private.pem"))
 
 	// Trust the key
-	goexec.MustRunPrefixedCmd(prefix,
-		goexec.MustCmd("gpg",
-			goexec.SetIn(strings.NewReader("5\r\ny\r\n")),
-			goexec.Args(
-				"--command-fd", "0",
-				"--edit-key", "Brad Jones (vault) <brad@bjc.id.au>",
-				"trust",
-			),
-		),
-	)
+	trustGpgKey(prefix, "Brad Jones (vault) <brad@bjc.id.au>")
 
 	// Add the key to the agent
 	if runtime.GOOS == "windows" {
