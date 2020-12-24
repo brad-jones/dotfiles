@@ -8,7 +8,6 @@ require (
 	github.com/bhendo/go-powershell v0.0.0-20190719160123-219e7fb4e41e
 	github.com/brad-jones/goasync/v2 v2.1.1
 	github.com/brad-jones/goerr/v2 v2.1.1
-	github.com/brad-jones/goexec v1.0.0
 	github.com/brad-jones/goexec/v2 v2.1.2
 	github.com/brad-jones/goprefix/v2 v2.0.1
 	github.com/cavaliercoder/grab v2.0.0+incompatible
