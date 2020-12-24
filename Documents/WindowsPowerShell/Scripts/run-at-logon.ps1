@@ -29,7 +29,7 @@ Write-Output "Unlocked gpg key: Brad Jones <brad@bjc.id.au>";
 
 # Unlock personal ssh key
 $pass = gopass show "keys/ssh/brad@bjc.id.au.pass";
-Write-Output $pass | ssh-add-with-pass "$env:USERPROFILE\.ssh\brad@bjc.id.au";
+Write-Output $pass | ssh_add_with_pass "$env:USERPROFILE\.ssh\brad@bjc.id.au";
 Write-Output "Unlocked ssh key: brad@bjc.id.au";
 
 # Some windows apps (looking at you GitKraken) do not integrate with
@@ -47,7 +47,7 @@ if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
 	Write-Output "Unlocked gpg key: Brad Jones <brad.jones@xero.com>";
 
 	$pass = gopass show "keys/ssh/brad.jones@xero.com.pass";
-	Write-Output $pass | ssh-add-with-pass "$env:USERPROFILE\.ssh\brad.jones@xero.com.pass";
+	Write-Output $pass | ssh_add_with_pass "$env:USERPROFILE\.ssh\brad.jones@xero.com.pass";
 	Write-Output "Unlocked ssh key: brad.jones@xero.com";
 
 	gopass bin cp "keys/ssh/brad.jones@xero.com.ppk" "$env:USERPROFILE\.ssh\brad.jones@xero.com.ppk";
