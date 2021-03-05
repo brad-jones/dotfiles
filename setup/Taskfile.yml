@@ -5,7 +5,7 @@ output: prefixed
 
 tasks:
   build:
-    desc: Builds binaries for all 3 major operating systems.
+    desc: Builds binaries for Linux & Windows
     deps:
       - build-linux
       - build-windows
