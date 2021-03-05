@@ -1,0 +1,96 @@
+{
+    "explorer.confirmDelete": false,
+    "atomKeymap.promptV3Features": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.formatOnPaste": false,
+    "go.useLanguageServer": true,
+    "[go]": {
+        "editor.snippetSuggestions": "none",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+        }
+    },
+    "gopls": {
+        "usePlaceholders": true, // add parameter placeholders when completing a function
+        // Experimental settings
+        "completeUnimported": true, // autocomplete unimported packages
+        "deepCompletion": true, // enable deep completion
+    },
+    "files.eol": "\n", // formatting only supports LF line endings
+    "workbench.iconTheme": "vscode-icons",
+    "files.exclude": {
+        "**/.DS_Store": false,
+        "**/.git": false,
+        "**/.hg": false,
+        "**/.svn": false,
+        "**/CVS": false
+    },
+    "editor.renderWhitespace": "boundary",
+    "editor.codeLens": false,
+    "breadcrumbs.enabled": false,
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "kotlin.trace.server": "verbose",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.startupEditor": "newUntitledFile",
+    "window.titleBarStyle": "native",
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "remote.SSH.remotePlatform": {
+        "dev-server": "linux",
+        "dev-server-hv": "linux",
+        "dev-server-ec2": "linux",
+        "dev-server-ec2-win": "windows"
+    },
+    "remote.SSH.suppressWindowsSshWarning": true,
+    "window.zoomLevel": 0,
+    "yaml.schemas": {
+        "kubernetes": "kube*.yml"
+    },
+    "vsicons.dontShowNewVersionMessage": true,
+    "shebang.associations": [
+        {
+            "pattern": "^#!/usr/bin/env (dart|dshell)$",
+            "language": "dart"
+        }
+    ],
+    "logViewer.watch": [
+        {
+            "title": "sshd",
+            "pattern": "C:\\ProgramData\\ssh\\logs\\sshd.log"
+        }
+    ],
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[kotlin]": {
+        "editor.defaultFormatter": "esafirm.kotlin-formatter"
+    },
+    "java.semanticHighlighting.enabled": true,
+    "java.configuration.checkProjectSettingsExclusions": false,
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "java.project.importHint": false
+}
