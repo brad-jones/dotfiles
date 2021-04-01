@@ -1,55 +1,45 @@
 package steps
 
-// InstallRunAtLoginPwshScript makes our "run-at-logon.ps1" script run at login.
-func InstallRunAtLoginPwshScript() {
-	/*//prefix := colorchooser.Sprint("install-run-at-login-script")
+import (
+	"fmt"
 
-	if !isElevated() {
-		//Start-Process powershell -Wait -Verb RunAs `
-		//	-ArgumentList "-NoLogo", "-NoProfile", `
-		//	"-EncodedCommand", "${base64.encode(encodeUtf16le(script))}";
-	}
+	"github.com/brad-jones/goasync/v2/task"
+	"github.com/brad-jones/goerr/v2"
+	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
+	"github.com/brad-jones/gopwsh"
+)
 
-	ps, err := powershell.New(&backend.Local{})
-	goerr.Check(err)
+// MustInstallRunAtLoginPwshScript makes our "run-at-logon.ps1" script run at login.
+func MustInstallRunAtLoginPwshScript() {
+	prefix := colorchooser.Sprint("install-run-at-login-script")
+
+	ps := gopwsh.MustNew(gopwsh.Elevated(sudoBin()))
 	defer ps.Exit()
 
-	_, _, err = ps.Execute("$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent());")
-	goerr.Check(err)
-	stdout, _, err := ps.Execute("$currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator);")
-	goerr.Check(err)
-
-	// \$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent());
-	// \$currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator);
-
-	fmt.Println("|" + stdout + "|")
-	fmt.Println(stderr)
-	//_, _, err = ps.Execute("Unregister-ScheduledTask -TaskName \"Run at Logon\" -Confirm:$false")
-	//goerr.Check(err)*/
-}
-
-/*
-# Install our run at login script
-# ------------------------------------------------------------------------------
-if (-Not (Get-ScheduledTask -TaskName "Run at Logon" -ErrorAction Ignore)) {
-	Exec -ScriptBlock {
-		$u = whoami;
-
-		$Stt = New-ScheduledTaskTrigger -AtLogOn -User "$u";
-
-		$Sta = New-ScheduledTaskAction `
-			-Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" `
-			-Argument "-NoLogo .\run-at-logon.ps1" `
-			-WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";
-
-		$STPrincipal = New-ScheduledTaskPrincipal `
-			-UserID "$u" `
-			-LogonType Interactive;
-
-		Register-ScheduledTask "Run at Logon" `
-			-Principal $STPrincipal `
-			-Trigger $Stt `
-			-Action $Sta;
+	fmt.Println(prefix, "| does task exist?")
+	if _, stderr := ps.MustExecute(`Get-ScheduledTask -TaskName "Run at Logon"`); len(stderr) == 0 {
+		fmt.Println(prefix, "| deleting task...")
+		if _, stderr := ps.MustExecute(`Unregister-ScheduledTask -TaskName "Run at Logon" -Confirm:$false`); len(stderr) > 0 {
+			goerr.Check(ScheduledTaskError, "failed to unregister task", stderr)
+		}
+		fmt.Println(prefix, "| re-creating...")
+	} else {
+		fmt.Println(prefix, "| task does not exist, creating...")
 	}
+
+	if _, stderr := ps.MustExecute(
+		`$u = whoami;`,
+		`$Stt = New-ScheduledTaskTrigger -AtLogOn -User "$u";`,
+		`$Sta = New-ScheduledTaskAction -Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "-NoLogo .\run-at-logon.ps1" -WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";`,
+		`$STPrincipal = New-ScheduledTaskPrincipal -UserID "$u" -LogonType Interactive;`,
+		`Register-ScheduledTask "Run at Logon" -Principal $STPrincipal -Trigger $Stt -Action $Sta;`,
+	); len(stderr) > 0 {
+		goerr.Check(ScheduledTaskError, "failed to create task", stderr)
+	}
+
+	fmt.Println(prefix, "| task created")
 }
-*/
+
+func InstallRunAtLoginPwshScriptAsync() *task.Task {
+	return task.New(func() { MustInstallRunAtLoginPwshScript() })
+}

@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bhendo/go-powershell"
-	"github.com/bhendo/go-powershell/backend"
+	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
+	"github.com/brad-jones/gopwsh"
 )
 
-// InstallCredentialManager will install https://www.powershellgallery.com/packages/CredentialManager/1.0
+// MustInstallCredentialManager will install https://www.powershellgallery.com/packages/CredentialManager/1.0
 // This is used by the "run-at-logon.ps1" script to unlock our SSH/GPG keys without interaction.
-func InstallCredentialManager() {
+func MustInstallCredentialManager() {
 	prefix := colorchooser.Sprint("install-credential-manager")
 
 	homeDir, err := os.UserHomeDir()
@@ -27,19 +27,21 @@ func InstallCredentialManager() {
 			"C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
 	))
 
-	ps, err := powershell.New(&backend.Local{})
-	goerr.Check(err)
+	// Enforce PowerShell Desktop
+	// The CredentialManager module does not work with PS6+
+	ps := gopwsh.MustNew(gopwsh.PwshLocation("powershell.exe"))
 	defer ps.Exit()
 
 	fmt.Println(prefix, "| installing PowerShellGet")
-	_, _, err = ps.Execute("Install-Module -Name PowerShellGet -Force")
-	goerr.Check(err)
+	ps.MustExecute("Install-Module -Name PowerShellGet -Force")
 
 	fmt.Println(prefix, "| importing PowerShellGet")
-	_, _, err = ps.Execute("Import-Module PowerShellGet -Force")
-	goerr.Check(err)
+	ps.MustExecute("Import-Module PowerShellGet -Force")
 
 	fmt.Println(prefix, "| installing CredentialManager")
-	_, _, err = ps.Execute("Install-Module CredentialManager -Force")
-	goerr.Check(err)
+	ps.MustExecute("Install-Module CredentialManager -Force")
+}
+
+func InstallCredentialManagerAsync() *task.Task {
+	return task.New(func() { MustInstallCredentialManager() })
 }

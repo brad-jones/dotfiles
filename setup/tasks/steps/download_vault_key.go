@@ -9,13 +9,14 @@ import (
 	"runtime"
 
 	"github.com/avast/retry-go"
+	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 )
 
-// DownloadVaultKey will fetch the key from the gitlab repo and import it into the keychain
-func DownloadVaultKey(repoPassword, keyPassword string) {
+// MustDownloadVaultKey will fetch the key from the gitlab repo and import it into the keychain
+func MustDownloadVaultKey(repoPassword, keyPassword string) {
 	prefix := colorchooser.Sprint("download-vault-key")
 
 	cloneDir, err := ioutil.TempDir("", "bradsDotFiles")
@@ -27,10 +28,7 @@ func DownloadVaultKey(repoPassword, keyPassword string) {
 	goexec.MustRunPrefixed(prefix, "git", "clone", cloneURI, cloneDir)
 
 	// Import the gpg key into the keychain
-	goexec.MustRunPrefixed(prefix, "gpg", "--import", filepath.Join(cloneDir, "private.pem"))
-
-	// Trust the key
-	trustGpgKey(prefix, "Brad Jones (vault) <brad@bjc.id.au>")
+	importGpgKey(prefix, filepath.Join(cloneDir, "private.pem"), "Brad Jones (vault) <brad@bjc.id.au>")
 
 	// Add the key to the agent
 	if runtime.GOOS == "windows" {
@@ -58,4 +56,8 @@ func DownloadVaultKey(repoPassword, keyPassword string) {
 			"/pass:"+keyPassword,
 		)
 	}
+}
+
+func DownloadVaultKeyAsync(repoPassword, keyPassword string) *task.Task {
+	return task.New(func() { MustDownloadVaultKey(repoPassword, keyPassword) })
 }

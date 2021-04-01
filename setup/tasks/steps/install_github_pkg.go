@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/cavaliercoder/grab"
@@ -17,8 +18,8 @@ import (
 	"github.com/phayes/permbits"
 )
 
-// InstallGithubPkg will download, extract and place into your home dir a binary from a github release
-func InstallGithubPkg(owner, repo, tag, exeName string) {
+// MustInstallGithubPkg will download, extract and place into your home dir a binary from a github release
+func MustInstallGithubPkg(owner, repo, tag, exeName string) {
 	g := github.NewClient(nil)
 	prefix := colorchooser.Sprint("install-"+repo) + " |"
 
@@ -29,7 +30,7 @@ func InstallGithubPkg(owner, repo, tag, exeName string) {
 	downloadURL := ""
 	for _, v := range r.Assets {
 		name := strings.ToLower(v.GetName())
-		if isArchive(name) && strings.Contains(name, runtime.GOOS) && strings.Contains(name, runtime.GOARCH) {
+		if isDownloadable(name) {
 			downloadURL = v.GetBrowserDownloadURL()
 			break
 		}
@@ -51,11 +52,8 @@ func InstallGithubPkg(owner, repo, tag, exeName string) {
 	extracted := filepath.Join(tmpDir, "extracted")
 	goerr.Check(archiver.Unarchive(resp.Filename, extracted), resp.Filename, extracted)
 
-	home, err := os.UserHomeDir()
-	goerr.Check(err)
-
 	src := filepath.Join(extracted, exeName)
-	dst := filepath.Join(home, ".local", "bin", exeName)
+	dst := filepath.Join(homeDir(), ".local", "bin", exeName)
 	if runtime.GOOS == "windows" {
 		dst = dst + ".exe"
 		src = src + ".exe"
@@ -77,7 +75,36 @@ func InstallGithubPkg(owner, repo, tag, exeName string) {
 	}
 }
 
+func InstallGithubPkgAsync(owner, repo, tag, exeName string) *task.Task {
+	return task.New(func() { MustInstallGithubPkg(owner, repo, tag, exeName) })
+}
+
 func isArchive(filename string) bool {
 	return strings.HasSuffix(filename, ".zip") ||
 		strings.HasSuffix(filename, ".tar.gz")
+}
+
+func isDownloadable(name string) bool {
+	if !isArchive(name) {
+		return false
+	}
+
+	if !strings.Contains(name, runtime.GOARCH) {
+		return false
+	}
+
+	if !strings.Contains(name, runtime.GOOS) {
+		// This crap is here because of my winsudo package
+		// If I had just followed the existing standard of name_os_arch
+		// instead of name_arch we wouldn't be here.
+		if runtime.GOOS == "windows" {
+			if !strings.Contains(name, "win") || strings.Contains(name, "darwin") {
+				return false
+			}
+		} else {
+			return false
+		}
+	}
+
+	return true
 }

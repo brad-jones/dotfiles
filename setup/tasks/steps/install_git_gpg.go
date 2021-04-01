@@ -4,17 +4,18 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 )
 
-// InstallGitGpg will install git & gpg using the systems package manager
-func InstallGitGpg(password string) {
+// MustInstallGitGpg will install git & gpg using the systems package manager
+func MustInstallGitGpg(password string) {
 	prefix := colorchooser.Sprint("install-git-gpg")
 
 	if runtime.GOOS == "windows" {
-		InstallScoop()
+		MustInstallScoop()
 		goexec.MustRunPrefixed(prefix, "powershell",
 			"-Command", "scoop install git gpg",
 		)
@@ -51,4 +52,8 @@ func InstallGitGpg(password string) {
 	}
 
 	goerr.Check(UnSupportedOsError)
+}
+
+func InstallGitGpgAsync(password string) *task.Task {
+	return task.New(func() { MustInstallGitGpg(password) })
 }

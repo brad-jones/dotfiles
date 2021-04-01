@@ -6,13 +6,14 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 )
 
-// ChezmoiInit will clone the dotfiles repo into ~/.local/share/chezmoi
-func ChezmoiInit(repoPassword string) {
+// MustChezmoiInit will clone the dotfiles repo into ~/.local/share/chezmoi
+func MustChezmoiInit(repoPassword string) {
 	prefix := colorchooser.Sprint("chezmoi-init")
 
 	homeDir, err := os.UserHomeDir()
@@ -29,4 +30,8 @@ func ChezmoiInit(repoPassword string) {
 		"--git-dir", filepath.Join(cloneDir, ".git"),
 		"remote", "set-url", "origin", "git@github.com:brad-jones/dotfiles.git",
 	)
+}
+
+func ChezmoiInitAsync(repoPassword string) *task.Task {
+	return task.New(func() { MustChezmoiInit(repoPassword) })
 }

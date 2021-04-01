@@ -13,13 +13,13 @@ import (
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 )
 
-// InstallSSHGpgKeys will get my identity keys (as opposed to the gopass vault
+// MustInstallSSHGpgKeys will get my identity keys (as opposed to the gopass vault
 // encryption key) out of the gopass vault and install them into SSH & GPG agents.
 //
 // TODO: I want to replace with some sort of password manager that
 // can also act as an SSH & GPG agent, that way the keys always remain
 // inside the vault.
-func InstallSSHGpgKeys() {
+func MustInstallSSHGpgKeys() {
 	prefix := colorchooser.Sprint("install-ssh-gpg-keys")
 
 	homeDir, err := os.UserHomeDir()
@@ -47,8 +47,7 @@ func InstallSSHGpgKeys() {
 			goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp",
 				"keys/gpg/brad@bjc.id.au", dst,
 			)
-			goexec.MustRunPrefixed(prefix, "gpg", "--import", dst)
-			trustGpgKey(prefix, "Brad Jones <brad@bjc.id.au>")
+			importGpgKey(prefix, dst, "Brad Jones <brad@bjc.id.au>")
 		}),
 	}
 
@@ -65,11 +64,41 @@ func InstallSSHGpgKeys() {
 				goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp",
 					"keys/gpg/brad.jones@xero.com", dst,
 				)
-				goexec.MustRunPrefixed(prefix, "gpg", "--import", dst)
-				trustGpgKey(prefix, "Brad Jones <brad.jones@xero.com>")
+				importGpgKey(prefix, dst, "Brad Jones <brad.jones@xero.com>")
 			}),
 		)
 	}
 
 	await.MustFastAllOrError(tasks...)
 }
+
+func InstallSSHGpgKeysAsync() *task.Task {
+	return task.New(func() { MustInstallSSHGpgKeys() })
+}
+
+/*
+	# Install additional SSH Keys
+	# ------------------------------------------------------------------------------
+	# TODO: Would be nice use gopass as an actual ssh-agent?
+	if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
+		RmIfExists -Path $env:USERPROFILE/.ssh/keys;
+
+		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-prod; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-prod/payroll-checkpoint.pem $env:USERPROFILE\.ssh\keys\xero-payroll-prod\payroll-checkpoint.pem; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-prod/payroll-dev-public.pem $env:USERPROFILE\.ssh\keys\xero-payroll-prod\payroll-dev-public.pem; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-prod/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-payroll-prod\payroll-devops.pem; }
+
+		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-test; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-test/payroll-checkpoint.pem $env:USERPROFILE\.ssh\keys\xero-payroll-test\payroll-checkpoint.pem; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-test/payroll-dev-public.pem $env:USERPROFILE\.ssh\keys\xero-payroll-test\payroll-dev-public.pem; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-test/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-payroll-test\payroll-devops.pem; }
+
+		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-uat; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-uat/payroll-checkpoint.pem $env:USERPROFILE\.ssh\keys\xero-payroll-uat\payroll-checkpoint.pem; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-uat/payroll-dev-public.pem $env:USERPROFILE\.ssh\keys\xero-payroll-uat\payroll-dev-public.pem; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-uat/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-payroll-uat\payroll-devops.pem; }
+
+		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-ps-paas-svc; }
+		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-ps-paas-svc/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-ps-paas-svc\payroll-devops.pem; }
+	}
+*/

@@ -5,7 +5,6 @@ import (
 
 	"github.com/brad-jones/dotfiles/setup/tasks/steps"
 	"github.com/brad-jones/goasync/v2/await"
-	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
@@ -22,23 +21,27 @@ func Bootstrap() (err error) {
 
 	answers := steps.BootstrapSurvey()
 
+	if runtime.GOOS == "windows" {
+		steps.MustInstallGithubPkg("brad-jones", "winsudo", "v1.0.5", "sudo")
+	}
+
 	await.MustFastAllOrError(
-		task.New(func() { steps.InstallGitGpg(answers.SudoPassword) }),
-		task.New(func() { steps.InstallGithubPkg("gopasspw", "gopass", "v1.9.2", "gopass") }),
-		task.New(func() { steps.InstallGithubPkg("twpayne", "chezmoi", "v1.8.8", "chezmoi") }),
+		steps.InstallGitGpgAsync(answers.SudoPassword),
+		steps.InstallGithubPkgAsync("gopasspw", "gopass", "v1.9.2", "gopass"),
+		steps.InstallGithubPkgAsync("twpayne", "chezmoi", "v1.8.8", "chezmoi"),
 	)
 
 	await.MustFastAllOrError(
-		task.New(func() { steps.ChezmoiInit(answers.GithubPassword) }),
-		task.New(func() { steps.DownloadVault(answers.GithubPassword) }),
-		task.New(func() { steps.DownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword) }),
+		steps.ChezmoiInitAsync(answers.GithubPassword),
+		steps.DownloadVaultAsync(answers.GithubPassword),
+		steps.DownloadVaultKeyAsync(answers.GitlabPassword, answers.VaultKeyPassword),
 	)
 
 	if runtime.GOOS == "windows" {
 		prefix := colorchooser.Sprint("cleanup-wincred")
 		await.MustFastAllOrError(
-			task.New(func() { goexec.MustRunPrefixed(prefix, "cmdkey", `/delete:git:https://github.com`) }),
-			task.New(func() { goexec.MustRunPrefixed(prefix, "cmdkey", `/delete:git:https://brad-jones@gitlab.com`) }),
+			goexec.RunPrefixedAsync(prefix, "cmdkey", `/delete:git:https://github.com`),
+			goexec.RunPrefixedAsync(prefix, "cmdkey", `/delete:git:https://brad-jones@gitlab.com`),
 		)
 	}
 

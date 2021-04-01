@@ -9,21 +9,22 @@ import (
 )
 
 func main() {
-	if err := (&cli.App{
-		Action: func(c *cli.Context) error {
-			if c.Args().Get(0) == "chezmoi-apply" {
-				if err := tasks.ChezmoiApply(); err != nil {
-					return goerr.Wrap(err)
-				}
-			} else {
-				if err := tasks.Bootstrap(); err != nil {
-					return goerr.Wrap(err)
-				}
-			}
-			return nil
-		},
-	}).Run(os.Args); err != nil {
+	defer goerr.Handle(func(err error) {
 		goerr.PrintTrace(err)
 		os.Exit(1)
-	}
+	})
+
+	goerr.Check((&cli.App{
+		Action: func(c *cli.Context) (err error) {
+			defer goerr.Handle(func(e error) { err = e })
+
+			if c.Args().Get(0) == "chezmoi-apply" {
+				goerr.Check(tasks.ChezmoiApply())
+				return
+			}
+
+			goerr.Check(tasks.Bootstrap())
+			return
+		},
+	}).Run(os.Args))
 }

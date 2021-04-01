@@ -6,13 +6,14 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 )
 
-// DownloadVault will clone the gopass vault repo into ~/.password-store
-func DownloadVault(repoPassword string) {
+// MustDownloadVault will clone the gopass vault repo into ~/.password-store
+func MustDownloadVault(repoPassword string) {
 	prefix := colorchooser.Sprint("download-vault")
 
 	homeDir, err := os.UserHomeDir()
@@ -29,4 +30,8 @@ func DownloadVault(repoPassword string) {
 		"--git-dir", filepath.Join(cloneDir, ".git"),
 		"remote", "set-url", "origin", "git@github.com:brad-jones/vault.git",
 	)
+}
+
+func DownloadVaultAsync(repoPassword string) *task.Task {
+	return task.New(func() { MustDownloadVault(repoPassword) })
 }
