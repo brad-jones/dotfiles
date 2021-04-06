@@ -21,14 +21,13 @@ func Bootstrap() (err error) {
 
 	answers := steps.BootstrapSurvey()
 
-	if runtime.GOOS == "windows" {
-		steps.MustInstallGithubPkg("brad-jones", "winsudo", "v1.0.5", "sudo")
-	}
+	steps.MustInstallSudoForWindows()
+	steps.MustDisableUACForWindows()
 
 	await.MustFastAllOrError(
 		steps.InstallGitGpgAsync(answers.SudoPassword),
-		steps.InstallGithubPkgAsync("gopasspw", "gopass", "v1.9.2", "gopass"),
-		steps.InstallGithubPkgAsync("twpayne", "chezmoi", "v1.8.8", "chezmoi"),
+		steps.InstallGithubPkgAsync("gopasspw", "gopass", "v1.9.2", "", "gopass", ""),
+		steps.InstallGithubPkgAsync("twpayne", "chezmoi", "v1.8.8", "", "chezmoi", ""),
 	)
 
 	await.MustFastAllOrError(

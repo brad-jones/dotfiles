@@ -13,18 +13,13 @@ import (
 func ChezmoiApply() (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
-	// Subsequent steps may need to elevate.
-	// On linux this is of course built-in / taken for granted.
-	// On Windows we need to install a sudo like tool.
-	// We can't really use scoop because scoop it's self need to elevate on install.
-	if runtime.GOOS == "windows" {
-		steps.MustInstallGithubPkg("brad-jones", "winsudo", "v1.0.5", "sudo")
-	}
+	steps.MustInstallSudoForWindows()
+	steps.MustDisableUACForWindows()
 
 	// Now install or update our SSH/GPG keys
 	await.MustFastAllOrError(
 		steps.InstallSSHGpgKeysAsync(),
-		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "ssh_add_with_pass"),
+		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "", "ssh_add_with_pass", ""),
 	)
 
 	if runtime.GOOS == "windows" {
@@ -117,10 +112,6 @@ func ChezmoiApply() (err error) {
 
 /*
 	TODO
-
-	Reg hack UAC to off
-
-	Change scoop install dir
 
 	Google Chrome, Firefox, Wavebox & other apps we want to install from the
 	nonportable bucket & then basically just rely on the built-in updating.

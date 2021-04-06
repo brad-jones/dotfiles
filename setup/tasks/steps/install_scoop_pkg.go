@@ -1,8 +1,8 @@
 package steps
 
 import (
+	"fmt"
 	"path/filepath"
-	"strings"
 
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goexec/v2"
@@ -38,29 +38,15 @@ func MustInstallScoopPkgs(packages map[string]string) {
 	ps := gopwsh.MustNew()
 	defer ps.Exit()
 
-	install := []string{}
-	update := []string{}
-
 	for pkg, ver := range packages {
-		if fileExists(filepath.Join(homeDir(), "scoop", "apps", pkg, "current", "manifest.json")) {
-			if ver != "" {
-				update = append(update, pkg+"@"+ver)
-			} else {
-				update = append(update, pkg)
-			}
+		var stdout string
+		if ver == "" && fileExists(filepath.Join(scoopDir(), "apps", pkg, "current", "manifest.json")) {
+			stdout, _ = ps.MustExecute(fmt.Sprintf("scoop update %s", pkg))
 		} else {
-			if ver != "" {
-				install = append(install, pkg+"@"+ver)
-			} else {
-				install = append(install, pkg)
-			}
+			stdout, _ = ps.MustExecute(fmt.Sprintf("scoop install %s@%s", pkg, ver))
 		}
+		fmt.Println(prefix, "|", stdout)
 	}
-
-	if len(install) > 0 {
-		goexec.MustRunPrefixed(prefix, "powershell", "-Command", "scoop install "+strings.Join(install, " "))
-	}
-	goexec.MustRunPrefixed(prefix, "powershell", "-Command", "scoop update "+strings.Join(update, " "))
 }
 
 func InstallScoopPkgsAsync(packages map[string]string) *task.Task {

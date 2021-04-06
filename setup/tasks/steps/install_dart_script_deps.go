@@ -10,7 +10,7 @@ import (
 
 func MustInstallDartScriptDeps() {
 	prefix := colorchooser.Sprint("install-dart-script-deps")
-	pub := filepath.Join(homeDir(), "scoop", "apps", "dart", "current", "bin", "pub.bat")
+	pub := filepath.Join(scoopDir(), "apps", "dart", "current", "bin", "pub.bat")
 	scriptsDir := filepath.Join(homeDir(), ".local", "sbin")
 	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd(pub, goexec.Args("get"), goexec.Cwd(scriptsDir)))
 }

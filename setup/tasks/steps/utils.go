@@ -5,12 +5,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
-	"github.com/brad-jones/gopwsh"
 )
 
 func isRoot() bool {
@@ -21,6 +19,10 @@ func homeDir() string {
 	home, err := os.UserHomeDir()
 	goerr.Check(err, "failed to get the users home dir")
 	return home
+}
+
+func scoopDir() string {
+	return os.Getenv("SCOOP")
 }
 
 func sudoBin() string {
@@ -45,22 +47,6 @@ func fileExists(filename string) bool {
 // not for "--edit-key" it seems. So because I can't stream the output through
 // my prefixer nor can I discard it, it corrupts the terminal output.
 func trustGpgKey(keyName string) {
-	// On Windows I can start a hidden console. ie: ShellExecute.
-	// This is using my winsudo package, so it's running elevated when it
-	// doesn't have to be. But if I call ShellExecute directly I then need a
-	// way to catch errors, etc... so this will do for now.
-	if runtime.GOOS == "windows" {
-		goexec.MustRunBufferedCmd(goexec.MustCmd(sudoBin(),
-			goexec.Args(
-				"powershell",
-				"-Command",
-				"echo '5\r\ny\r\n' | gpg --command-fd 0 --edit-key "+gopwsh.QuoteArg(keyName)+" trust",
-			),
-		))
-		return
-	}
-
-	// Else where lets just do this for now.
 	goexec.MustRunBufferedCmd(goexec.MustCmd("gpg",
 		goexec.SetIn(strings.NewReader("5\ny\n")),
 		goexec.Args(

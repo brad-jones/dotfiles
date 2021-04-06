@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -19,7 +20,9 @@ import (
 )
 
 // MustInstallGithubPkg will download, extract and place into your home dir a binary from a github release
-func MustInstallGithubPkg(owner, repo, tag, exeName string) {
+//
+// TODO: This should really do hash checks too
+func MustInstallGithubPkg(owner, repo, tag, pkgPattern, srcExeName, dstExeName string) {
 	g := github.NewClient(nil)
 	prefix := colorchooser.Sprint("install-"+repo) + " |"
 
@@ -30,7 +33,7 @@ func MustInstallGithubPkg(owner, repo, tag, exeName string) {
 	downloadURL := ""
 	for _, v := range r.Assets {
 		name := strings.ToLower(v.GetName())
-		if isDownloadable(name) {
+		if isDownloadable(name, pkgPattern) {
 			downloadURL = v.GetBrowserDownloadURL()
 			break
 		}
@@ -52,8 +55,12 @@ func MustInstallGithubPkg(owner, repo, tag, exeName string) {
 	extracted := filepath.Join(tmpDir, "extracted")
 	goerr.Check(archiver.Unarchive(resp.Filename, extracted), resp.Filename, extracted)
 
-	src := filepath.Join(extracted, exeName)
-	dst := filepath.Join(homeDir(), ".local", "bin", exeName)
+	src := filepath.Join(extracted, srcExeName)
+	dst := filepath.Join(homeDir(), ".local", "bin", srcExeName)
+	if len(dstExeName) > 0 {
+		dst = filepath.Join(homeDir(), ".local", "bin", dstExeName)
+	}
+
 	if runtime.GOOS == "windows" {
 		dst = dst + ".exe"
 		src = src + ".exe"
@@ -75,8 +82,8 @@ func MustInstallGithubPkg(owner, repo, tag, exeName string) {
 	}
 }
 
-func InstallGithubPkgAsync(owner, repo, tag, exeName string) *task.Task {
-	return task.New(func() { MustInstallGithubPkg(owner, repo, tag, exeName) })
+func InstallGithubPkgAsync(owner, repo, tag, pkgPattern, srcExeName, dstExeName string) *task.Task {
+	return task.New(func() { MustInstallGithubPkg(owner, repo, tag, pkgPattern, srcExeName, dstExeName) })
 }
 
 func isArchive(filename string) bool {
@@ -84,7 +91,13 @@ func isArchive(filename string) bool {
 		strings.HasSuffix(filename, ".tar.gz")
 }
 
-func isDownloadable(name string) bool {
+func isDownloadable(name, pkgPattern string) bool {
+	if len(pkgPattern) > 0 {
+		match, err := regexp.MatchString(pkgPattern, name)
+		goerr.Check(err, pkgPattern, "did not match", name)
+		return match
+	}
+
 	if !isArchive(name) {
 		return false
 	}
@@ -94,16 +107,7 @@ func isDownloadable(name string) bool {
 	}
 
 	if !strings.Contains(name, runtime.GOOS) {
-		// This crap is here because of my winsudo package
-		// If I had just followed the existing standard of name_os_arch
-		// instead of name_arch we wouldn't be here.
-		if runtime.GOOS == "windows" {
-			if !strings.Contains(name, "win") || strings.Contains(name, "darwin") {
-				return false
-			}
-		} else {
-			return false
-		}
+		return false
 	}
 
 	return true
