@@ -48,9 +48,11 @@ func ChezmoiApply() (err error) {
 			"curl":                 "",
 			"dart":                 "",
 			"deno":                 "",
+			"firefox":              "",
 			"git":                  "",
 			"gitkraken":            "",
 			"go":                   "",
+			"googlechrome":         "",
 			"gpg":                  "",
 			"grep":                 "",
 			"jq":                   "",
@@ -70,7 +72,9 @@ func ChezmoiApply() (err error) {
 			"sonar-scanner":        "",
 			"task":                 "",
 			"terraform":            "",
+			"vlc":                  "",
 			"vscode":               "",
+			"wavebox10-pro":        "",
 			"wget":                 "",
 			"win32-openssh":        "",
 			"windows-terminal":     "",
@@ -113,8 +117,15 @@ func ChezmoiApply() (err error) {
 /*
 	TODO
 
-	Google Chrome, Firefox, Wavebox & other apps we want to install from the
-	nonportable bucket & then basically just rely on the built-in updating.
+	7zip context menu install
+
+	vscode context menu install
+
+	install https://addons.mozilla.org/en-US/firefox/addon/open-url-in-container/ automatically
+
+	install https://github.com/gopasspw/gopassbridge
+
+	install xop
 
 	Fix Dart warnings
 
