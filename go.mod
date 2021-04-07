@@ -20,7 +20,7 @@ require (
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mholt/archiver v3.1.1+incompatible
-	github.com/mitchellh/go-ps v1.0.0 // indirect
+	github.com/mitchellh/go-ps v1.0.0
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/nwaples/rardecode v1.1.0 // indirect
 	github.com/phayes/permbits v0.0.0-20190612203442-39d7c581d2ee
