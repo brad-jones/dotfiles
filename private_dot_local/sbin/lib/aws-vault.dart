@@ -8,7 +8,7 @@ import 'package:scripts/src/guest.dart';
 final originalAwsVaultExe = normalizeDir(
   Platform.isLinux
       ? '~/.linuxbrew/bin/aws-vault'
-      : '~/scoop/apps/aws-vault/current/aws-vault.exe',
+      : '~/.scoop/apps/aws-vault/current/aws-vault.exe',
 );
 
 Future<Config> readAwsConfig([String path = '~/.aws/config']) async {
