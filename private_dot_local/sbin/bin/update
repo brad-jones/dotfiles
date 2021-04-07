@@ -1,3 +1,0 @@
-#!/usr/bin/env dart
-import 'package:scripts/update.dart' as update;
-Future<void> main(List<String> argv) => update.main(argv);

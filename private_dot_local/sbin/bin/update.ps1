@@ -1,1 +1,0 @@
-dart $PSScriptRoot\update @args;
