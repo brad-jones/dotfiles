@@ -12,6 +12,7 @@ import (
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/cavaliercoder/grab"
+	"github.com/gosimple/slug"
 )
 
 func MustInstallDotnet(versions ...string) {
@@ -42,6 +43,8 @@ func MustInstallDotnet(versions ...string) {
 	installDir := filepath.Join(homeDir(), ".dotnet")
 
 	for _, version := range versions {
+		prefix = colorchooser.Sprint("install-dotnet-" + slug.Make(version))
+
 		if runtime.GOOS == "windows" {
 			goexec.MustRunPrefixed(prefix, "powershell", scriptDst,
 				"-InstallDir", installDir,
