@@ -2,6 +2,7 @@ package steps
 
 import (
 	"path/filepath"
+	"runtime"
 
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goexec/v2"
@@ -10,8 +11,14 @@ import (
 
 func MustInstallDartScriptDeps() {
 	prefix := colorchooser.Sprint("install-dart-script-deps")
-	pub := filepath.Join(scoopDir(), "apps", "dart", "current", "bin", "pub.bat")
 	scriptsDir := filepath.Join(homeDir(), ".local", "sbin")
+
+	pub := "pub"
+	if runtime.GOOS == "windows" {
+		pub = filepath.Join(scoopDir(), "apps", "dart", "current", "bin", "pub.bat")
+		setWritable(filepath.Join(scriptsDir, "pubspec.lock"))
+	}
+
 	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd(pub, goexec.Args("get"), goexec.Cwd(scriptsDir)))
 }
 

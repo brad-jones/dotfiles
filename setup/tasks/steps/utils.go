@@ -42,6 +42,10 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+func setWritable(filepath string) {
+	goerr.Check(os.Chmod(filepath, 0222))
+}
+
 // this is super annoying, gpg writes to /dev/tty, instead of the usual
 // /dev/stdout|stderr. In some cases "--batch" is meant to solve that but
 // not for "--edit-key" it seems. So because I can't stream the output through
