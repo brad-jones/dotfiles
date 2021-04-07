@@ -13,22 +13,11 @@ import (
 func ChezmoiApply() (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
-	steps.MustInstallSudoForWindows()
-	steps.MustDisableUACForWindows()
-
-	// Now install or update our SSH/GPG keys
-	await.MustFastAllOrError(
-		steps.InstallSSHGpgKeysAsync(),
-		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "", "ssh_add_with_pass", ""),
-	)
-
-	// Installs dotnet core / dotnet v5+ into ~/.dotnet
-	steps.MustInstallDotnet(
-		"latest",
-		"3.1.407",
-	)
-
 	if runtime.GOOS == "windows" {
+		// Make sure we have a way to elevate on Windows
+		steps.MustInstallSudoForWindows()
+		steps.MustDisableUACForWindows()
+
 		// On Windows we install/update the majority of our tools via scoop
 		steps.MustInstallScoop()
 		await.MustFastAllOrError(
@@ -87,43 +76,19 @@ func ChezmoiApply() (err error) {
 		// SSH/GPG keys by piping passphrases stored in the WinCred store.
 		steps.MustInstallCredentialManager()
 		steps.MustInstallRunAtLoginPwshScript()
-
-		// Highly likely to fail due to all this shenanigans:
-		// - https://github.com/PowerShell/PSReadLine#upgrading
-		// - https://github.com/PowerShell/PSReadLine/issues/1370
-		//
-		// Probs just going to leave this disabled for now as there
-		// is no easy way to solve this.
-		//steps.InstallPSReadLine()
-
-		// We have these scripts written in dart under: ".local/sbin".
-		//
-		// They are tools which are very specific to me, do questionable things
-		// like (automatically filling out MFA tokens) or are very much prototype
-		// quality so they make less sense to release publically.
-		//
-		// The only issue is that when Dart updates then the scripts start to
-		// break. I could "pin" the version of dart in this very setup project
-		// but then I couldn't use the latest Dart on some other project, at
-		// least on Windows anyway, where a dartenv style version manager isn't
-		// really viable.
-		//
-		// The whole pattern is kinda cool, but kinda a pain at the same time.
-		// I think longer term these things will turn into compiled self-contained
-		// executables, written with either Dart, Go or even Deno perhaps...
-		steps.MustInstallDartScriptDeps()
-
-		// Some features of some apps don't work very well when installed via
-		// scoop / other package managers. So we prefer to install them natively.
-		// These apps also have good built-in update mechanisms that we trust.
-		// So if the app is already installed we do nothing.
-		await.MustFastAllOrError(
-			steps.InstallChromeAsync(),
-			steps.InstallFirefoxAsync(),
-			steps.InstallWaveboxAsync(),
-		)
 	}
 
+	// These tasks are cross platform
+	// We are probs being a bit ambitious trying to run all this is once... we will see
+	await.MustFastAllOrError(
+		steps.InstallSSHGpgKeysAsync(),
+		steps.InstallChromeAsync(),
+		steps.InstallFirefoxAsync(),
+		steps.InstallWaveboxAsync(),
+		steps.InstallDartScriptDepsAsync(),
+		steps.InstallDotnetAsync("latest", "3.1.407", "2.1.814"),
+		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "", "ssh_add_with_pass", ""),
+	)
 	return
 }
 
