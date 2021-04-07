@@ -22,6 +22,12 @@ func ChezmoiApply() (err error) {
 		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "", "ssh_add_with_pass", ""),
 	)
 
+	// Installs dotnet core / dotnet v5+ into ~/.dotnet
+	steps.MustInstallDotnet(
+		"latest",
+		"3.1.407",
+	)
+
 	if runtime.GOOS == "windows" {
 		// On Windows we install/update the majority of our tools via scoop
 		steps.MustInstallScoop()
@@ -131,9 +137,6 @@ func ChezmoiApply() (err error) {
 	Fix aws-vault rotate
 
 	The rdp shortcuts
-
-	Dotnet Core install, need a dotnet version manager.
-	I think the install scripts actually do an ok job
 
 	Docker Desktop
 
