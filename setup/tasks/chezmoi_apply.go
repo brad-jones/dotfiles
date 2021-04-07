@@ -48,11 +48,9 @@ func ChezmoiApply() (err error) {
 			"curl":                 "",
 			"dart":                 "",
 			"deno":                 "",
-			"firefox":              "",
 			"git":                  "",
 			"gitkraken":            "",
 			"go":                   "",
-			"googlechrome":         "",
 			"gpg":                  "",
 			"grep":                 "",
 			"jq":                   "",
@@ -74,7 +72,6 @@ func ChezmoiApply() (err error) {
 			"terraform":            "",
 			"vlc":                  "",
 			"vscode":               "",
-			"wavebox10-pro":        "",
 			"wget":                 "",
 			"win32-openssh":        "",
 			"windows-terminal":     "",
@@ -109,6 +106,16 @@ func ChezmoiApply() (err error) {
 		// I think longer term these things will turn into compiled self-contained
 		// executables, written with either Dart, Go or even Deno perhaps...
 		steps.MustInstallDartScriptDeps()
+
+		// Some features of some apps don't work very well when installed via
+		// scoop / other package managers. So we prefer to install them natively.
+		// These apps also have good built-in update mechanisms that we trust.
+		// So if the app is already installed we do nothing.
+		await.MustFastAllOrError(
+			steps.InstallChromeAsync(),
+			steps.InstallFirefoxAsync(),
+			steps.InstallWaveboxAsync(),
+		)
 	}
 
 	return
@@ -116,14 +123,6 @@ func ChezmoiApply() (err error) {
 
 /*
 	TODO
-
-	7zip context menu install
-
-	vscode context menu install
-
-	install https://addons.mozilla.org/en-US/firefox/addon/open-url-in-container/ automatically
-
-	install https://github.com/gopasspw/gopassbridge
 
 	install xop
 
