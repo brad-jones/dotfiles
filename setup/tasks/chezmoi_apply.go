@@ -18,7 +18,7 @@ func ChezmoiApply() (err error) {
 		steps.MustInstallSudoForWindows()
 		steps.MustDisableUACForWindows()
 
-		// On Windows we install/update the majority of our tools via scoop
+		// On Windows we install/update the majority of our tools via https://scoop.sh/
 		steps.MustInstallScoop()
 		await.MustFastAllOrError(
 			steps.InstallScoopBucketAsync("extras", ""),
@@ -33,6 +33,11 @@ func ChezmoiApply() (err error) {
 		// it installed before installing the rest of the tools.
 		// see: https://github.com/lukesampson/scoop#multi-connection-downloads-with-aria2
 		steps.MustInstallScoopPkg("aria2", "")
+
+		// Kill running apps the might get updated
+		steps.KillProcByName("gpg-agent")
+		steps.KillProcByName("ssh-agent")
+		steps.KillProcByName("pageant")
 
 		// [pkg]ver - if ver == "", then latest version will install
 		steps.MustInstallScoopPkgs(map[string]string{

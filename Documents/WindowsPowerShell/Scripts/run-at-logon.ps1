@@ -6,6 +6,7 @@ Write-Output "Start the SSH agent";
 Start-Service ssh-agent;
 
 # Start the gpg agent
+# TODO: https://support.nitrokey.com/t/why-doesnt-gpg-agent-startup-on-first-call/2443/10
 Write-Output "Start the GPG agent";
 RetryCommand -Verbose -ScriptBlock {
 	gpg-connect-agent /bye;

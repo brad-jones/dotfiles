@@ -2,9 +2,11 @@ package steps
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
+	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/brad-jones/gopwsh"
 )
@@ -38,6 +40,8 @@ func MustInstallRunAtLoginPwshScript() {
 	}
 
 	fmt.Println(prefix, "| task created")
+
+	goexec.MustRunPrefixed(prefix, "powershell", filepath.Join(homeDir(), "Documents", "WindowsPowershell", "Scripts", "run-at-logon.ps1"))
 }
 
 func InstallRunAtLoginPwshScriptAsync() *task.Task {

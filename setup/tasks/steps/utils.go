@@ -5,11 +5,21 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
+	"github.com/brad-jones/gopwsh"
 )
+
+func KillProcByName(name string) {
+	if runtime.GOOS == "windows" {
+		ps := gopwsh.MustNew(gopwsh.Elevated(sudoBin()))
+		defer ps.Exit()
+		ps.MustExecute(fmt.Sprintf("Stop-Process -Name %s", gopwsh.QuoteArg(name)))
+	}
+}
 
 func isRoot() bool {
 	return goexec.MustRunBuffered("id", "-u").StdOut == "0"
