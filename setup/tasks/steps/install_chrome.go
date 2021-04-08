@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -20,7 +21,7 @@ func MustInstallChrome() {
 	prefix := colorchooser.Sprint("install-google-chrome")
 
 	if runtime.GOOS == "windows" {
-		if fileExists(`C:\Program Files\Google\Chrome\Application\chrome.exe`) {
+		if utils.FileExists(`C:\Program Files\Google\Chrome\Application\chrome.exe`) {
 			fmt.Println(prefix, "|", "google chrome is already installed")
 			return
 		}
@@ -37,7 +38,7 @@ func MustInstallChrome() {
 		goerr.Check(err)
 
 		fmt.Println(prefix, "|", "running chrome_installer.exe")
-		goexec.MustRunPrefixed(prefix, sudoBin(), installer, "/silent", "/install")
+		goexec.MustRunPrefixed(prefix, utils.SudoBin(), installer, "/silent", "/install")
 
 		// this is only needed with gsudo instead of my winsudo package
 		for {

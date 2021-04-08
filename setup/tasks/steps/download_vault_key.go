@@ -9,6 +9,7 @@ import (
 	"runtime"
 
 	"github.com/avast/retry-go"
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -28,7 +29,7 @@ func MustDownloadVaultKey(repoPassword, keyPassword string) {
 	goexec.MustRunPrefixed(prefix, "git", "clone", cloneURI, cloneDir)
 
 	// Import the gpg key into the keychain
-	importGpgKey(prefix, filepath.Join(cloneDir, "private.pem"), "Brad Jones (vault) <brad@bjc.id.au>")
+	utils.ImportGpgKey(prefix, filepath.Join(cloneDir, "private.pem"), "Brad Jones (vault) <brad@bjc.id.au>")
 
 	// Add the key to the agent
 	if runtime.GOOS == "windows" {

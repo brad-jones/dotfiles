@@ -1,8 +1,8 @@
+// +build windows
+
 package steps
 
 import (
-	"runtime"
-
 	"github.com/brad-jones/goasync/v2/task"
 )
 
@@ -22,9 +22,6 @@ import (
 //   robust, better tested, more mature & smarter with respect to how it
 //   actually does the elevation.
 func MustInstallSudoForWindows() {
-	if runtime.GOOS != "windows" {
-		return
-	}
 	//MustInstallGithubPkg("brad-jones", "winsudo", "v1.0.5", `winsudo_amd64\.zip`, "sudo", "")
 	MustInstallGithubPkg("gerardog", "gsudo", "v0.7.3", `gsudo\..*\.zip`, "gsudo", "sudo")
 }

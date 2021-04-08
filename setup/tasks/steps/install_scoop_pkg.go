@@ -1,9 +1,12 @@
+// +build windows
+
 package steps
 
 import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
@@ -19,7 +22,7 @@ func MustInstallScoopPkg(pkgName, version string) {
 		return
 	}
 
-	if fileExists(filepath.Join(homeDir(), "scoop", "apps", pkgName, "current", "manifest.json")) {
+	if utils.FileExists(filepath.Join(utils.HomeDir(), "scoop", "apps", pkgName, "current", "manifest.json")) {
 		goexec.MustRunPrefixed(prefix, "powershell", "-Command", "scoop update "+pkgName)
 		return
 	}
@@ -40,7 +43,7 @@ func MustInstallScoopPkgs(packages map[string]string) {
 
 	for pkg, ver := range packages {
 		var stdout string
-		if ver == "" && fileExists(filepath.Join(scoopDir(), "apps", pkg, "current", "manifest.json")) {
+		if ver == "" && utils.FileExists(filepath.Join(utils.ScoopDir(), "apps", pkg, "current", "manifest.json")) {
 			stdout, _ = ps.MustExecute(fmt.Sprintf("scoop update %s", pkg))
 		} else {
 			stdout, _ = ps.MustExecute(fmt.Sprintf("scoop install %s@%s", pkg, ver))

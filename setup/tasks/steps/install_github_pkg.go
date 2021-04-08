@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
@@ -56,9 +57,9 @@ func MustInstallGithubPkg(owner, repo, tag, pkgPattern, srcExeName, dstExeName s
 	goerr.Check(archiver.Unarchive(resp.Filename, extracted), resp.Filename, extracted)
 
 	src := filepath.Join(extracted, srcExeName)
-	dst := filepath.Join(homeDir(), ".local", "bin", srcExeName)
+	dst := filepath.Join(utils.HomeDir(), ".local", "bin", srcExeName)
 	if len(dstExeName) > 0 {
-		dst = filepath.Join(homeDir(), ".local", "bin", dstExeName)
+		dst = filepath.Join(utils.HomeDir(), ".local", "bin", dstExeName)
 	}
 
 	if runtime.GOOS == "windows" {

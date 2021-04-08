@@ -28,3 +28,21 @@ func main() {
 		},
 	}).Run(os.Args))
 }
+
+/*
+	TODO
+
+	install xop
+
+	Fix Dart warnings
+
+	Fix aws-vault rotate
+
+	The rdp shortcuts
+
+	Docker Desktop
+
+	WSL setup, which then leads into Linux setup
+
+	Vscode extensions sync
+*/

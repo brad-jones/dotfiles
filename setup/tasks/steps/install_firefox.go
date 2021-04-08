@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -20,7 +21,7 @@ func MustInstallFirefox() {
 	prefix := colorchooser.Sprint("install-firefox")
 
 	if runtime.GOOS == "windows" {
-		if fileExists(`C:\Program Files\Mozilla Firefox\firefox.exe`) {
+		if utils.FileExists(`C:\Program Files\Mozilla Firefox\firefox.exe`) {
 			fmt.Println(prefix, "|", "firefox is already installed")
 			return
 		}
@@ -37,7 +38,7 @@ func MustInstallFirefox() {
 		goerr.Check(err)
 
 		fmt.Println(prefix, "|", "running firefox_installer.exe")
-		goexec.MustRunPrefixed(prefix, sudoBin(), installer, "/S")
+		goexec.MustRunPrefixed(prefix, utils.SudoBin(), installer, "/S")
 
 		// this is only needed with gsudo instead of my winsudo package
 		for {

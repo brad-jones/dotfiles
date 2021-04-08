@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -40,7 +41,7 @@ func MustInstallDotnet(versions ...string) {
 
 	// TODO: hash checking
 
-	installDir := filepath.Join(homeDir(), ".dotnet")
+	installDir := filepath.Join(utils.HomeDir(), ".dotnet")
 
 	for _, version := range versions {
 		prefix = colorchooser.Sprint("install-dotnet-" + slug.Make(version))

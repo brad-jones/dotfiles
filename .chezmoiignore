@@ -1,6 +1,9 @@
-README.md
+.gitignore
 go.mod
 go.sum
+README.md
+Taskfile.yml
+.task/
 setup/
 
 {{- if ne .chezmoi.os "linux" }}

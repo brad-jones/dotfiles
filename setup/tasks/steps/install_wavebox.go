@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -20,7 +21,7 @@ func MustInstallWavebox() {
 	prefix := colorchooser.Sprint("install-wavebox")
 
 	if runtime.GOOS == "windows" {
-		if fileExists(`C:\Users\brad.jones\AppData\Local\WaveboxApp\Application\wavebox.exe`) {
+		if utils.FileExists(`C:\Users\brad.jones\AppData\Local\WaveboxApp\Application\wavebox.exe`) {
 			fmt.Println(prefix, "|", "wavebox is already installed")
 			return
 		}

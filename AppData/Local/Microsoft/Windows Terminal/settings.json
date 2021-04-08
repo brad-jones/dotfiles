@@ -38,9 +38,9 @@
       {
           "guid": "{ee74f5aa-3e18-5d1f-b932-51dbf303640e}",
           "hidden": false,
-          "name": "Fedora32",
+          "name": "Fedora33",
           "source": "Windows.Terminal.Wsl",
-          "icon": "C:\\Users\\brad.jones\\Pictures\\fedora-icon.png"
+          "icon": "C:\\Users\\brad.jones\\AppData\\Local\\Microsoft\\Windows Terminal\\fedora-icon.png"
       }
     ]
   },

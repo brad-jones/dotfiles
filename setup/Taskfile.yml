@@ -3,11 +3,21 @@ version: '3'
 silent: true
 output: prefixed
 
+vars:
+  SHELL: '{{if eq OS "windows"}}powershell -Command{{end}}'
+  SETUP: '{{if eq OS "windows"}}./bin/setup_windows_amd64.exe{{else}}./bin/setup_linux_amd64{{end}}'
+
 tasks:
+  apply:
+    desc: Executes the setup binary in apply mode
+    deps:
+      - build
+    cmds:
+      - '{{.SETUP}} chezmoi-apply'
+
   build:
     desc: Builds binaries for Linux & Windows
     deps:
-      - build-linux
       - build-windows
 
   build-linux:
@@ -25,6 +35,8 @@ tasks:
 
   build-windows:
     desc: Builds the windows binary
+    deps:
+      - build-linux
     env:
       CGO_ENABLED: 0
       GOOS: windows
@@ -34,4 +46,6 @@ tasks:
     generates:
       - ./bin/setup_windows_amd64.exe
     cmds:
+      - "{{.SHELL}} cp ./bin/setup_linux_amd64 ./tasks/steps/setup_linux_amd64"
       - go build -v -o ./bin/setup_windows_amd64.exe
+      - "{{.SHELL}} rm ./tasks/steps/setup_linux_amd64"

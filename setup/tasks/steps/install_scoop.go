@@ -1,8 +1,11 @@
+// +build windows
+
 package steps
 
 import (
 	"fmt"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
@@ -25,7 +28,7 @@ func MustInstallScoop() {
 		return
 	}
 
-	psElevated := gopwsh.MustNew(gopwsh.Elevated(sudoBin()))
+	psElevated := gopwsh.MustNew(gopwsh.Elevated(utils.SudoBin()))
 	defer psElevated.Exit()
 
 	fmt.Println(prefix, "| setting execution policy to RemoteSigned")

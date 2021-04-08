@@ -1,9 +1,12 @@
+// +build windows
+
 package steps
 
 import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -15,7 +18,7 @@ import (
 func MustInstallRunAtLoginPwshScript() {
 	prefix := colorchooser.Sprint("install-run-at-login-script")
 
-	ps := gopwsh.MustNew(gopwsh.Elevated(sudoBin()))
+	ps := gopwsh.MustNew(gopwsh.Elevated(utils.SudoBin()))
 	defer ps.Exit()
 
 	fmt.Println(prefix, "| does task exist?")
@@ -41,7 +44,7 @@ func MustInstallRunAtLoginPwshScript() {
 
 	fmt.Println(prefix, "| task created")
 
-	goexec.MustRunPrefixed(prefix, "powershell", filepath.Join(homeDir(), "Documents", "WindowsPowershell", "Scripts", "run-at-logon.ps1"))
+	goexec.MustRunPrefixed(prefix, "powershell", filepath.Join(utils.HomeDir(), "Documents", "WindowsPowershell", "Scripts", "run-at-logon.ps1"))
 }
 
 func InstallRunAtLoginPwshScriptAsync() *task.Task {
