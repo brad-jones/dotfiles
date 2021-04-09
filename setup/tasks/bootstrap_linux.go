@@ -35,5 +35,7 @@ func Bootstrap() (err error) {
 
 	goexec.MustRun(filepath.Join(utils.HomeDir(), ".local", "bin", "chezmoi"), "apply", "--debug")
 
+	// /usr/share/crypto-policies/DEFAULT/openssh.txt 0644
+
 	return
 }

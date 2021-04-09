@@ -1,3 +1,4 @@
 {{ if ne .chezmoi.os "windows" -}}
+chmod +x ~/.local/share/chezmoi/setup/bin/setup_{{ .chezmoi.os }}_amd64
 exec ~/.local/share/chezmoi/setup/bin/setup_{{ .chezmoi.os }}_amd64 chezmoi-apply
 {{ end -}}

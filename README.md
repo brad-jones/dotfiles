@@ -47,3 +47,25 @@ Just execute `chezmoi update`.
 
 - Executing the `setup` tool without any arguments will run the **Bootstrap** tasks.
   Which is also _idempotent_ so is safe to do run again if you want to totally start from scratch.
+
+## Notes
+
+### Should we stick with chezmoi?
+
+- Can chezmoi clone a private git repo?
+- How well does the integrated git work in chezmoi?
+- How would the `before_` & `after_` scripts work?
+- Cross platform support?
+- Instead of committing golang bins maybe we use deno / node / dart?
+
+### WSL2 vs Native Hyper-V
+
+- WSL & systemd? Geni? Does it work with Fedora?
+- Docker vs Podman?
+- WSL is faster to boot & lightweight when compared to native hyper-v
+- WSL feels like a mutable, long lived container instead of a VM.
+- WSL has native drive mount support (but only from WSL to Windows).
+- WSL can easily called windows executables. eg: code
+- WSL ssh-agent / gpg-agent? Run native inside or connect to windows ones?
+- Our Hyper-V setup can do all the things WSL can do & more but perhaps more buggy require maintences, etc.
+- Our Hyper-V setup surly consumes more resources, feels heavy
