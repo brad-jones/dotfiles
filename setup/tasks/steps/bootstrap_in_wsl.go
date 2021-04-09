@@ -68,7 +68,7 @@ func MustBoostrapInWSL(distro string) {
 	linuxSetupPath = strings.ReplaceAll(linuxSetupPath, "\\", "/")
 	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("wsl",
 		goexec.SetIn(strings.NewReader(fmt.Sprintf("%s\n%s\n%s\n", githubPass, gitlabPass, vaultPass))),
-		goexec.Args("wsl", "-d", distro, "-e", linuxSetupPath),
+		goexec.Args("-d", distro, "-e", linuxSetupPath),
 	))
 }
 
