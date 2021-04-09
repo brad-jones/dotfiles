@@ -7,6 +7,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goerr/v2"
 )
 
@@ -21,6 +22,7 @@ type BootstrapSurveyAnswers struct {
 // BootstrapSurvey will prompt the user for answers that we need to know ahead of time.
 func BootstrapSurvey() *BootstrapSurveyAnswers {
 	answers := &BootstrapSurveyAnswers{}
+
 	questions := []*survey.Question{
 		{
 			Name:   "GithubPassword",
@@ -36,7 +38,7 @@ func BootstrapSurvey() *BootstrapSurveyAnswers {
 		},
 	}
 
-	if runtime.GOOS == "linux" {
+	if runtime.GOOS == "linux" && !utils.IsWSL() {
 		questions = append(questions, &survey.Question{
 			Name:   "SudoPassword",
 			Prompt: &survey.Password{Message: "Your password for sudo?"},

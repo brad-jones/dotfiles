@@ -52,7 +52,7 @@ func MustInstallSSHGpgKeys() {
 		}),
 	}
 
-	if os.Getenv("COMPUTERNAME") == "XLW-5CD936CWNQ" {
+	if utils.GetComputerName() == "XLW-5CD936CWNQ" {
 		tasks = append(tasks,
 			task.New(func() {
 				goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp",

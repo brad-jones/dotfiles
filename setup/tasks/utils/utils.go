@@ -13,6 +13,22 @@ import (
 	"github.com/brad-jones/gopwsh"
 )
 
+func GetComputerName() string {
+	if runtime.GOOS == "windows" {
+		return os.Getenv("COMPUTERNAME")
+	}
+
+	if IsWSL() {
+		return os.Getenv("NAME")
+	}
+
+	return os.Getenv("HOSTNAME")
+}
+
+func IsWSL() bool {
+	return strings.Contains(goexec.MustRunBuffered("uname", "-a").StdOut, "microsoft-standard-WSL2")
+}
+
 func KillProcByName(name string) {
 	if runtime.GOOS == "windows" {
 		ps := gopwsh.MustNew(gopwsh.Elevated(SudoBin()))

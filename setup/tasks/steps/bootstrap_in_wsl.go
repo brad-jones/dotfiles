@@ -15,6 +15,7 @@ import (
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
+	"github.com/brad-jones/gopwsh"
 	"github.com/gosimple/slug"
 )
 
@@ -43,6 +44,16 @@ func MustBoostrapInWSL(distro string) {
 		fmt.Println(prefix, "|", "user account already exists")
 	}
 
+	ps := gopwsh.MustNew()
+	defer ps.Exit()
+	stdout, _ := ps.MustExecute(
+		`$vaultPass = Get-StoredCredential -Target "passphrase:vault";`,
+		`echo [System.Net.NetworkCredential]::new('', $vaultPass.Password).Password`,
+	)
+	vaultPass := strings.TrimSpace(stdout)
+	githubPass := strings.TrimSpace(goexec.MustRunBuffered("gopass", "show", "-o", "websites/github.com/brad@bjc.id.au").StdOut)
+	gitlabPass := strings.TrimSpace(goexec.MustRunBuffered("gopass", "show", "-o", "websites/gitlab.com/brad@bjc.id.au").StdOut)
+
 	tempDir, err := ioutil.TempDir("", "bradsDotFiles")
 	goerr.Check(err)
 	defer os.RemoveAll(tempDir)
@@ -55,7 +66,10 @@ func MustBoostrapInWSL(distro string) {
 
 	linuxSetupPath = strings.Replace(linuxSetupPath, "C:\\", "/mnt/c/", 1)
 	linuxSetupPath = strings.ReplaceAll(linuxSetupPath, "\\", "/")
-	goexec.MustRunPrefixed(prefix, "wsl", "-d", distro, "-e", linuxSetupPath)
+	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("wsl",
+		goexec.SetIn(strings.NewReader(fmt.Sprintf("%s\n%s\n%s\n", githubPass, gitlabPass, vaultPass))),
+		goexec.Args("wsl", "-d", distro, "-e", linuxSetupPath),
+	))
 }
 
 func BoostrapInWSLAsync(distro string) *task.Task {

@@ -17,22 +17,35 @@ func MustInstallGitGpg(password string) {
 		if utils.IsRoot() {
 			goexec.MustRunPrefixed(prefix, "dnf", "install", "-y", "git", "gnupg")
 		} else {
-			goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-				goexec.SetIn(strings.NewReader(password)),
-				goexec.Args("-S", "dnf", "install", "-y", "git", "gnupg"),
-			))
+			if len(password) > 0 {
+				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
+					goexec.SetIn(strings.NewReader(password)),
+					goexec.Args("-S", "dnf", "install", "-y", "git", "gnupg"),
+				))
+			} else {
+				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
+					goexec.Args("dnf", "install", "-y", "git", "gnupg"),
+				))
+			}
 		}
 		return
 	}
+
 	if utils.CommandExists("apt") {
 		script := "apt update && apt install -y git gnupg"
 		if utils.IsRoot() {
 			goexec.MustRunPrefixed(prefix, "bash", "-c", script)
 		} else {
-			goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-				goexec.SetIn(strings.NewReader(password)),
-				goexec.Args("-S", "bash", "-c", script),
-			))
+			if len(password) > 0 {
+				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
+					goexec.SetIn(strings.NewReader(password)),
+					goexec.Args("-S", "bash", "-c", script),
+				))
+			} else {
+				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
+					goexec.Args("bash", "-c", script),
+				))
+			}
 		}
 		return
 	}
