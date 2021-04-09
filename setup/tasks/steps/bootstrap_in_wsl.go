@@ -44,11 +44,12 @@ func MustBoostrapInWSL(distro string) {
 		fmt.Println(prefix, "|", "user account already exists")
 	}
 
-	ps := gopwsh.MustNew()
+	ps := gopwsh.MustNew(gopwsh.PwshLocation("powershell"))
 	defer ps.Exit()
 	stdout, _ := ps.MustExecute(
 		`$vaultPass = Get-StoredCredential -Target "passphrase:vault";`,
-		`echo [System.Net.NetworkCredential]::new('', $vaultPass.Password).Password`,
+		`$p = [System.Net.NetworkCredential]::new('', $vaultPass.Password).Password;`,
+		`echo $p;`,
 	)
 	vaultPass := strings.TrimSpace(stdout)
 	githubPass := strings.TrimSpace(goexec.MustRunBuffered("gopass", "show", "-o", "websites/github.com/brad@bjc.id.au").StdOut)

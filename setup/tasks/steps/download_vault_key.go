@@ -28,35 +28,52 @@ func MustDownloadVaultKey(repoPassword, keyPassword string) {
 	cloneURI := "https://brad-jones:" + url.QueryEscape(repoPassword) + "@gitlab.com/brad-jones/vault-key.git"
 	goexec.MustRunPrefixed(prefix, "git", "clone", cloneURI, cloneDir)
 
+	goerr.Check(os.MkdirAll(filepath.Join(utils.HomeDir(), ".gnupg"), 0755))
+	goerr.Check(ioutil.WriteFile(
+		filepath.Join(utils.HomeDir(), ".gnupg", "gpg-agent.conf"),
+		[]byte("allow-preset-passphrase\ndefault-cache-ttl 34560000\nmax-cache-ttl 34560000"),
+		0755,
+	))
+
 	// Import the gpg key into the keychain
-	utils.ImportGpgKey(prefix, filepath.Join(cloneDir, "private.pem"), "Brad Jones (vault) <brad@bjc.id.au>")
+	utils.ImportGpgKey(prefix,
+		filepath.Join(cloneDir, "private.pem"),
+		"Brad Jones (vault) <brad@bjc.id.au>",
+		keyPassword,
+	)
 
 	// Add the key to the agent
+	presetBin := "gpg-preset-passphrase"
+
 	if runtime.GOOS == "windows" {
-		fmt.Println(prefix, "starting gpg agent...")
-		goerr.Check(retry.Do(func() error {
-			return goexec.RunPrefixed(prefix, "gpg-connect-agent", "/bye")
-		}))
-
-		fmt.Println(prefix, "adding preset for 83D182028C7F2DF102F09E61FF308BBB10F539D8")
-		goexec.MustRunPrefixed(prefix, "gpg-preset-passphrase",
-			"--passphrase", keyPassword,
-			"--preset", "83D182028C7F2DF102F09E61FF308BBB10F539D8", // keygrip
-		)
-
-		fmt.Println(prefix, "adding preset for F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB")
-		goexec.MustRunPrefixed(prefix, "gpg-preset-passphrase",
-			"--passphrase", keyPassword,
-			"--preset", "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB", // keygrip
-		)
-
 		fmt.Println(prefix, "storing the vault key passphrase into local wincred store")
 		goexec.MustRunPrefixed(prefix, "cmdkey",
 			"/generic:passphrase:vault",
 			"/user:gpg",
 			"/pass:"+keyPassword,
 		)
+
+		fmt.Println(prefix, "starting gpg agent...")
+		goerr.Check(retry.Do(func() error {
+			return goexec.RunPrefixed(prefix, "gpg-connect-agent", "/bye")
+		}))
 	}
+
+	if runtime.GOOS == "linux" {
+		presetBin = "/usr/libexec/gpg-preset-passphrase"
+	}
+
+	fmt.Println(prefix, "adding preset for 83D182028C7F2DF102F09E61FF308BBB10F539D8")
+	goexec.MustRunPrefixed(prefix, presetBin,
+		"--passphrase", keyPassword,
+		"--preset", "83D182028C7F2DF102F09E61FF308BBB10F539D8", // keygrip
+	)
+
+	fmt.Println(prefix, "adding preset for F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB")
+	goexec.MustRunPrefixed(prefix, presetBin,
+		"--passphrase", keyPassword,
+		"--preset", "F217E464BDDC0DF42C0E4B5F740FD611F4E35ADB", // keygrip
+	)
 }
 
 func DownloadVaultKeyAsync(repoPassword, keyPassword string) *task.Task {

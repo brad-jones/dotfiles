@@ -1,6 +1,7 @@
 package steps
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"runtime"
@@ -23,6 +24,24 @@ type BootstrapSurveyAnswers struct {
 func BootstrapSurvey() *BootstrapSurveyAnswers {
 	answers := &BootstrapSurveyAnswers{}
 
+	if utils.IsWSL() {
+		scanner := bufio.NewScanner(os.Stdin)
+
+		scanner.Scan()
+		answers.GithubPassword = scanner.Text()
+		goerr.Check(scanner.Err())
+
+		scanner.Scan()
+		answers.GitlabPassword = scanner.Text()
+		goerr.Check(scanner.Err())
+
+		scanner.Scan()
+		answers.VaultKeyPassword = scanner.Text()
+		goerr.Check(scanner.Err())
+
+		return answers
+	}
+
 	questions := []*survey.Question{
 		{
 			Name:   "GithubPassword",
@@ -38,7 +57,7 @@ func BootstrapSurvey() *BootstrapSurveyAnswers {
 		},
 	}
 
-	if runtime.GOOS == "linux" && !utils.IsWSL() {
+	if runtime.GOOS == "linux" {
 		questions = append(questions, &survey.Question{
 			Name:   "SudoPassword",
 			Prompt: &survey.Password{Message: "Your password for sudo?"},

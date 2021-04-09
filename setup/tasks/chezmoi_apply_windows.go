@@ -1,11 +1,7 @@
 package tasks
 
 import (
-	"path/filepath"
-
 	"github.com/brad-jones/dotfiles/setup/tasks/steps"
-	"github.com/brad-jones/dotfiles/setup/tasks/utils"
-	"github.com/brad-jones/goasync/v2/await"
 	"github.com/brad-jones/goerr/v2"
 )
 
@@ -15,7 +11,7 @@ func ChezmoiApply() (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
 	// Make sure we have a way to elevate on Windows
-	steps.MustInstallSudoForWindows()
+	/*steps.MustInstallSudoForWindows()
 	steps.MustDisableUACForWindows()
 
 	// On Windows we install/update the majority of our tools via https://scoop.sh/
@@ -91,16 +87,16 @@ func ChezmoiApply() (err error) {
 		"Microsoft",
 		"Windows Terminal",
 		"settings.json",
-	))
+	))*/
 
 	// Here we configure our primary WSL instance. Essentially this will
 	// install a WSL distro and then run this same boostrap setup inside it.
 	steps.MustInstallWSL(false)
-	distro := steps.MustInstallWSLFedora("33.20210226.0", true, false)
+	distro := steps.MustInstallWSLFedora("33.20210226.0", true, true)
 	steps.MustBoostrapInWSL(distro)
 
 	// These tasks are cross platform
-	await.MustFastAllOrError(
+	/*await.MustFastAllOrError(
 		steps.InstallSSHGpgKeysAsync(),
 		steps.InstallChromeAsync(),
 		steps.InstallFirefoxAsync(),
@@ -108,7 +104,7 @@ func ChezmoiApply() (err error) {
 		steps.InstallDartScriptDepsAsync(),
 		steps.InstallDotnetAsync("latest", "3.1.407", "2.1.814"),
 		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "", "ssh_add_with_pass", ""),
-	)
+	)*/
 
 	return
 }

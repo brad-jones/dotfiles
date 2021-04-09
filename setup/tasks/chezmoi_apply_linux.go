@@ -13,11 +13,6 @@ func ChezmoiApply() (err error) {
 
 	await.MustFastAllOrError(
 		steps.InstallSSHGpgKeysAsync(),
-		steps.InstallChromeAsync(),
-		steps.InstallFirefoxAsync(),
-		steps.InstallWaveboxAsync(),
-		steps.InstallDartScriptDepsAsync(),
-		steps.InstallDotnetAsync("latest", "3.1.407", "2.1.814"),
 		steps.InstallGithubPkgAsync("brad-jones", "ssh-add-with-pass", "v1.0.4", "", "ssh_add_with_pass", ""),
 	)
 

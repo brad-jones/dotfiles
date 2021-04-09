@@ -15,16 +15,16 @@ func MustInstallGitGpg(password string) {
 
 	if utils.CommandExists("dnf") {
 		if utils.IsRoot() {
-			goexec.MustRunPrefixed(prefix, "dnf", "install", "-y", "git", "gnupg")
+			goexec.MustRunPrefixed(prefix, "dnf", "install", "-y", "git", "gnupg", "pinentry")
 		} else {
 			if len(password) > 0 {
 				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
 					goexec.SetIn(strings.NewReader(password)),
-					goexec.Args("-S", "dnf", "install", "-y", "git", "gnupg"),
+					goexec.Args("-S", "dnf", "install", "-y", "git", "gnupg", "pinentry"),
 				))
 			} else {
 				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-					goexec.Args("dnf", "install", "-y", "git", "gnupg"),
+					goexec.Args("dnf", "install", "-y", "git", "gnupg", "pinentry"),
 				))
 			}
 		}

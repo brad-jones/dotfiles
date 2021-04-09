@@ -68,7 +68,7 @@ func MustInstallGithubPkg(owner, repo, tag, pkgPattern, srcExeName, dstExeName s
 	}
 
 	fmt.Println(prefix, "moving", src, "to", dst)
-	goerr.Check(os.MkdirAll(filepath.Dir(dst), 0644), dst)
+	goerr.Check(os.MkdirAll(filepath.Dir(dst), 0755), dst)
 	goerr.Check(os.Rename(src, dst), src, dst)
 
 	if runtime.GOOS != "windows" {

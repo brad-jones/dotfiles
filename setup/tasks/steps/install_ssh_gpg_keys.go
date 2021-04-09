@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/await"
@@ -48,7 +49,10 @@ func MustInstallSSHGpgKeys() {
 			goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp",
 				"keys/gpg/brad@bjc.id.au", dst,
 			)
-			utils.ImportGpgKey(prefix, dst, "Brad Jones <brad@bjc.id.au>")
+			p := strings.TrimSpace(goexec.MustRunBuffered("gopass",
+				"show", "-o", "keys/gpg/brad@bjc.id.au.pass",
+			).StdOut)
+			utils.ImportGpgKey(prefix, dst, "Brad Jones <brad@bjc.id.au>", p)
 		}),
 	}
 
@@ -65,7 +69,10 @@ func MustInstallSSHGpgKeys() {
 				goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp",
 					"keys/gpg/brad.jones@xero.com", dst,
 				)
-				utils.ImportGpgKey(prefix, dst, "Brad Jones <brad.jones@xero.com>")
+				p := strings.TrimSpace(goexec.MustRunBuffered("gopass",
+					"show", "-o", "keys/gpg/brad.jones@xero.com.pass",
+				).StdOut)
+				utils.ImportGpgKey(prefix, dst, "Brad Jones <brad.jones@xero.com>", p)
 			}),
 		)
 	}

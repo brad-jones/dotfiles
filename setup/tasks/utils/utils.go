@@ -95,12 +95,22 @@ func TrustGpgKey(keyName string) {
 	))
 }
 
-func ImportGpgKey(prefix, keyPath, keyName string) {
-	fmt.Println(prefix, "importing", keyPath)
-	goexec.MustRunBuffered("gpg", "--import", keyPath)
+func ImportGpgKey(prefix, keyPath, keyName, keyPassphrase string) {
+	fmt.Println(prefix, "|", "importing", keyPath)
+	if len(keyPassphrase) > 0 {
+		goexec.MustRunPrefixed(prefix, "gpg",
+			"--pinentry-mode", "loopback",
+			"--passphrase", keyPassphrase,
+			"--import", keyPath,
+		)
+	} else {
+		goexec.MustRunPrefixed(prefix, "gpg",
+			"--import", keyPath,
+		)
+	}
 
-	fmt.Println(prefix, "imported", keyPath, "trusting", keyName)
+	fmt.Println(prefix, "|", "imported", keyPath, "trusting", keyName)
 	TrustGpgKey("Brad Jones (vault) <brad@bjc.id.au>")
 
-	fmt.Println(prefix, "trusted", keyName)
+	fmt.Println(prefix, "|", "trusted", keyName)
 }
