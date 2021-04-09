@@ -1,7 +1,10 @@
 package tasks
 
 import (
+	"path/filepath"
+
 	"github.com/brad-jones/dotfiles/setup/tasks/steps"
+	"github.com/brad-jones/dotfiles/setup/tasks/utils"
 	"github.com/brad-jones/goasync/v2/await"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -40,7 +43,7 @@ func Bootstrap() (err error) {
 		goexec.RunPrefixedAsync(prefix, "cmdkey", `/delete:git:https://brad-jones@gitlab.com`),
 	)
 
-	goexec.MustRun("chezmoi", "apply", "--debug")
+	goexec.MustRun(filepath.Join(utils.HomeDir(), ".local", "bin", "chezmoi.exe"), "apply", "--debug")
 
 	return
 }
