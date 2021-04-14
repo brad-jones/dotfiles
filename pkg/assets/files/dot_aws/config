@@ -1,0 +1,76 @@
+[default]
+output = json
+cli_follow_urlparam = false
+
+# Personal Accounts
+# ------------------------------------------------------------------------------
+[profile bjc]
+region = ap-southeast-2
+
+# XERO PAAS Accounts
+# ------------------------------------------------------------------------------
+[profile xero-ps-paas-identity]
+region = ap-southeast-2
+mfa_serial = arn:aws:iam::477275408388:mfa/brad.jones@xero.com
+mfa_token_provider = "gopass otp -o 2fa/aws/brad.jones@xero.com"
+
+[profile xero-ps-paas-prod]
+region = us-east-1
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::966283773129:role/Developer
+
+[profile xero-ps-paas-svc]
+region = ap-southeast-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::640077214053:role/Developer
+
+[profile xero-ps-paas-uat]
+region = us-west-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::192337955983:role/Developer
+
+[profile xero-ps-paas-test]
+region = ap-southeast-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::046921848075:role/Developer
+
+[profile xero-ps-paas-dev]
+region = ap-southeast-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::769423770222:role/Developer
+
+# XERO BP DevOps Accounts
+# ------------------------------------------------------------------------------
+[profile xero-pay-devops-test]
+region = ap-southeast-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::243997632406:role/X-AdminAccess
+
+# XERO Payroll Accounts
+# ------------------------------------------------------------------------------
+[profile xero-payroll-prod]
+region = us-east-1
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::557935033251:role/X-AdminAccess
+
+[profile xero-payroll-uat]
+region = us-west-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::721874215166:role/X-AdminAccess
+
+[profile xero-payroll-test]
+region = ap-southeast-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::244668436958:role/X-AdminAccess
+
+# XERO Product Ladder Accounts
+# ------------------------------------------------------------------------------
+[profile xero-pay-provisioning-prod]
+region = us-east-1
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::169392980917:role/X-AdminAccess
+
+[profile xero-pay-provisioning-uat]
+region = us-west-2
+source_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::415069618321:role/X-AdminAccess

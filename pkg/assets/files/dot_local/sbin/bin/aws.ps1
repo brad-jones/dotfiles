@@ -1,0 +1,1 @@
+dart $PSScriptRoot\aws @args;

@@ -1,0 +1,20 @@
+root:
+  askformore: false
+  autoclip: false
+  autoprint: false
+  autoimport: true
+  autosync: true
+  check_recipient_hash: false
+  cliptimeout: 45
+  concurrency: 1
+  editrecipients: false
+  nocolor: false
+  noconfirm: true
+  nopager: false
+  notifications: true
+  path: gpgcli-gitcli-fs+file:///C:%5CUsers%5Cbrad.jones%5C.password-store
+  #path: gpgcli-gitcli-fs+file:///home/brad.jones/.password-store
+  recipient_hash: {}
+  safecontent: false
+  usesymbols: false
+mounts: {}

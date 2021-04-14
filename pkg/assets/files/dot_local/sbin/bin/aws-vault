@@ -1,0 +1,3 @@
+#!/usr/bin/env dart
+import 'package:scripts/aws-vault.dart' as awsVault;
+Future<void> main(List<String> argv) => awsVault.main(argv);

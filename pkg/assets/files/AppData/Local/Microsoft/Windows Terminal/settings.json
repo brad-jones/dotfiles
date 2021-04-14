@@ -1,0 +1,77 @@
+{
+	"$schema": "https://aka.ms/terminal-profiles-schema",
+	"defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+	"copyOnSelect": false,
+	"copyFormatting": false,
+	"disabledProfileSources": [
+		"Windows.Terminal.Azure",
+		"Windows.Terminal.Wsl"
+	],
+	"profiles": {
+		"defaults": {
+			"fontSize": 10,
+			"padding": "1",
+			"fontFace": "Consolas"
+		},
+		"list": [
+			{
+				"guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+				"hidden": false,
+				"name": "PowerShell Core",
+				"startingDirectory": "%USERPROFILE%",
+				"commandline": "C:\\Users\\brad.jones\\.scoop\\apps\\pwsh\\current\\pwsh.exe",
+				"icon": "C:\\Users\\brad.jones\\.scoop\\apps\\windows-terminal\\current\\ProfileIcons\\{574e775e-4f2a-5b96-ac1e-a2962a402336}.scale-200.png"
+			},
+			{
+				"guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+				"name": "Windows PowerShell",
+				"commandline": "powershell.exe",
+				"hidden": false,
+				"startingDirectory": "%USERPROFILE%",
+				"icon": "C:\\Users\\brad.jones\\.scoop\\apps\\windows-terminal\\current\\ProfileIcons\\{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.scale-200.png"
+			},
+			{
+				"guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+				"name": "Command Prompt",
+				"commandline": "cmd.exe",
+				"hidden": false,
+				"startingDirectory": "%USERPROFILE%",
+				"icon": "C:\\Users\\brad.jones\\.scoop\\apps\\windows-terminal\\current\\ProfileIcons\\{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.scale-200.png"
+			},
+			{
+				"guid": "{ee74f5aa-3e18-5d1f-b932-51dbf303640e}",
+				"name": "Fedora",
+				"commandline": "wsl",
+				"hidden": false,
+				"startingDirectory": "%USERPROFILE%",
+				"icon": "C:\\Users\\brad.jones\\AppData\\Local\\Microsoft\\Windows Terminal\\fedora-icon.png"
+			}
+		]
+	},
+	"schemes": [],
+	"keybindings": [
+		{
+			"command": {
+				"action": "copy",
+				"singleLine": false
+			},
+			"keys": "ctrl+c"
+		},
+		{
+			"command": "paste",
+			"keys": "ctrl+v"
+		},
+		{
+			"command": "find",
+			"keys": "ctrl+shift+f"
+		},
+		{
+			"command": {
+				"action": "splitPane",
+				"split": "auto",
+				"splitMode": "duplicate"
+			},
+			"keys": "alt+shift+d"
+		}
+	]
+}
