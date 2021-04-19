@@ -24,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.CANCEL_GITHUB_TOKEN }}
+      VCN_EMAIL: ${{ secrets.VCN_EMAIL }}
+      VCN_PASSWORD: ${{ secrets.VCN_PASSWORD }}
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Read .go-version
