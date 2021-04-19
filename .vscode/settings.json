@@ -6,6 +6,9 @@
 	// Maintain code style and quality by formatting after every save.
 	"editor.formatOnSave": true,
 	"editor.formatOnPaste": false,
+	"[powershell]": {
+		"editor.formatOnSave": false
+	},
 	//
 	// Prettier is a a code style / anti-bikeshedding tool from the javascript
 	// world, it also handles files, like XML/YAML/JSON. Make sure it enables
