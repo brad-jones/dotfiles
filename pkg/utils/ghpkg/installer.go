@@ -15,7 +15,7 @@ import (
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/cavaliercoder/grab"
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v35/github"
 	"github.com/mholt/archiver"
 	"github.com/phayes/permbits"
 )
