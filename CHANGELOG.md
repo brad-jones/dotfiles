@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/brad-jones/dotfiles/compare/v1.1.2...v1.2.0) (2021-04-19)
+
+
+### Features
+
+* executes the dotfiles bin directly on logon ([1594d5d](https://github.com/brad-jones/dotfiles/commit/1594d5dfa9acc4bb1d12aa180f2a4fbd6baccf3a))
+
 ## [1.1.2](https://github.com/brad-jones/dotfiles/compare/v1.1.1...v1.1.2) (2021-04-19)
 
 
