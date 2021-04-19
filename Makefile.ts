@@ -202,7 +202,7 @@ export async function notarize() {
 				},
 				json: {
 					kind: "file",
-					name: `https://github.com/brad-jones/dotfiles/releases/download/${config.versionNo}/${file}`,
+					name: `https://github.com/brad-jones/dotfiles/releases/download/v${config.versionNo}/${file}`,
 					hash: await hasha.fromFile(`./bin/${file}`, {
 						algorithm: "sha256",
 						encoding: "hex",

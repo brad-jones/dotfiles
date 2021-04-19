@@ -20,7 +20,7 @@ $installDir = if ([string]::IsNullOrWhiteSpace($installDir)) {
 # The final url that will be downloaded.
 $finalUrl = $env:DOTFILES_DOWNLOAD_URL;
 $finalUrl = if ([string]::IsNullOrWhiteSpace($finalUrl)) {
-	"https://github.com/brad-jones/dotfiles/releases/${version}/download/dotfiles_windows_amd64.exe"
+	"https://github.com/brad-jones/dotfiles/releases/download/v${version}/dotfiles_windows_amd64.exe"
 }
 
 # The final output path of the downloaded executable.
@@ -93,6 +93,15 @@ if ($results.verification.status -ne 0) {
 	[Console]::Error.WriteLine("$finalOutput has been deleted");
 	[Console]::ResetColor();
 	exit $results.verification.status;
+}
+if ($results.name -ne $finalUrl) {
+	[Console]::ForegroundColor = 'red';
+	[Console]::Error.WriteLine("UNTRUSTED");
+	[Console]::Error.WriteLine("!!! Downloaded URL does not match Notarized URL from codenotary.io !!!");
+	Remove-Item -Path "$finalOutput";
+	[Console]::Error.WriteLine("$finalOutput has been deleted");
+	[Console]::ResetColor();
+	exit -1;
 }
 [Console]::WriteLine("TRUSTED");
 
