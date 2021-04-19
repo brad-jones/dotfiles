@@ -192,24 +192,27 @@ export async function notarize() {
 	const log = logger.getChildLogger({ prefix: ["notarize:"] });
 
 	for (let file of await fs.promises.readdir("./bin")) {
-		let r = await got.post("https://api.codenotary.io/notarize", {
-			headers: {
-				Authorization: `Basic ${Buffer.from(
-					`${config.vcnEmail}:${config.vcnPassword}`
-				).toString("base64")}`,
-			},
-			json: {
-				kind: "file",
-				name: `https://github.com/brad-jones/dotfiles/releases/download/${config.versionNo}/${file}`,
-				hash: await hasha.fromFile(`./bin/${file}`, {
-					algorithm: "sha256",
-					encoding: "hex",
-				}),
-				size: (await fs.promises.stat(`./bin/${file}`)).size,
-				contentType: "application/x-executable",
-			},
-			responseType: "json",
-		});
+		let r = await got.post(
+			"https://api.codenotary.io/notarize?public=true",
+			{
+				headers: {
+					Authorization: `Basic ${Buffer.from(
+						`${config.vcnEmail}:${config.vcnPassword}`
+					).toString("base64")}`,
+				},
+				json: {
+					kind: "file",
+					name: `https://github.com/brad-jones/dotfiles/releases/download/${config.versionNo}/${file}`,
+					hash: await hasha.fromFile(`./bin/${file}`, {
+						algorithm: "sha256",
+						encoding: "hex",
+					}),
+					size: (await fs.promises.stat(`./bin/${file}`)).size,
+					contentType: "application/x-executable",
+				},
+				responseType: "json",
+			}
+		);
 		log.info(`./bin/${file}`, r.body);
 	}
 }
