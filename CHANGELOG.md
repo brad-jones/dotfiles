@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/brad-jones/dotfiles/compare/v1.1.1...v1.1.2) (2021-04-19)
+
+
+### Bug Fixes
+
+* downloaded URL checked against Notarized URL ([f754421](https://github.com/brad-jones/dotfiles/commit/f754421b2b94c8f9741ce377e2e3497f455a3df8))
+
 ## [1.1.1](https://github.com/brad-jones/dotfiles/compare/v1.1.0...v1.1.1) (2021-04-19)
 
 
