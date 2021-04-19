@@ -64,7 +64,7 @@ function CommandExists {
 # Make sure the finalOutput dir exists
 $parentDir = Split-Path $finalOutput;
 [Console]::Write("Ensuring $parentDir exists... ");
-New-Item -ItemType "directory" -Path "$parentDir" -Force > Out-Null;
+New-Item -ItemType "directory" -Path "$parentDir" -Force > $null;
 [Console]::WriteLine("DONE");
 
 # Download the executable.
