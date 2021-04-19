@@ -2,6 +2,7 @@ package steps
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
@@ -15,6 +16,9 @@ var ScheduledTaskError = goerr.New("failed")
 
 func MustInstallRunAtLogonScript() {
 	prefix := colorchooser.Sprint("install-run-at-logon-script")
+
+	exe, err := os.Executable()
+	goerr.Check(err, "failed to get path to current running exe")
 
 	if runtime.GOOS == "windows" {
 		ps := gopwsh.MustNew(gopwsh.Elevated(winsudo.Path()))
@@ -34,7 +38,7 @@ func MustInstallRunAtLogonScript() {
 		if _, stderr := ps.MustExecute(
 			`$u = whoami;`,
 			`$Stt = New-ScheduledTaskTrigger -AtLogOn -User "$u";`,
-			`$Sta = New-ScheduledTaskAction -Execute "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "-NoLogo .\run-at-logon.ps1" -WorkingDirectory "$env:USERPROFILE\Documents\WindowsPowershell\Scripts";`,
+			`$Sta = New-ScheduledTaskAction -Execute "`+exe+`" -Argument "-update" -WorkingDirectory "$env:USERPROFILE";`,
 			`$STPrincipal = New-ScheduledTaskPrincipal -UserID "$u" -LogonType Interactive;`,
 			`Register-ScheduledTask "Run at Logon" -Principal $STPrincipal -Trigger $Stt -Action $Sta;`,
 		); len(stderr) > 0 {

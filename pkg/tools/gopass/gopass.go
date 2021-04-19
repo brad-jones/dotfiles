@@ -55,9 +55,7 @@ func GetSecret(key string) string {
 
 // Indicates if the vault is working & unlocked or not
 func VaultUnlocked() (r bool) {
-	defer goerr.Handle(func(err error) {
-		r = false
-	})
+	defer goerr.Handle(func(err error) { r = false })
 	if !utils.CommandExists("gopass") {
 		return false
 	}

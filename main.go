@@ -11,7 +11,6 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
 	"github.com/brad-jones/goasync/v2/await"
-	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/urfave/cli/v2"
 )
@@ -49,6 +48,10 @@ func main() {
 				Name:  "reset",
 				Usage: "If set then many things will be deleted & replaced instead of just checking for existence.",
 			},
+			&cli.BoolFlag{
+				Name:  "update",
+				Usage: "If set then we will attempt to update ourselves, before then running our updated self.",
+			},
 		},
 		Action: func(c *cli.Context) (err error) {
 			defer goerr.Handle(func(e error) { err = e })
@@ -74,15 +77,13 @@ func main() {
 				// Setup our dart scripts
 				steps.InstallDartScriptsAsync(),
 
-				// Unlock our secrets
-				task.New(func() {
-					steps.MustUnlockVault(answers)
-					steps.MustUnlockKeys(answers)
-				}),
-
 				// This will make this binary self-update and run again on logon
 				steps.InstallRunAtLogonScriptAsync(),
 			)
+
+			// Unlock our secrets
+			steps.MustUnlockVault(answers)
+			steps.MustUnlockKeys(answers)
 
 			// Write all out other files
 			if runtime.GOOS == "windows" {

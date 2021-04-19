@@ -7,10 +7,8 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
-	"github.com/brad-jones/dotfiles/pkg/tools/gopass"
 	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goerr/v2"
-	"github.com/gosimple/slug"
 	"github.com/urfave/cli/v2"
 )
 
@@ -20,20 +18,24 @@ type Answers struct {
 	SudoPassword     string
 	VaultKeyPassword string
 	Reset            bool
+	Update           bool
+	UpdateToVersion  string
 }
 
 func AskQuestions(c *cli.Context) *Answers {
 	answers := &Answers{}
 
-	// Some answers come from the CLI
+	// Some answers come from the CLI & environment
 	answers.Reset = c.Bool("reset")
+	answers.Update = c.Bool("update")
+	if answers.Update {
+		answers.UpdateToVersion = os.Getenv("DOTFILES_VERSION")
+	}
 
-	// If our secret vault (currently gopass) is unlocked
-	// we will get these secrets from the vault.
-	if gopass.VaultUnlocked() {
-		answers.GithubPassword = gopass.GetSecret("websites/github.com/brad@bjc.id.au")
-		answers.GitlabPassword = gopass.GetSecret("websites/gitlab.com/brad@bjc.id.au")
-		answers.SudoPassword = gopass.GetSecret(fmt.Sprintf("sudo/%s", slug.Make(utils.GetComputerName())))
+	// If we haven't been told to do a full reset and the things needed for the
+	// vault are already installed, we are just going to assume that the vault
+	// just needs unlocking.
+	if utils.CommandExists("gpg") && utils.CommandExists("gopass") {
 		answers.VaultKeyPassword = utils.GetSecretFromKeychain("passphrase", "vault")
 		return answers
 	}

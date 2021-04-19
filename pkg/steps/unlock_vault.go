@@ -18,6 +18,7 @@ import (
 	"github.com/brad-jones/goprefix/v2/pkg/prefixer"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
+	"github.com/gosimple/slug"
 	"github.com/zalando/go-keyring"
 )
 
@@ -30,15 +31,20 @@ const vaultKeyRepoHTTPS = "https://gitlab.com/brad-jones/vault-key.git"
 func UnlockVault(answers *survey.Answers) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
-	await.MustFastAllOrError(
-		gopass.InstallAsync(answers.Reset),
-		gpg.InstallAsync(answers.SudoPassword),
-		downloadVaultAsync(answers.GithubPassword, answers.Reset),
-	)
+	if answers.Reset || (len(answers.GithubPassword) > 0 && len(answers.GitlabPassword) > 0) {
+		await.MustFastAllOrError(
+			gopass.InstallAsync(answers.Reset),
+			gpg.InstallAsync(answers.SudoPassword),
+			downloadVaultAsync(answers.GithubPassword, answers.Reset),
+		)
+		mustDownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword, answers.Reset)
+	}
 
-	mustDownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword, answers.Reset)
 	gpg.MustStartAgent()
 	gpg.MustUnlockKey(vaultKeyname, answers.VaultKeyPassword)
+	answers.GithubPassword = gopass.GetSecret("websites/github.com/brad@bjc.id.au")
+	answers.GitlabPassword = gopass.GetSecret("websites/gitlab.com/brad@bjc.id.au")
+	answers.SudoPassword = gopass.GetSecret(fmt.Sprintf("sudo/%s", slug.Make(utils.GetComputerName())))
 
 	return
 }
