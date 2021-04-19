@@ -1,31 +1,56 @@
 # Brads DotFiles
 
 This repo, represents Brads home directory dotfiles for both _*nix_ based
-systems _(Fedora)_ & Windows ones. It is a Go project which gets compiled
-into a single binary, download & run the binary to install Brad's dotfiles.
-_Brad does not use MacOS... yet_
+systems & Windows ones. It is a Go project which gets compiled into a single
+binary, download & run the binary to install Brad's dotfiles. _Brad does not
+use MacOS... yet_
+
+> Fedora is my primary distro, other Redhat based distros may work but YMMV.
 
 ## Quick Start
-
-On first run, the binary will ask a bunch of questions interactively.
-
-Things like passwords in order to setup the [gopass](https://www.gopass.pw/)
-vault which contains all other secrets. On subsequent executions these questions
-won't be asked and it will simply re-apply the environment config in an
-idempotent manner.
 
 ### *nix
 
 ```
-TODO, construct a BASH one liner here to download and run the binary
+curl -fsSL https://github.com/brad-jones/dotfiles/releases/latest/download/install.sh | sh
 ```
-
-> Fedora is my primary distro, other Redhat based distros may work but YMMV.
 
 ### Windows
 
 ```
-TODO, construct a PowerShell one liner here to download and run the binary
+iwr https://github.com/brad-jones/dotfiles/releases/latest/download/install.ps1 -useb | iex
+```
+
+These one liners are designed to get you up and running on a fresh system,
+quickly & easily. The scripts are designed to be small, simple and auditable.
+_You should never just execute any arbitrary code from the internet!_
+
+These scripts have the following config variables, which can be overridden via
+corresponding environment variables:
+
+- `DOTFILES_VERSION`: The default value is etched into the script by the pipeline at release time.
+- `DOTFILES_INSTALL_DIR`: Defaults to `~/.local/bin`.
+- `DOTFILES_DOWNLOAD_URL`: Constructed from `DOTFILES_VERSION`.
+- `DOTFILES_OUTPUT`: Defaults to `$DOTFILES_INSTALL_DIR/dotfiles[.exe]`
+- `DOTFILES_SIGNERS`: Defaults to `0x33dc7b56c2be6175e1ad17e31f003f55943fa4ce`
+- `DOTFILES_RUN_AFTER_INSTALL`: Default to `true`
+
+### CodeNotary
+
+All artifacts produced by the pipeline are signed with <https://codenotary.io> -
+A blockchain based digital code signing service.
+
+The above one liners will download the executable and then verify it against
+the CodeNotary API before executing it for you.
+
+To do this manually just download the correct executable from <https://github.com/brad-jones/dotfiles/releases>.
+Then open <https://authenticate.codenotary.io> in a browser & drop the downloaded file into the page.
+This will hash the file locally & send the hash _(not the file)_ off to the blockchain for verification.
+
+My signing ID is:
+
+```
+0x33dc7b56c2be6175e1ad17e31f003f55943fa4ce
 ```
 
 ## Features
@@ -39,8 +64,8 @@ TODO, construct a PowerShell one liner here to download and run the binary
   through [dependabot](https://dependabot.com/) _like_ workflows.
 
 - On Windows based systems it will create a WSL instance and then automatically
-  download the Linux version of the binary and apply the setup inside the VM as
-  well - inception :wink:
+  run the Linux version of the binary (which is embedded into the Windows one)
+  and apply the setup inside the VM as well - inception :wink:
 
 - Easily apply rollbacks by simply downloading & running a previously released
   version of the self-contained dotfiles binary.
@@ -90,7 +115,7 @@ software.
 
 While I see why they have made this choice & on *nix based systems you can
 easily work with-in the declarative guard rails, on Windows I found this more
-challenging.
+challenging due to things like the Registry urgh...
 
 And I couldn't help but feel that it's a bit of a cop out to just discard that
 part of ones environment setup. For me I wanted something 100% automated.
