@@ -79,6 +79,9 @@ func main() {
 					steps.MustUnlockVault(answers)
 					steps.MustUnlockKeys(answers)
 				}),
+
+				// This will make this binary self-update and run again on logon
+				steps.InstallRunAtLogonScriptAsync(),
 			)
 
 			// Write all out other files
