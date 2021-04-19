@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/brad-jones/dotfiles/compare/v1.1.0...v1.1.1) (2021-04-19)
+
+
+### Bug Fixes
+
+* powershell installer direct to null was incorrect ([5367a50](https://github.com/brad-jones/dotfiles/commit/5367a5000a56919e909903686437df3c8ecdeb59))
+
 # [1.1.0](https://github.com/brad-jones/dotfiles/compare/v1.0.1...v1.1.0) (2021-04-19)
 
 
