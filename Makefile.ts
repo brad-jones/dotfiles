@@ -1,9 +1,11 @@
 import * as fs from "fs";
 import yargs from "yargs";
+import Jsvcn from "jsvcn";
 import { Logger } from "tslog";
 import * as execa from "execa";
 import * as hasha from "hasha";
 import * as readline from "readline";
+import { replaceInFile } from "replace-in-file";
 
 // >>> CONFIGURATION
 // -----------------------------------------------------------------------------
@@ -11,6 +13,8 @@ import * as readline from "readline";
 //
 // see: https://yargs.js.org/
 const config = yargs(process.argv.slice(2))
+	.option("vcnEmail", { default: process.env["VCN_EMAIL"] })
+	.option("vcnPassword", { default: process.env["VCN_PASSWORD"] })
 	.option("versionNo", { default: process.env["VERSION_NO"] ?? "0.0.0" })
 	.option("buildDate", {
 		default: process.env["DATE"] ?? new Date().toISOString(),
@@ -87,10 +91,6 @@ export async function clean() {
 	log.info("rm -rf ./bin");
 }
 
-/**
- * With PowerShell call this like: `./make run '--' --version`
- * Bash of course understands with `--` means and doesn't require quotes.
- */
 export async function run() {
 	await build();
 
@@ -113,6 +113,15 @@ export async function buildLinux() {
 	const log = logger.getChildLogger({ prefix: ["buildLinux:"] });
 	log.info("building go binary");
 	await goBuilder("linux", log);
+
+	log.info("copying ./installers/install.sh => ./bin/install.sh");
+	await fs.promises.copyFile("./installers/install.sh", "./bin/install.sh");
+	log.info("injecting version number into ./bin/install.sh");
+	await replaceInFile({
+		files: "./bin/install.sh",
+		from: "0.0.0",
+		to: config.versionNo,
+	});
 }
 
 export async function buildWindows() {
@@ -144,6 +153,15 @@ export async function buildWindows() {
 		log.info("deleting ./pkg/assets/files/dotfiles_linux_amd64");
 		await fs.promises.rm("./pkg/assets/files/dotfiles_linux_amd64");
 	}
+
+	log.info("copying ./installers/install.ps1 => ./bin/install.ps1");
+	await fs.promises.copyFile("./installers/install.ps1", "./bin/install.ps1");
+	log.info("injecting version number into ./bin/install.ps1");
+	await replaceInFile({
+		files: "./bin/install.ps1",
+		from: "0.0.0",
+		to: config.versionNo,
+	});
 }
 
 export async function writeChecksums() {
@@ -167,10 +185,27 @@ export async function writeChecksums() {
 	log.info("written ./bin/sha256_checksums.txt");
 }
 
+export async function notarize() {
+	const log = logger.getChildLogger({ prefix: ["notarize:"] });
+
+	const vcn = new Jsvcn({
+		credentials: {
+			email: config.vcnEmail,
+			password: config.vcnPassword,
+		},
+	});
+
+	for (let file of await fs.promises.readdir("./bin")) {
+		log.info(`./bin/${file}`);
+		console.log(await vcn.sign(`./bin/${file}`));
+	}
+}
+
 export async function prepareRelease() {
 	await clean();
 	await build();
 	await writeChecksums();
+	await notarize();
 }
 
 // >>> ENTRYPOINT
