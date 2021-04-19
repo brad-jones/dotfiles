@@ -1,11 +1,14 @@
+import got from "got";
 import * as fs from "fs";
 import yargs from "yargs";
-import Jsvcn from "jsvcn";
 import { Logger } from "tslog";
 import * as execa from "execa";
 import * as hasha from "hasha";
 import * as readline from "readline";
 import { replaceInFile } from "replace-in-file";
+
+// Load up local .env values
+require("dotenv").config();
 
 // >>> CONFIGURATION
 // -----------------------------------------------------------------------------
@@ -188,16 +191,26 @@ export async function writeChecksums() {
 export async function notarize() {
 	const log = logger.getChildLogger({ prefix: ["notarize:"] });
 
-	const vcn = new Jsvcn({
-		credentials: {
-			email: config.vcnEmail,
-			password: config.vcnPassword,
-		},
-	});
-
 	for (let file of await fs.promises.readdir("./bin")) {
-		log.info(`./bin/${file}`);
-		console.log(await vcn.sign(`./bin/${file}`));
+		let r = await got.post("https://api.codenotary.io/notarize", {
+			headers: {
+				Authorization: `Basic ${Buffer.from(
+					`${config.vcnEmail}:${config.vcnPassword}`
+				).toString("base64")}`,
+			},
+			json: {
+				kind: "file",
+				name: `https://github.com/brad-jones/dotfiles/releases/download/${config.versionNo}/${file}`,
+				hash: await hasha.fromFile(`./bin/${file}`, {
+					algorithm: "sha256",
+					encoding: "hex",
+				}),
+				size: (await fs.promises.stat(`./bin/${file}`)).size,
+				contentType: "application/x-executable",
+			},
+			responseType: "json",
+		});
+		log.info(`./bin/${file}`, r.body);
 	}
 }
 
