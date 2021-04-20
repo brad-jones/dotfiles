@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"time"
 
 	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/steps"
@@ -29,6 +30,10 @@ func main() {
 	// where we will spit out a stack trace for debugging purposes.
 	defer goerr.Handle(func(err error) {
 		goerr.PrintTrace(err)
+		go func() { time.Sleep(time.Second * 120); os.Exit(1) }()
+		fmt.Println("Press Enter to continue...")
+		fmt.Println("NOTE: you have 120 seconds to answer and then the program will terminate regardless")
+		fmt.Scanln()
 		os.Exit(1)
 	})
 
