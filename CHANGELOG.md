@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/brad-jones/dotfiles/compare/v1.2.0...v1.2.1) (2021-04-20)
+
+
+### Bug Fixes
+
+* vault unlocking and updating, still not totally happy with this ([e285027](https://github.com/brad-jones/dotfiles/commit/e28502720904cea2625a5493c86f3cff7ec3f30d))
+
 # [1.2.0](https://github.com/brad-jones/dotfiles/compare/v1.1.2...v1.2.0) (2021-04-19)
 
 
