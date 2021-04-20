@@ -34,8 +34,8 @@ func AskQuestions(c *cli.Context) *Answers {
 
 	// If we haven't been told to do a full reset and the things needed for the
 	// vault are already installed, we are just going to assume that the vault
-	// just needs unlocking.
-	if utils.CommandExists("gpg") && utils.CommandExists("gopass") {
+	// needs unlocking. The other answers we can get from the vault when we unlock it.
+	if !answers.Reset && utils.CommandExists("gpg") && utils.CommandExists("gopass") {
 		answers.VaultKeyPassword = utils.GetSecretFromKeychain("passphrase", "vault")
 		return answers
 	}
@@ -53,11 +53,11 @@ func AskQuestions(c *cli.Context) *Answers {
 		goerr.Check(scanner.Err())
 
 		scanner.Scan()
-		answers.SudoPassword = scanner.Text()
+		answers.VaultKeyPassword = scanner.Text()
 		goerr.Check(scanner.Err())
 
 		scanner.Scan()
-		answers.VaultKeyPassword = scanner.Text()
+		answers.SudoPassword = scanner.Text()
 		goerr.Check(scanner.Err())
 
 		return answers

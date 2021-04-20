@@ -31,20 +31,33 @@ const vaultKeyRepoHTTPS = "https://gitlab.com/brad-jones/vault-key.git"
 func UnlockVault(answers *survey.Answers) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
-	if answers.Reset || (len(answers.GithubPassword) > 0 && len(answers.GitlabPassword) > 0) {
-		await.MustFastAllOrError(
-			gopass.InstallAsync(answers.Reset),
-			gpg.InstallAsync(answers.SudoPassword),
-			downloadVaultAsync(answers.GithubPassword, answers.Reset),
-		)
-		mustDownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword, answers.Reset)
+	// If the tools for the vault exist already but we have no creds then we
+	// need to unlock the vault, grab the creds, close the vault, update the
+	// vault & finally unlock it again.
+	if utils.CommandExists("gpg") &&
+		utils.CommandExists("gopass") &&
+		len(answers.SudoPassword) == 0 &&
+		len(answers.GithubPassword) == 0 &&
+		len(answers.GitlabPassword) == 0 {
+		gpg.MustStartAgent()
+		gpg.MustUnlockKey(vaultKeyname, answers.VaultKeyPassword)
+		answers.GithubPassword = gopass.GetSecret("websites/github.com/brad@bjc.id.au")
+		answers.GitlabPassword = gopass.GetSecret("websites/gitlab.com/brad@bjc.id.au")
+		answers.SudoPassword = gopass.GetSecret(fmt.Sprintf("sudo/%s", slug.Make(utils.GetComputerName())))
+		utils.KillProcByName("gpg-agent")
 	}
 
+	// Install or update the vault
+	await.MustFastAllOrError(
+		gopass.InstallAsync(answers.Reset),
+		gpg.InstallAsync(answers.SudoPassword),
+		downloadVaultAsync(answers.GithubPassword, answers.Reset),
+	)
+	mustDownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword, answers.Reset)
+
+	// Unlock the vault
 	gpg.MustStartAgent()
 	gpg.MustUnlockKey(vaultKeyname, answers.VaultKeyPassword)
-	answers.GithubPassword = gopass.GetSecret("websites/github.com/brad@bjc.id.au")
-	answers.GitlabPassword = gopass.GetSecret("websites/gitlab.com/brad@bjc.id.au")
-	answers.SudoPassword = gopass.GetSecret(fmt.Sprintf("sudo/%s", slug.Make(utils.GetComputerName())))
 
 	return
 }

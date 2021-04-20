@@ -70,6 +70,10 @@ func main() {
 				scoop.MustInstall(answers.Reset, false)
 			}
 
+			// Unlock our secrets
+			steps.MustUnlockVault(answers)
+			steps.MustUnlockKeys(answers)
+
 			await.MustFastAllOrError(
 				// Update (or install) all our other software
 				steps.UpdateAsync(),
@@ -80,10 +84,6 @@ func main() {
 				// This will make this binary self-update and run again on logon
 				steps.InstallRunAtLogonScriptAsync(),
 			)
-
-			// Unlock our secrets
-			steps.MustUnlockVault(answers)
-			steps.MustUnlockKeys(answers)
 
 			// Write all out other files
 			if runtime.GOOS == "windows" {
