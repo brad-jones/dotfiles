@@ -15,7 +15,7 @@ import (
 )
 
 // NotWindows is returned whenever one of these tasks are run on a non-windows OS
-var NotWindows = goerr.New("scoop is a windows only technology")
+var NotWindows = goerr.New("winsudo is a windows only technology")
 
 // Installs sudo for Windows.
 //
