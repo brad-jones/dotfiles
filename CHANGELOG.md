@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/brad-jones/dotfiles/compare/v1.2.1...v1.3.0) (2021-04-20)
+
+
+### Bug Fixes
+
+* **winsudo:** updated error txt to be correct ([20f574b](https://github.com/brad-jones/dotfiles/commit/20f574b1dbac842d33eb99c2fcb22220ed8082d6))
+
+
+### Features
+
+* added press enter to continue logic to error handler ([d2d7c58](https://github.com/brad-jones/dotfiles/commit/d2d7c58cf868e27d1a7cd59ad340b6274e1d52c6))
+
 ## [1.2.1](https://github.com/brad-jones/dotfiles/compare/v1.2.0...v1.2.1) (2021-04-20)
 
 
