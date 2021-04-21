@@ -11,9 +11,9 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/survey"
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
+	"github.com/brad-jones/dotfiles/pkg/updater"
 	"github.com/brad-jones/goasync/v2/await"
 	"github.com/brad-jones/goerr/v2"
-	"github.com/brad-jones/goexec/v2"
 	"github.com/urfave/cli/v2"
 )
 
@@ -27,13 +27,13 @@ var (
 )
 
 func main() {
-	// All un handled errors should bubble all the way up to here
+	// All unhandled errors should bubble all the way up to here
 	// where we will spit out a stack trace for debugging purposes.
 	defer goerr.Handle(func(err error) {
 		goerr.PrintTrace(err)
 		go func() { time.Sleep(time.Second * 120); os.Exit(1) }()
 		fmt.Println("Press Enter to continue...")
-		fmt.Println("NOTE: you have 120 seconds to answer and then the program will terminate regardless")
+		fmt.Println("NOTE: the program will terminate in 120s regardless")
 		fmt.Scanln()
 		os.Exit(1)
 	})
@@ -47,16 +47,20 @@ func main() {
 		)
 	}
 
+	// Define the main CLI application.
+	// We are using: https://github.com/urfave/cli
 	goerr.Check((&cli.App{
 		Version: versionNo,
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
-				Name:  "reset",
-				Usage: "If set then many things will be deleted & replaced instead of just checking for existence.",
+				Name: "reset",
+				Usage: "If set then the setup process will start from the " +
+					"very start even if it has already successfully run.",
 			},
 			&cli.BoolFlag{
-				Name:  "update",
-				Usage: "If set then we will attempt to update ourselves, before then running our updated self.",
+				Name: "update",
+				Usage: "If set then we will attempt to update ourselves, " +
+					"before then running our updated self.",
 			},
 		},
 		Action: func(c *cli.Context) (err error) {
@@ -64,28 +68,46 @@ func main() {
 
 			// Start by collecting some information from the user
 			// On subsequent executions these answers will be filled
-			// automatically from cache or the unlocked secrets vault.
+			// automatically from cache and/or the unlocked secrets vault.
 			answers := survey.AskQuestions(c)
 
-			if runtime.GOOS == "windows" {
-				// Before we go any further we need a way to "elevate" on Windows.
-				winsudo.MustInstall(answers.Reset)
+			// If the update flag has been provided then we will execute the
+			// self update process. This will download a new version of this
+			// tool and then execute the new version of the tool. If the new
+			// version fails, a rollback will be performed.
+			if answers.Update {
+				updater.MustUpdate(versionNo, answers)
+				os.Exit(0)
+			}
 
-				// And then we need the scoop package manager
-				// to be able to install all the other things.
+			// Windows systems need a way to "elevate" & install packages.
+			// Sudo for Windows: https://github.com/gerardog/gsudo
+			// A command-line installer for Windows: https://scoop.sh
+			if runtime.GOOS == "windows" {
+				winsudo.MustInstall(answers.Reset)
 				scoop.MustInstall(answers.Reset, false)
 			}
 
-			// Unlock our secrets
+			// The very next thing we do is unlock our secrets.
+			// We do this early on so that we may refer to secrets
+			// as required throughout the rest of the process.
 			steps.MustUnlockVault(answers)
 			steps.MustUnlockKeys(answers)
-			goexec.MustRunPrefixed("gopass", "gopass", "sync")
 
 			await.MustFastAllOrError(
 				// Update (or install) all our other software
 				steps.UpdateAsync(),
 
-				// Setup our dart scripts
+				// These scripts automate some of my daily tasks.
+				//
+				// They either do very specific things for "me" and so make less
+				// sense to release as standalone tools or they are simply at a
+				// PoC stage and not ready for public consumption.
+				//
+				// TODO: I want to either re-write into Deno scripts so that
+				// they are truly self contained scripts and then Deno handles
+				// the installation of the dependencies for me. Or re-write with
+				// into standalone Go tools if warrented.
 				steps.InstallDartScriptsAsync(),
 
 				// This will make this binary self-update and run again on logon

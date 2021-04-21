@@ -70,6 +70,11 @@ func UnlockKeys(answers *survey.Answers) (err error) {
 	}
 
 	await.MustFastAllOrError(tasks...)
+
+	// Now that all our SSH keys are added to the agent we
+	// can then pull any changes to the gopass vault.
+	goexec.MustRunPrefixed("gopass", "gopass", "sync")
+
 	return
 }
 
