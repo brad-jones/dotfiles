@@ -76,8 +76,11 @@ func main() {
 			// tool and then execute the new version of the tool. If the new
 			// version fails, a rollback will be performed.
 			if answers.Update {
-				updater.MustUpdate(versionNo, answers)
-				os.Exit(0)
+				if updater.MustUpdate(versionNo, answers) {
+					// If we did update we can exit here
+					time.Sleep(time.Second * 3)
+					os.Exit(0)
+				}
 			}
 
 			// Windows systems need a way to "elevate" & install packages.

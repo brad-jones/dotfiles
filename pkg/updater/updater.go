@@ -27,10 +27,13 @@ const signer = "0x33dc7b56c2be6175e1ad17e31f003f55943fa4ce"
 
 var UnTrusted = goerr.New("the downloaded binary did not authenticate agains codenotary.io")
 
-func Update(currentVersion string, answers *survey.Answers) (err error) {
-	defer goerr.Handle(func(e error) { err = e })
-	prefix := colorchooser.Sprint("self-update")
+func Update(currentVersion string, answers *survey.Answers) (updated bool, err error) {
+	defer goerr.Handle(func(e error) {
+		updated = false
+		err = e
+	})
 
+	prefix := colorchooser.Sprint("self-update")
 	g := github.NewClient(nil)
 
 	// If we don't have a specific version to update to,
@@ -92,7 +95,7 @@ func Update(currentVersion string, answers *survey.Answers) (err error) {
 		// above. And then when this returns the rest of this versions process
 		// will run, hopefully restoring the system into a working state.
 		fmt.Println(prefix, "|", "the new version failed, rolling back...")
-		return nil
+		return false, nil
 	}
 
 	// Now we can finally replace and update ourselves.
@@ -100,11 +103,13 @@ func Update(currentVersion string, answers *survey.Answers) (err error) {
 	goerr.Check(replaceSelf(newBin), "failed to replace ourselves, perform update manually...")
 	fmt.Println(prefix, "|", "new version has been installed")
 
-	return
+	return true, nil
 }
 
-func MustUpdate(currentVersion string, answers *survey.Answers) {
-	goerr.Check(Update(currentVersion, answers))
+func MustUpdate(currentVersion string, answers *survey.Answers) bool {
+	updated, err := Update(currentVersion, answers)
+	goerr.Check(err)
+	return updated
 }
 
 func stripV(in string) string {
