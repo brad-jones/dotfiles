@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/brad-jones/dotfiles/compare/v1.3.1...v1.4.0) (2021-04-21)
+
+
+### Bug Fixes
+
+* **dartscripts:** remove some debugging code ([c172e28](https://github.com/brad-jones/dotfiles/commit/c172e289e5b3afb6735a69a038833f5ea8717d22))
+
+
+### Features
+
+* self update is now a thing ([0426e5a](https://github.com/brad-jones/dotfiles/commit/0426e5ab384b4e1334a8574c028f11ba4de1e386))
+
 ## [1.3.1](https://github.com/brad-jones/dotfiles/compare/v1.3.0...v1.3.1) (2021-04-21)
 
 
