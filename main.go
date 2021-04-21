@@ -100,6 +100,11 @@ func main() {
 			assets.WriteFolderToHome("Projects")
 			assets.WriteFileToHome(".gitconfig")
 
+			// When run at logon we want to wait here for a bit so it gives the
+			// user a chance to read what was printed to the console before the
+			// console window closes.
+			time.Sleep(time.Second * 3)
+
 			return
 		},
 	}).Run(os.Args))
