@@ -12,6 +12,7 @@ import (
 
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
+	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/brad-jones/gopwsh"
 	"github.com/zalando/go-keyring"
 )
@@ -74,6 +75,7 @@ func KillProcByName(name string) {
 		defer ps.Exit()
 		ps.MustExecute(fmt.Sprintf("Stop-Process -Name %s -Force", gopwsh.QuoteArg(name)))
 	}
+	fmt.Println(colorchooser.Sprint("kill-proc"), "|", name)
 }
 
 func IsRoot() bool {
