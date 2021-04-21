@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/brad-jones/dotfiles/compare/v1.3.0...v1.3.1) (2021-04-21)
+
+
+### Bug Fixes
+
+* **gopass:** make sure we sync the vault after unlocking it ([6606ed5](https://github.com/brad-jones/dotfiles/commit/6606ed553513ca295b82090a55b979d824b99d9f))
+* add some sleep time at the end of the program ([017de6e](https://github.com/brad-jones/dotfiles/commit/017de6eba3c6933ce0b97cf413ee56563ffb020d))
+* **killprocbyname:** add some additional logging ([aa70cb3](https://github.com/brad-jones/dotfiles/commit/aa70cb3167528fa472521c0072b0e9518d478417))
+
 # [1.3.0](https://github.com/brad-jones/dotfiles/compare/v1.2.1...v1.3.0) (2021-04-20)
 
 
