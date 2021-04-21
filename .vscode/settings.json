@@ -33,5 +33,16 @@
 	// spelled but not english words. This is a white list of words.
 	//
 	// see: https://github.com/streetsidesoftware/vscode-spell-checker
-	"cSpell.words": ["dotfile", "dotfiles", "goerr"]
+	"cSpell.words": [
+		"Deno",
+		"Pkgs",
+		"blang",
+		"deps",
+		"dotfile",
+		"dotfiles",
+		"goerr",
+		"goexec",
+		"sbin",
+		"semver"
+	]
 }
