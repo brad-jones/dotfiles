@@ -237,8 +237,7 @@ Future<void> main(List<String> argv) async {
       parsedArgv['key'],
       profile,
     );
-    print(pwd);
-    exit(1);
+
     await login(
       meta['PrivateIpAddress'],
       username,
