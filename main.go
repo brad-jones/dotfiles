@@ -13,6 +13,7 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
 	"github.com/brad-jones/goasync/v2/await"
 	"github.com/brad-jones/goerr/v2"
+	"github.com/brad-jones/goexec/v2"
 	"github.com/urfave/cli/v2"
 )
 
@@ -78,6 +79,7 @@ func main() {
 			// Unlock our secrets
 			steps.MustUnlockVault(answers)
 			steps.MustUnlockKeys(answers)
+			goexec.MustRunPrefixed("gopass", "gopass", "sync")
 
 			await.MustFastAllOrError(
 				// Update (or install) all our other software
