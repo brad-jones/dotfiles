@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/brad-jones/dotfiles/compare/v1.4.0...v1.4.1) (2021-04-21)
+
+
+### Bug Fixes
+
+* **selfupdate:** now still runs rest of process if no update needed ([a818717](https://github.com/brad-jones/dotfiles/commit/a818717aff9b59c79216cb366b104ef1a9858057))
+
 # [1.4.0](https://github.com/brad-jones/dotfiles/compare/v1.3.1...v1.4.0) (2021-04-21)
 
 
