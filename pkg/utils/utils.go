@@ -107,16 +107,22 @@ func CommandExists(cmd string) bool {
 
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+		goerr.Check(err, "failed to stat file", filename)
 	}
 	return !info.IsDir()
 }
 
 func FolderExists(filename string) bool {
 	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
+	if err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+		goerr.Check(err, "failed to stat folder", filename)
 	}
 	return info.IsDir()
 }

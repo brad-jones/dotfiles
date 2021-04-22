@@ -38,10 +38,12 @@
 		"Pkgs",
 		"blang",
 		"deps",
+		"distro",
 		"dotfile",
 		"dotfiles",
 		"goerr",
 		"goexec",
+		"ldflags",
 		"sbin",
 		"semver"
 	]

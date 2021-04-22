@@ -60,6 +60,10 @@ func Install(reset bool) (err error) {
 	//
 	// We just stop the prompt from displaying for Admin users with
 	// `ConsentPromptBehaviorAdmin` set to 0.
+	//
+	// Actually a more accurate analogy is where Sudo prompts for a password.
+	// This is essentially like having `ALL=(ALL) NOPASSWD:ALL`. If UAC had some
+	// sort of CLI interface this wouldn't be needed.
 	if reset || !exists {
 		prefix := colorchooser.Sprint("install-gsudo")
 		fmt.Println(prefix, "|", "setting ConsentPromptBehaviorAdmin to 0")

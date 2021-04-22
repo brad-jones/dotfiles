@@ -13,12 +13,12 @@ import (
 	"github.com/brad-jones/goasync/v2/task"
 )
 
-func MustUpdate() {
+func MustInstallOrUpdate() {
 	await.MustFastAllOrError(
 		chrome.InstallAsync(),
 		firefox.InstallAsync(),
 		wavebox.InstallAsync(),
-		dotnet.InstallAsync("latest", "3.1.407", "2.1.814"),
+		dotnet.InstallAsync(tools.DotnetVersions()...),
 		task.New(func() {
 			if runtime.GOOS == "windows" {
 				updateWindows()
@@ -29,8 +29,8 @@ func MustUpdate() {
 	)
 }
 
-func UpdateAsync() *task.Task {
-	return task.New(func() { MustUpdate() })
+func InstallOrUpdateAsync() *task.Task {
+	return task.New(func() { MustInstallOrUpdate() })
 }
 
 func updateWindows() {

@@ -31,10 +31,14 @@ func main() {
 	// where we will spit out a stack trace for debugging purposes.
 	defer goerr.Handle(func(err error) {
 		goerr.PrintTrace(err)
-		go func() { time.Sleep(time.Second * 120); os.Exit(1) }()
+
+		// When this is executed as a login script, this just gives the
+		// user a chance to read the error before the Window closes.
 		fmt.Println("Press Enter to continue...")
-		fmt.Println("NOTE: the program will terminate in 120s regardless")
+		fmt.Println("NOTE: the program will terminate in 30s regardless")
+		go func() { time.Sleep(time.Second * 30); os.Exit(1) }()
 		fmt.Scanln()
+
 		os.Exit(1)
 	})
 
@@ -77,10 +81,17 @@ func main() {
 			// version fails, a rollback will be performed.
 			if answers.Update {
 				if updater.MustUpdate(versionNo, answers) {
-					// If we did update we can exit here
+					// If we did update successfully we can exit here as the
+					// updater runs the new version of this tool for us, in
+					// effect making the rest of the instructions in this
+					// function redundant and possibly incompatible with the
+					// what the new version of the tool just executed.
 					time.Sleep(time.Second * 3)
 					os.Exit(0)
 				}
+				// However if the updater fails we can then run this version
+				// of the tool in the hope that it will leave the system in a
+				// useable state, in effect performing a rollback.
 			}
 
 			// Windows systems need a way to "elevate" & install packages.
@@ -98,8 +109,12 @@ func main() {
 			steps.MustUnlockKeys(answers)
 
 			await.MustFastAllOrError(
-				// Update (or install) all our other software
-				steps.UpdateAsync(),
+				// This is the whole point right :)
+				// Lets write our actual dotfiles to the filesystem.
+				assets.WriteDotfilesAsync(),
+
+				// Here we install (or update) the bulk of our software
+				steps.InstallOrUpdateAsync(),
 
 				// These scripts automate some of my daily tasks.
 				//
@@ -109,23 +124,21 @@ func main() {
 				//
 				// TODO: I want to either re-write into Deno scripts so that
 				// they are truly self contained scripts and then Deno handles
-				// the installation of the dependencies for me. Or re-write with
-				// into standalone Go tools if warrented.
+				// the installation of the dependencies for me. Or re-write into
+				// standalone Go tools if warrented.
 				steps.InstallDartScriptsAsync(),
 
 				// This will make this binary self-update and run again on logon
 				steps.InstallRunAtLogonScriptAsync(),
 			)
 
-			// Write all out other files
+			// Finally, on Windows systems we perform some recursion and we
+			// create a WSL instance in which we then execute ourselves or
+			// rather the linux version, embedded with-in, inside the new
+			// WSL instance.
 			if runtime.GOOS == "windows" {
-				assets.WriteFolderToHome("AppData/Local/Microsoft/Windows Terminal")
-				assets.WriteFolderToHome("AppData/Roaming/Code")
-				assets.WriteFolderToHome("Documents")
+				steps.SetupWSL(answers)
 			}
-			assets.WriteFolderToHome(".aws")
-			assets.WriteFolderToHome("Projects")
-			assets.WriteFileToHome(".gitconfig")
 
 			// When run at logon we want to wait here for a bit so it gives the
 			// user a chance to read what was printed to the console before the

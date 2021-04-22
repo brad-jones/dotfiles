@@ -53,10 +53,10 @@ func UnlockVault(answers *survey.Answers) (err error) {
 		gpg.InstallAsync(answers.SudoPassword),
 		downloadVaultAsync(answers.GithubPassword, answers.Reset),
 	)
-	mustDownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword, answers.Reset)
 
 	// Unlock the vault
 	gpg.MustStartAgent()
+	mustDownloadVaultKey(answers.GitlabPassword, answers.VaultKeyPassword, answers.Reset)
 	gpg.MustUnlockKey(vaultKeyname, answers.VaultKeyPassword)
 
 	return

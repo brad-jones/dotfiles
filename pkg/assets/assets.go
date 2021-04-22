@@ -50,7 +50,7 @@ func GetPermission(path string, pathType FSItemType) fs.FileMode {
 			return p.Mode
 		}
 	}
-	return 0666 // https://stackoverflow.com/questions/23842247
+	return 0755 // https://stackoverflow.com/questions/23842247
 }
 
 // ReadFile will return the contents of an embedded file given the path to it.
@@ -70,8 +70,12 @@ func WriteFile(src, dst string) {
 	parent := ""
 
 	for _, part := range strings.Split(replaceWinSlashes(filepath.Dir(dst)), "/") {
-		if parent == "" {
-			parent = part
+		if part == "" {
+			parent = "/"
+			continue
+		}
+		if parent == "" || parent == "/" {
+			parent = parent + part
 		} else {
 			parent = fmt.Sprintf("%s/%s", parent, part)
 		}
@@ -80,7 +84,7 @@ func WriteFile(src, dst string) {
 			perms := GetPermission(parent, FOLDER)
 			goerr.Check(
 				os.Mkdir(translatedParent, perms),
-				"failed to create parent folder", parent,
+				"failed to create parent folder", dst,
 			)
 			fmt.Println(colorchooser.Sprint("created-folder"), "|", translatedParent, perms)
 		}
@@ -158,14 +162,18 @@ func translatePathRev(in string) string {
 	out := ""
 
 	for _, part := range strings.Split(replaceWinSlashes(in), "/") {
+		if part == "" {
+			out = "/"
+			continue
+		}
 		if strings.HasPrefix(part, "dot_") {
 			part = strings.Replace(part, "dot_", ".", 1)
 		}
 		if strings.HasPrefix(part, "underscore_") {
 			part = strings.Replace(part, "underscore_", "_", 1)
 		}
-		if out == "" {
-			out = part
+		if out == "" || out == "/" {
+			out = out + part
 		} else {
 			out = fmt.Sprintf("%s/%s", out, part)
 		}

@@ -2,6 +2,7 @@ package survey
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -41,25 +42,13 @@ func AskQuestions(c *cli.Context) *Answers {
 	}
 
 	// If we have been piped data, read it
+	// Expects a single JSON line.
 	if !utils.IsATerminal() {
 		scanner := bufio.NewScanner(os.Stdin)
-
 		scanner.Scan()
-		answers.GithubPassword = scanner.Text()
-		goerr.Check(scanner.Err())
-
-		scanner.Scan()
-		answers.GitlabPassword = scanner.Text()
-		goerr.Check(scanner.Err())
-
-		scanner.Scan()
-		answers.VaultKeyPassword = scanner.Text()
-		goerr.Check(scanner.Err())
-
-		scanner.Scan()
-		answers.SudoPassword = scanner.Text()
-		goerr.Check(scanner.Err())
-
+		j := scanner.Bytes()
+		goerr.Check(scanner.Err(), "failed to read JSON answers")
+		goerr.Check(json.Unmarshal(j, &answers), "failed to parse JSON answers", string(j))
 		return answers
 	}
 

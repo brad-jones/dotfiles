@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/brad-jones/dotfiles/pkg/tools"
 	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
@@ -15,6 +16,9 @@ import (
 	"github.com/cavaliercoder/grab"
 	"github.com/gosimple/slug"
 )
+
+// TODO: We could just embed it
+var HashInvalid = goerr.New("the downloaded installer script did not match it's expected hash")
 
 func MustInstall(versions ...string) {
 	prefix := colorchooser.Sprint("install-dotnet")
@@ -39,7 +43,9 @@ func MustInstall(versions ...string) {
 	_, err = grab.Get(scriptDst, scriptLink)
 	goerr.Check(err)
 
-	// TODO: hash checking
+	if utils.Sha256HashFile(scriptDst) != tools.GetVersion(scriptLink).Hash {
+		goerr.Check(HashInvalid)
+	}
 
 	installDir := filepath.Join(utils.HomeDir(), ".dotnet")
 
