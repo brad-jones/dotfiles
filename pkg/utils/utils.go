@@ -14,6 +14,7 @@ import (
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/brad-jones/gopwsh"
+	"github.com/shirou/gopsutil/v3/process"
 	"github.com/zalando/go-keyring"
 )
 
@@ -70,12 +71,51 @@ func IsWSL() bool {
 }
 
 func KillProcByName(name string) {
-	if runtime.GOOS == "windows" {
-		ps := gopwsh.MustNew(gopwsh.Elevated())
-		defer ps.Exit()
-		ps.MustExecute(fmt.Sprintf("Stop-Process -Name %s -Force", gopwsh.QuoteArg(name)))
+	fmt.Println(colorchooser.Sprint("kill-proc"), "|", "looking for", name)
+
+	procs, err := process.Processes()
+	goerr.Check(err, "failed to list processes")
+
+	for _, p := range procs {
+		pName, err := p.Name()
+		goerr.Check(err, "failed to get proc name")
+
+		if pName == name {
+			pChildren, err := p.Children()
+			goerr.Check(err, "failed to get proc children", pName)
+
+			for _, v := range pChildren {
+				goerr.Check(v.Kill(), "failed to kill proc child", pName)
+			}
+
+			goerr.Check(p.Kill(), "failed to kill proc parent", pName)
+		}
 	}
-	fmt.Println(colorchooser.Sprint("kill-proc"), "|", name)
+
+	fmt.Println(colorchooser.Sprint("kill-proc"), "|", name, "has been slayed")
+}
+
+func RunElevatedNix(prefix, sudoPassword, cmd string, args ...string) {
+	if runtime.GOOS == "windows" {
+		goerr.Check(goerr.New("RunElevatedNix is not designed to work on Windows"))
+	}
+
+	if IsRoot() {
+		goexec.MustRunPrefixed(prefix, cmd, args...)
+		return
+	}
+
+	if len(sudoPassword) > 0 {
+		goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
+			goexec.SetIn(strings.NewReader(sudoPassword)),
+			goexec.Args(append([]string{"-S", cmd}, args...)...),
+		))
+		return
+	}
+
+	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
+		goexec.Args(append([]string{cmd}, args...)...),
+	))
 }
 
 func IsRoot() bool {

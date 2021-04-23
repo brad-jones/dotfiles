@@ -59,6 +59,10 @@ func GetPermission(path string, pathType FSItemType) fs.FileMode {
 func ReadFile(filename string) []byte {
 	dat, err := FS.ReadFile(translatePath(filename))
 	goerr.Check(err, "failed to read file from embedded assets")
+	if strings.HasSuffix(filename, ".tmpl") {
+		dat, err = ExecuteTemplate(dat)
+		goerr.Check(err, "template failure", filename)
+	}
 	return dat
 }
 
@@ -177,6 +181,10 @@ func translatePathRev(in string) string {
 		} else {
 			out = fmt.Sprintf("%s/%s", out, part)
 		}
+	}
+
+	if strings.HasSuffix(out, ".tmpl") {
+		out = strings.Replace(out, ".tmpl", "", 1)
 	}
 
 	return out

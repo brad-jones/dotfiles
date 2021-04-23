@@ -17,9 +17,6 @@
 [includeIf "gitdir:~/.password-store/"]
 	path = ~/Projects/Personal/.gitconfig
 
-[includeIf "gitdir:~/.local/share/chezmoi/"]
-	path = ~/Projects/Personal/.gitconfig
-
 [includeIf "gitdir:/mnt/C/Users/brad.jones/Projects/Personal/"]
 	path = /mnt/C/Users/brad.jones/Projects/Personal/.gitconfig
 
@@ -27,10 +24,18 @@
 	path = /mnt/C/Users/brad.jones/Projects/Xero/.gitconfig
 
 [credential]
+	{{ if eq .Runtime.GOOS "windows" -}}
 	helper = manager
+	{{ else -}}
+	helper = cache
+	{{ end }}
 
 [gpg]
+	{{ if eq .Runtime.GOOS "windows" -}}
 	program = C:\\Users\\brad.jones\\.scoop\\apps\\gpg\\current\\bin\\gpg.exe
+	{{ else -}}
+	program = /usr/bin/gpg
+	{{ end }}
 
 [commit]
 	gpgSign = true

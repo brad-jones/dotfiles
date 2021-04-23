@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"runtime"
 
 	"github.com/brad-jones/dotfiles/pkg/survey"
 	"github.com/brad-jones/dotfiles/pkg/tools/gopass"
@@ -34,46 +35,52 @@ func UnlockKeys(answers *survey.Answers) (err error) {
 	tasks := []*task.Task{
 		task.New(func() {
 			dst := filepath.Join(sshDir, "brad@bjc.id.au")
-			goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp", "keys/ssh/brad@bjc.id.au", dst)
+			goexec.MustRunPrefixed(prefix, gopass.Path(), "bin", "cp", "keys/ssh/brad@bjc.id.au", dst)
 			ssh.MustUnlockKey(dst, gopass.GetSecret("keys/ssh/brad@bjc.id.au.pass"))
 		}),
 		task.New(func() {
-			dst := filepath.Join(sshDir, "brad@bjc.id.au.ppk")
-			goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp", "keys/ssh/brad@bjc.id.au.ppk", dst)
-			ssh.MustUnlockPagentKey(dst)
-		}),
-		task.New(func() {
 			dst := filepath.Join(tmpDir, "brad@bjc.id.au")
-			goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp", "keys/gpg/brad@bjc.id.au", dst)
+			goexec.MustRunPrefixed(prefix, gopass.Path(), "bin", "cp", "keys/gpg/brad@bjc.id.au", dst)
 			gpg.MustImportKey(dst, "Brad Jones <brad@bjc.id.au>", gopass.GetSecret("keys/gpg/brad@bjc.id.au.pass"), true)
 		}),
+	}
+
+	if runtime.GOOS == "windows" {
+		tasks = append(tasks, task.New(func() {
+			dst := filepath.Join(sshDir, "brad@bjc.id.au.ppk")
+			goexec.MustRunPrefixed(prefix, gopass.Path(), "bin", "cp", "keys/ssh/brad@bjc.id.au.ppk", dst)
+			ssh.MustUnlockPagentKey(dst)
+		}))
 	}
 
 	if utils.GetComputerName() == "XLW-5CD936CWNQ" {
 		tasks = append(tasks,
 			task.New(func() {
 				dst := filepath.Join(sshDir, "brad.jones@xero.com")
-				goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp", "keys/ssh/brad.jones@xero.com", dst)
+				goexec.MustRunPrefixed(prefix, gopass.Path(), "bin", "cp", "keys/ssh/brad.jones@xero.com", dst)
 				ssh.MustUnlockKey(dst, gopass.GetSecret("keys/ssh/brad.jones@xero.com.pass"))
 			}),
 			task.New(func() {
-				dst := filepath.Join(sshDir, "brad.jones@xero.com.ppk")
-				goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp", "keys/ssh/brad.jones@xero.com.ppk", dst)
-				ssh.MustUnlockPagentKey(dst)
-			}),
-			task.New(func() {
 				dst := filepath.Join(tmpDir, "brad.jones@xero.com")
-				goexec.MustRunPrefixed(prefix, "gopass", "bin", "cp", "keys/gpg/brad.jones@xero.com", dst)
+				goexec.MustRunPrefixed(prefix, gopass.Path(), "bin", "cp", "keys/gpg/brad.jones@xero.com", dst)
 				gpg.MustImportKey(dst, "Brad Jones <brad.jones@xero.com>", gopass.GetSecret("keys/gpg/brad.jones@xero.com.pass"), true)
 			}),
 		)
+
+		if runtime.GOOS == "windows" {
+			tasks = append(tasks, task.New(func() {
+				dst := filepath.Join(sshDir, "brad.jones@xero.com.ppk")
+				goexec.MustRunPrefixed(prefix, gopass.Path(), "bin", "cp", "keys/ssh/brad.jones@xero.com.ppk", dst)
+				ssh.MustUnlockPagentKey(dst)
+			}))
+		}
 	}
 
 	await.MustFastAllOrError(tasks...)
 
 	// Now that all our SSH keys are added to the agent we
 	// can then pull any changes to the gopass vault.
-	goexec.MustRunPrefixed("gopass", "gopass", "sync")
+	goexec.MustRunPrefixed(prefix, gopass.Path(), "sync")
 
 	return
 }

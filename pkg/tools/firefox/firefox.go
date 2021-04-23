@@ -15,7 +15,7 @@ import (
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 	"github.com/cavaliercoder/grab"
-	"github.com/mitchellh/go-ps"
+	"github.com/shirou/gopsutil/v3/process"
 )
 
 func MustInstall() {
@@ -45,12 +45,15 @@ func MustInstall() {
 		for {
 			time.Sleep(time.Millisecond * 100)
 
-			procs, err := ps.Processes()
-			goerr.Check(err)
+			procs, err := process.Processes()
+			goerr.Check(err, "failed to list processes")
 
 			exists := false
 			for _, p := range procs {
-				if p.Executable() == "firefox_installer.exe" {
+				pName, err := p.Name()
+				goerr.Check(err, "failed to get proc name")
+
+				if pName == "firefox_installer.exe" {
 					exists = true
 					break
 				}

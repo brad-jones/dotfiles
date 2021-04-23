@@ -3,8 +3,10 @@ package steps
 import (
 	"runtime"
 
+	"github.com/brad-jones/dotfiles/pkg/survey"
 	"github.com/brad-jones/dotfiles/pkg/tools"
 	"github.com/brad-jones/dotfiles/pkg/tools/chrome"
+	"github.com/brad-jones/dotfiles/pkg/tools/dart"
 	"github.com/brad-jones/dotfiles/pkg/tools/dotnet"
 	"github.com/brad-jones/dotfiles/pkg/tools/firefox"
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
@@ -13,11 +15,12 @@ import (
 	"github.com/brad-jones/goasync/v2/task"
 )
 
-func MustInstallOrUpdate() {
+func MustInstallOrUpdate(answers *survey.Answers) {
 	await.MustFastAllOrError(
 		chrome.InstallAsync(),
 		firefox.InstallAsync(),
 		wavebox.InstallAsync(),
+		dart.InstallAsync(),
 		dotnet.InstallAsync(tools.DotnetVersions()...),
 		task.New(func() {
 			if runtime.GOOS == "windows" {
@@ -29,8 +32,8 @@ func MustInstallOrUpdate() {
 	)
 }
 
-func InstallOrUpdateAsync() *task.Task {
-	return task.New(func() { MustInstallOrUpdate() })
+func InstallOrUpdateAsync(answers *survey.Answers) *task.Task {
+	return task.New(func() { MustInstallOrUpdate(answers) })
 }
 
 func updateWindows() {
@@ -79,4 +82,5 @@ func updateWindows() {
 	})
 }
 
-func updateLinux() {}
+func updateLinux() {
+}

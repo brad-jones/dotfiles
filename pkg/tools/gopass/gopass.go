@@ -5,7 +5,6 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/tools"
 	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/dotfiles/pkg/utils/ghpkg"
@@ -22,8 +21,6 @@ func Install(reset bool) (err error) {
 		ghpkg.Sha256Hash(v.Hash),
 		ghpkg.Reset(reset),
 	), "failed to install gopass")
-	assets.WriteFolderToHome("AppData/Local/gopass")
-	assets.WriteFolderToHome(".config/gopass")
 	return
 }
 
@@ -49,14 +46,14 @@ func Path() string {
 // Returns a secret from the vault
 func GetSecret(key string) string {
 	return strings.TrimSpace(
-		goexec.MustRunBuffered("gopass", "show", "-o", key).StdOut,
+		goexec.MustRunBuffered(Path(), "show", "-o", key).StdOut,
 	)
 }
 
 // Indicates if the vault is working & unlocked or not
 func VaultUnlocked() (r bool) {
 	defer goerr.Handle(func(err error) { r = false })
-	if !utils.CommandExists("gopass") {
+	if !utils.CommandExists(Path()) {
 		return false
 	}
 	return len(GetSecret("ato/tfn")) > 0

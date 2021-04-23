@@ -2,12 +2,10 @@ package gpg
 
 import (
 	"fmt"
-	"path/filepath"
 	"runtime"
 	"strings"
 
 	"github.com/avast/retry-go"
-	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
 	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goasync/v2/task"
@@ -26,43 +24,23 @@ func Install(sudoPassword string) (err error) {
 	prefix := colorchooser.Sprint("install-gpg")
 
 	if runtime.GOOS == "windows" {
-		goerr.Check(scoop.InstallOrUpdatePkgs(map[string]string{"gpg": "*"}), "failed to install gpg")
-		configure()
+		goerr.Check(
+			scoop.InstallOrUpdatePkgs(map[string]string{"gpg": "*"}),
+			"failed to install gpg",
+		)
 		return
 	}
 
 	if utils.CommandExists("dnf") {
-		if utils.IsRoot() {
-			goexec.MustRunPrefixed(prefix, "dnf", "install", "-y", "gnupg", "pinentry")
-		} else {
-			if len(sudoPassword) > 0 {
-				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-					goexec.SetIn(strings.NewReader(sudoPassword)),
-					goexec.Args("-S", "dnf", "install", "-y", "gnupg", "pinentry"),
-				))
-			} else {
-				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-					goexec.Args("dnf", "install", "-y", "gnupg", "pinentry"),
-				))
-			}
-		}
-		configure()
+		utils.RunElevatedNix(prefix, sudoPassword, "dnf", "install", "-y",
+			"gnupg",
+			"pinentry",
+		)
 		return
 	}
 
 	goerr.Check(UnSupportedOS)
 	return
-}
-
-func configure() {
-	if runtime.GOOS == "windows" {
-		assets.WriteFolder(".gnupg",
-			filepath.Join(scoop.Path(), "apps/gpg/current/home"),
-		)
-		return
-	}
-
-	assets.WriteFolderToHome(".gnupg")
 }
 
 // MustInstall does the same thing as Install but panics instead of returning an error
@@ -78,7 +56,7 @@ func InstallAsync(sudoPassword string) *task.Task {
 func MustStartAgent() {
 	prefix := colorchooser.Sprint("gpg-agent")
 
-	if runtime.GOOS == "windows" {
+	if runtime.GOOS == "windows" || utils.IsWSL() {
 		fmt.Println(prefix, "|", "starting...")
 		goerr.Check(retry.Do(func() error {
 			return goexec.RunPrefixed(prefix, "gpg-connect-agent", "/bye")

@@ -35,16 +35,21 @@
 	// see: https://github.com/streetsidesoftware/vscode-spell-checker
 	"cSpell.words": [
 		"Deno",
+		"Flatpak",
 		"Pkgs",
 		"blang",
 		"deps",
 		"distro",
 		"dotfile",
 		"dotfiles",
+		"findutils",
 		"goerr",
 		"goexec",
+		"iputils",
 		"ldflags",
+		"resolv",
 		"sbin",
-		"semver"
+		"semver",
+		"tmpl"
 	]
 }

@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/ActiveState/termtest/expect"
-	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
 	"github.com/brad-jones/dotfiles/pkg/utils"
@@ -37,35 +36,34 @@ func Install(sudoPassword string) (err error) {
 
 	if runtime.GOOS == "windows" {
 		goerr.Check(scoop.InstallOrUpdatePkgs(map[string]string{"win32-openssh": "*", "putty": "*"}), "failed to install ssh")
-		configure()
 		return
 	}
 
 	if utils.CommandExists("dnf") {
-		if utils.IsRoot() {
-			goexec.MustRunPrefixed(prefix, "dnf", "install", "-y", "openssh")
-		} else {
-			if len(sudoPassword) > 0 {
-				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-					goexec.SetIn(strings.NewReader(sudoPassword)),
-					goexec.Args("-S", "dnf", "install", "-y", "openssh"),
-				))
-			} else {
-				goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("sudo",
-					goexec.Args("dnf", "install", "-y", "openssh"),
-				))
-			}
+		utils.RunElevatedNix(prefix, sudoPassword, "dnf", "install", "-y",
+			"openssh",
+			"openssh-clients",
+		)
+
+		// Solves: Bad owner or permissions on /etc/crypto-policies/back-ends/openssh.config
+		//
+		// I haven't been able to find any defintivie answers on this one,
+		// again I think it's related to being a container / WSL.
+		//
+		// Closest thing I could find...
+		// see: https://bugzilla.redhat.com/show_bug.cgi?id=1902646
+		if utils.IsWSL() {
+			fmt.Println(prefix, "|", "fix ssh permissions issue")
+			utils.RunElevatedNix(prefix, sudoPassword,
+				"chmod", "0644", "/etc/crypto-policies/back-ends/openssh.config",
+			)
 		}
-		configure()
+
 		return
 	}
 
 	goerr.Check(UnSupportedOS)
 	return
-}
-
-func configure() {
-	assets.WriteFolderToHome(".ssh")
 }
 
 // MustInstall does the same thing as Install but panics instead of returning an error
@@ -80,14 +78,22 @@ func InstallAsync(sudoPassword string) *task.Task {
 
 func MustStartAgent() {
 	prefix := colorchooser.Sprint("ssh-agent")
+	fmt.Println(prefix, "|", "starting...")
 
 	if runtime.GOOS == "windows" {
-		fmt.Println(prefix, "|", "starting...")
 		ps := gopwsh.MustNew(gopwsh.Elevated(winsudo.Path()))
 		defer ps.Exit()
 		ps.MustExecute("Start-Service ssh-agent")
-		fmt.Println(prefix, "|", "running")
 	}
+
+	if utils.IsWSL() {
+		utils.KillProcByName("ssh-agent")
+		sock := filepath.Join(utils.HomeDir(), ".ssh/agent.sock")
+		goexec.MustRunBuffered("ssh-agent", "-a", sock)
+		goerr.Check(os.Setenv("SSH_AUTH_SOCK", sock), "failed to set SSH_AUTH_SOCK", sock)
+	}
+
+	fmt.Println(prefix, "|", "running")
 }
 
 func MustUnlockKey(keyFilePath, keyPassphrase string) {

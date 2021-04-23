@@ -11,7 +11,6 @@ import (
 
 	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/survey"
-	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
@@ -23,31 +22,7 @@ import (
 // in the WSL instance it runs this same tool but inside the Linux WSL instance.
 func InstallDotfiles(name string, answers *survey.Answers) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
-
-	prefix := colorchooser.Sprint("wsl-dotfiles-" + slug.Make(name))
-	currentUser := os.Getenv("USERNAME")
-	currentWSLUser := strings.TrimSpace(goexec.MustRunBuffered("wsl", "-d", name, "echo", "$USER").StdOut)
-
-	// Here we create a matchign user account inside the WSL instance
-	if currentUser != currentWSLUser {
-		fmt.Println(prefix, "|", "installing sudo")
-		goexec.MustRunPrefixed(prefix, "wsl", "-d", name, "dnf", "install", "-y", "sudo", "passwd")
-
-		fmt.Println(prefix, "|", "creating user account")
-		goexec.MustRunPrefixed(prefix, "wsl", "-d", name, "adduser", "-G", "wheel", currentUser)
-
-		fmt.Println(prefix, "|", "setting password for user account")
-		goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("wsl",
-			goexec.SetIn(strings.NewReader(answers.SudoPassword)),
-			goexec.Args("-d", name, "passwd", currentUser, "--stdin"),
-		))
-
-		fmt.Println(prefix, "|", "setting default user account")
-		distroCliTool := filepath.Join(utils.HomeDir(), ".wsl", name, name+".exe")
-		goexec.MustRunPrefixed(prefix, distroCliTool, "config", "--default-user", currentUser)
-	} else {
-		fmt.Println(prefix, "|", "user account already exists")
-	}
+	prefix := colorchooser.Sprint("wsl-" + slug.Make(name))
 
 	// Extract the linux version of this tool into a temp location
 	tempDir, err := ioutil.TempDir("", "bradsDotFiles")

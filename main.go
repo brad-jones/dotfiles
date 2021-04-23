@@ -94,6 +94,12 @@ func main() {
 				// useable state, in effect performing a rollback.
 			}
 
+			// There are small selection of configuration files that are
+			// required to unlock the secrets vault & maybe others in the
+			// future (eg: scoop config say). Most dotfiles are installed
+			// after the vault in unlocked so that they can consume secrets.
+			assets.MustWriteDotfiles(false)
+
 			// Windows systems need a way to "elevate" & install packages.
 			// Sudo for Windows: https://github.com/gerardog/gsudo
 			// A command-line installer for Windows: https://scoop.sh
@@ -108,27 +114,14 @@ func main() {
 			steps.MustUnlockVault(answers)
 			steps.MustUnlockKeys(answers)
 
+			// This is the whole point right :)
+			// Lets write our actual dotfiles to the filesystem.
+			assets.MustWriteDotfiles(true)
+
+			// Here we install (or update) most of the rest of our software
+			steps.MustInstallOrUpdate(answers)
 			await.MustFastAllOrError(
-				// This is the whole point right :)
-				// Lets write our actual dotfiles to the filesystem.
-				assets.WriteDotfilesAsync(),
-
-				// Here we install (or update) the bulk of our software
-				steps.InstallOrUpdateAsync(),
-
-				// These scripts automate some of my daily tasks.
-				//
-				// They either do very specific things for "me" and so make less
-				// sense to release as standalone tools or they are simply at a
-				// PoC stage and not ready for public consumption.
-				//
-				// TODO: I want to either re-write into Deno scripts so that
-				// they are truly self contained scripts and then Deno handles
-				// the installation of the dependencies for me. Or re-write into
-				// standalone Go tools if warrented.
-				steps.InstallDartScriptsAsync(),
-
-				// This will make this binary self-update and run again on logon
+				steps.InstallDartScriptsAsync(answers),
 				steps.InstallRunAtLogonScriptAsync(),
 			)
 
