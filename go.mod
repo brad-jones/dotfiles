@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/ActiveState/termtest/expect v0.7.0
-	github.com/AlecAivazis/survey/v2 v2.2.9
+	github.com/AlecAivazis/survey/v2 v2.2.12
 	github.com/Microsoft/go-winio v0.4.18 // indirect
 	github.com/Netflix/go-expect v0.0.0-20201125194554-85d881c3777e // indirect
 	github.com/StackExchange/wmi v0.0.0-20210224194228-fe8f1750fd46 // indirect
