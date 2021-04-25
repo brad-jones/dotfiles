@@ -20,6 +20,10 @@ PATH="$HOME/.rbenv/bin:$PATH";
 PATH="$HOME/.tfenv/bin:$PATH";
 PATH="$HOME/.tfenv/bin:$PATH";
 {{ if .Runtime.IsWSL -}}
+PATH="/mnt/c/Windows/System32:$PATH";
+PATH="/mnt/c/Windows/System32/WindowsPowerShell/v1.0:$PATH";
+PATH="/mnt/c/Program Files/Mozilla Firefox:$PATH";
+PATH="/mnt/c/Program Files/Google/Chrome/Application:$PATH";
 PATH="/mnt/c/Users/$USER/.scoop/apps/vscode/current/bin:$PATH";
 {{ end }}
 
@@ -50,7 +54,7 @@ export AWS_VAULT_PASS_PASSWORD_STORE_DIR="$HOME/.password-store";
 
 # Setup some bash auto completion
 complete -C "$HOME/.local/bin/aws_completer" aws;
-#eval "$(aws-vault --completion-script-bash)";
+eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
 
 # Setup all our tool version managers
@@ -88,34 +92,34 @@ alias rdp-xero-payroll-test-pod13='bash -c "rdp -h \"pod.pod13.people.xero-test.
 alias rdp-xero-payroll-test-pod15='bash -c "rdp -h \"pod.pod15.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
 alias rdp-xero-payroll-test-pod16='bash -c "rdp -h \"pod.pod16.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
 
-alias rdp-xero-payroll-test-pod1-admin="rdp --profile xero-payroll-test --ec2 podserver-pod1-B26-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod2-admin="rdp --profile xero-payroll-test --ec2 podserver-pod2-B40-branch15 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod3-admin="rdp --profile xero-payroll-test --ec2 podserver-pod3-B44-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod4-admin="rdp --profile xero-payroll-test --ec2 podserver-pod4-B18-branch48 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod5-admin="rdp --profile xero-payroll-test --ec2 podserver-pod5-B30-pod5 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod6-admin="rdp --profile xero-payroll-test --ec2 podserver-pod6-B34-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod7-admin="rdp --profile xero-payroll-test --ec2 podserver-pod7-B94-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod8-admin="rdp --profile xero-payroll-test --ec2 podserver-pod8-B32-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod9-admin="rdp --profile xero-payroll-test --ec2 podserver-pod9-B29-branch48 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod10-admin="rdp --profile xero-payroll-test --ec2 podserver-pod10-B81-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod11-admin="rdp --profile xero-payroll-test --ec2 podserver-pod11-B14-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod12-admin="rdp --profile xero-payroll-test --ec2 podserver-pod12-B76-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod13-admin="rdp --profile xero-payroll-test --ec2 podserver-pod13-B11-branch44 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod15-admin="rdp --profile xero-payroll-test --ec2 podserver-pod15-B3-branch4 --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem";
-alias rdp-xero-payroll-test-pod16-admin='rdp --profile xero-payroll-test --ec2 "podserver-pod16-B33-<default>" --key ~/.ssh/keys/xero-payroll-test/payroll-devops.pem';
+alias rdp-xero-payroll-test-pod1-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod1-B26-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod2-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod2-B40-branch15\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod3-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod3-B44-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod4-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod4-B18-branch48\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod5-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod5-B30-pod5\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod6-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod6-B34-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod7-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod7-B94-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod8-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod8-B32-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod9-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod9-B29-branch48\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod10-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod10-B81-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod11-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod11-B14-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod12-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod12-B76-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod13-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod13-B11-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod15-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod15-B3-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
+alias rdp-xero-payroll-test-pod16-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod16-B33-<default>\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
 
-alias rdp-xero-payroll-test-pod1-db-admin="rdp --profile xero-payroll-test --ec2 pod1-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod2-db-admin="rdp --profile xero-payroll-test --ec2 pod2-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod3-db-admin="rdp --profile xero-payroll-test --ec2 pod3-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod4-db-admin="rdp --profile xero-payroll-test --ec2 pod4-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod5-db-admin="rdp --profile xero-payroll-test --ec2 pod5-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod6-db-admin="rdp --profile xero-payroll-test --ec2 pod6-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod7-db-admin="rdp --profile xero-payroll-test --ec2 pod7-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod8-db-admin="rdp --profile xero-payroll-test --ec2 pod8-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod9-db-admin="rdp --profile xero-payroll-test --ec2 pod9-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod10-db-admin="rdp --profile xero-payroll-test --ec2 pod10-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod11-db-admin="rdp --profile xero-payroll-test --ec2 pod11-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod12-db-admin="rdp --profile xero-payroll-test --ec2 pod12-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod13-db-admin="rdp --profile xero-payroll-test --ec2 pod13-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod15-db-admin="rdp --profile xero-payroll-test --ec2 pod15-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
-alias rdp-xero-payroll-test-pod16-db-admin="rdp --profile xero-payroll-test --ec2 pod16-db-instance --key ~/.ssh/keys/xero-payroll-test/payroll-dev-public.pem";
+alias rdp-xero-payroll-test-pod1-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod1-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod2-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod2-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod3-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod3-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod4-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod4-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod5-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod5-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod6-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod6-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod7-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod7-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod8-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod8-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod9-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod9-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod10-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod10-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod11-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod11-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod12-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod12-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod13-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod13-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod15-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod15-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
+alias rdp-xero-payroll-test-pod16-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod16-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';

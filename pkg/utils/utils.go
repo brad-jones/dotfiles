@@ -83,7 +83,8 @@ func KillProcByName(name string) {
 	for _, p := range procs {
 		pName, err := p.Name()
 		if err != nil {
-			if strings.Contains(err.Error(), "couldn't find pid") {
+			if strings.Contains(err.Error(), "couldn't find pid") ||
+				strings.Contains(err.Error(), "status: no such file or directory") {
 				continue
 			}
 			goerr.Check(err, "failed to get proc name")

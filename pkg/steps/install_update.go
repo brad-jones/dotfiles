@@ -10,6 +10,7 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/survey"
 	"github.com/brad-jones/dotfiles/pkg/tools"
+	"github.com/brad-jones/dotfiles/pkg/tools/awsvault"
 	"github.com/brad-jones/dotfiles/pkg/tools/chrome"
 	"github.com/brad-jones/dotfiles/pkg/tools/dotnet"
 	"github.com/brad-jones/dotfiles/pkg/tools/firefox"
@@ -28,6 +29,7 @@ func MustInstallOrUpdate(answers *survey.Answers) {
 		chrome.InstallAsync(),
 		firefox.InstallAsync(),
 		wavebox.InstallAsync(),
+		awsvault.InstallAsync(),
 		dotnet.InstallAsync(tools.DotnetVersions()...),
 		task.New(func() {
 			if runtime.GOOS == "windows" {
@@ -59,7 +61,6 @@ func updateWindows() {
 	scoop.MustInstallOrUpdatePkgs(map[string]string{
 		"7zip":                 "*",
 		"adoptopenjdk-hotspot": "*",
-		"aws-vault":            tools.GetVersion("aws-vault").No,
 		"aws":                  "*",
 		"curl":                 "*",
 		"deno":                 "*",

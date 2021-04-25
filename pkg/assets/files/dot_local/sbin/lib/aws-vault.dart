@@ -6,9 +6,7 @@ import 'package:scripts/src/dir.dart';
 import 'package:scripts/src/guest.dart';
 
 final originalAwsVaultExe = normalizeDir(
-  Platform.isLinux
-      ? '~/.linuxbrew/bin/aws-vault'
-      : '~/.scoop/apps/aws-vault/current/aws-vault.exe',
+  Platform.isLinux ? '~/.local/bin/aws-vault' : '~/.local/bin/aws-vault.exe',
 );
 
 Future<Config> readAwsConfig([String path = '~/.aws/config']) async {
@@ -28,10 +26,10 @@ Future<Config> readAwsConfig([String path = '~/.aws/config']) async {
 Future<String> getMfaSerial(String profile) async {
   if (profile?.isEmpty ?? true) throw Exception('empty profile');
   var cfg = await readAwsConfig();
-  var serial = cfg.get('profile ${profile}', 'mfa_serial');
+  var serial = cfg.get('profile $profile', 'mfa_serial');
   if (serial?.isEmpty ?? true) {
     return await getMfaSerial(
-      cfg.get('profile ${profile}', 'source_profile'),
+      cfg.get('profile $profile', 'source_profile'),
     );
   }
   return serial.replaceAll('"', '');
@@ -40,10 +38,10 @@ Future<String> getMfaSerial(String profile) async {
 Future<String> getMfaProvider(String profile) async {
   if (profile?.isEmpty ?? true) throw Exception('empty profile');
   var cfg = await readAwsConfig();
-  var provider = cfg.get('profile ${profile}', 'mfa_token_provider');
+  var provider = cfg.get('profile $profile', 'mfa_token_provider');
   if (provider?.isEmpty ?? true) {
     return await getMfaProvider(
-      cfg.get('profile ${profile}', 'source_profile'),
+      cfg.get('profile $profile', 'source_profile'),
     );
   }
   return provider.replaceAll('"', '');

@@ -92,30 +92,3 @@ func MustUnlockKeys(answers *survey.Answers) {
 func UnlockKeysAsync(answers *survey.Answers) *task.Task {
 	return task.New(func() { MustUnlockKeys(answers) })
 }
-
-/*
-	# Install additional SSH Keys
-	# ------------------------------------------------------------------------------
-	# TODO: Would be nice use gopass as an actual ssh-agent?
-	if ($env:COMPUTERNAME -eq "XLW-5CD936CWNQ") {
-		RmIfExists -Path $env:USERPROFILE/.ssh/keys;
-
-		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-prod; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-prod/payroll-checkpoint.pem $env:USERPROFILE\.ssh\keys\xero-payroll-prod\payroll-checkpoint.pem; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-prod/payroll-dev-public.pem $env:USERPROFILE\.ssh\keys\xero-payroll-prod\payroll-dev-public.pem; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-prod/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-payroll-prod\payroll-devops.pem; }
-
-		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-test; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-test/payroll-checkpoint.pem $env:USERPROFILE\.ssh\keys\xero-payroll-test\payroll-checkpoint.pem; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-test/payroll-dev-public.pem $env:USERPROFILE\.ssh\keys\xero-payroll-test\payroll-dev-public.pem; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-test/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-payroll-test\payroll-devops.pem; }
-
-		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-payroll-uat; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-uat/payroll-checkpoint.pem $env:USERPROFILE\.ssh\keys\xero-payroll-uat\payroll-checkpoint.pem; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-uat/payroll-dev-public.pem $env:USERPROFILE\.ssh\keys\xero-payroll-uat\payroll-dev-public.pem; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-payroll-uat/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-payroll-uat\payroll-devops.pem; }
-
-		Exec -ScriptBlock { mkdir $env:USERPROFILE/.ssh/keys/xero-ps-paas-svc; }
-		Exec -ScriptBlock { gopass bin cp keys/ssh/xero-ps-paas-svc/payroll-devops.pem $env:USERPROFILE\.ssh\keys\xero-ps-paas-svc\payroll-devops.pem; }
-	}
-*/

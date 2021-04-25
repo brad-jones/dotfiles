@@ -4,6 +4,21 @@ set -euxo pipefail;
 # Source our bashrc file
 [ -f ~/.bashrc ] && set +u && . ~/.bashrc && set -u;
 
+# Install awscli
+# ------------------------------------------------------------------------------
+if ! [ -x "$HOME/.local/bin/aws" ]; then
+    rm -rf ~/.local/aws-cli ~/.local/bin/aws;
+fi
+tmpFolderAWS="/tmp/$(uuidgen)";
+mkdir -p $tmpFolderAWS;
+function finish {
+	rm -rf $tmpFolderAWS;
+}
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolderAWS/awscliv2.zip";
+unzip "$tmpFolderAWS/awscliv2.zip" -d "$tmpFolderAWS/extracted";
+$tmpFolderAWS/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin --update;
+~/.local/bin/aws --version;
+
 # Install Dartlang
 # ------------------------------------------------------------------------------
 if [ -z "$(command -v dart)" ]; then
@@ -85,21 +100,6 @@ pythonV="$(echo "$(~/.pyenv/bin/pyenv install --list)" | awk '{$1=$1};1' | grep 
 ~/.pyenv/bin/pyenv global $pythonV;
 ~/.pyenv/bin/pyenv rehash;
 
-# Install awscli
-# ------------------------------------------------------------------------------
-if ! [ -x "$HOME/.local/bin/aws" ]; then
-    rm -rf ~/.local/aws-cli ~/.local/bin/aws;
-fi
-tmpFolderAWS="/tmp/$(uuidgen)";
-mkdir -p $tmpFolderAWS;
-function finish {
-	rm -rf $tmpFolderAWS;
-}
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolderAWS/awscliv2.zip";
-unzip "$tmpFolderAWS/awscliv2.zip" -d "$tmpFolderAWS/extracted";
-$tmpFolderAWS/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin --update;
-~/.local/bin/aws --version;
-
 # Install Packer
 # ------------------------------------------------------------------------------
 if [ -z "$(command -v pkenv)" ]; then
@@ -128,24 +128,6 @@ if ! [ -d "$HOME/.sdkman" ]; then
     curl "https://get.sdkman.io?rcupdate=false" | bash;
 fi
 bash ~/.local/bin/update-sdkman;
-
-# Install Homebrew
-# ------------------------------------------------------------------------------
-#if ! [ -x "$(command -v brew)" ]; then
-#    rm -rf ~/.linuxbrew;
-#    sudo dnf install -y curl file git libxcrypt-compat;
-#    git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew;
-#    mkdir ~/.linuxbrew/bin;
-#    ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin;
-#    eval "$(~/.linuxbrew/bin/brew shellenv)";
-#    ~/.linuxbrew/bin/brew --version;
-#fi
-
-# Install aws-vault
-# ------------------------------------------------------------------------------
-#if ! [ -f "$HOME/.linuxbrew/bin/aws-vault" ]; then
-#    ~/.linuxbrew/bin/brew install aws-vault;
-#fi
 
 # Install Docker
 # ------------------------------------------------------------------------------

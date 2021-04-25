@@ -33,7 +33,7 @@ var PkgInvalidHash = goerr.New("downloaded artifact does not match supplied hash
 
 // We are using the Functional Options pattern.
 // see: https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis
-type config struct {
+type Config struct {
 	owner      string
 	repo       string
 	tag        string
@@ -42,12 +42,13 @@ type config struct {
 	sha256Hash string
 	pkgPattern string
 	reset      bool
+	naked      bool
 }
 
 // In addition to a git tag, you can set a SHA256 hash to make sure
 // what was downloaded really is cryptographically what you expected.
-func Sha256Hash(value string) func(*config) error {
-	return func(c *config) error {
+func Sha256Hash(value string) func(*Config) error {
+	return func(c *Config) error {
 		c.sha256Hash = value
 		return nil
 	}
@@ -56,8 +57,8 @@ func Sha256Hash(value string) func(*config) error {
 // By default we apply some simple logic based on the values of GOOS & GOARCH
 // to determin which Github Asset we should download. For most packages this
 // works ok but sometimes we need to be more explicit.
-func PkgPattern(value string) func(*config) error {
-	return func(c *config) error {
+func PkgPattern(value string) func(*Config) error {
+	return func(c *Config) error {
 		c.pkgPattern = value
 		return nil
 	}
@@ -65,8 +66,8 @@ func PkgPattern(value string) func(*config) error {
 
 // The name of the actual binary inside the downloaded archive.
 // If not set we assume it's the same as the repo name.
-func ExeName(value string) func(*config) error {
-	return func(c *config) error {
+func ExeName(value string) func(*Config) error {
+	return func(c *Config) error {
 		c.exeName = value
 		return nil
 	}
@@ -75,8 +76,8 @@ func ExeName(value string) func(*config) error {
 // Sometimes the name of binary inside the archive is different than what you
 // want it to be in the final installed location. This allows you to effectively
 // rename the binary. If not set the value of ExeName is used.
-func DstExeName(value string) func(*config) error {
-	return func(c *config) error {
+func DstExeName(value string) func(*Config) error {
+	return func(c *Config) error {
 		c.dstExeName = value
 		return nil
 	}
@@ -84,9 +85,16 @@ func DstExeName(value string) func(*config) error {
 
 // If set to true then, the binary will be downloaded and re-installed even if
 // the hashes match and everything else looks good.
-func Reset(value bool) func(*config) error {
-	return func(c *config) error {
+func Reset(value bool) func(*Config) error {
+	return func(c *Config) error {
 		c.reset = value
+		return nil
+	}
+}
+
+func Naked(value bool) func(*Config) error {
+	return func(c *Config) error {
+		c.naked = value
 		return nil
 	}
 }
@@ -94,11 +102,11 @@ func Reset(value bool) func(*config) error {
 // InstallPkg downloads released archives from Github Releases, of a given repo,
 // extracts the contents and then copies a single self contained binary out of
 // the package and into ~/.local/bin.
-func InstallPkg(owner, repo, tag string, decorators ...func(*config) error) (err error) {
+func InstallPkg(owner, repo, tag string, decorators ...func(*Config) error) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
 	// Set defaults and read in our config
-	c := &config{
+	c := &Config{
 		owner:   owner,
 		repo:    repo,
 		tag:     tag,
@@ -116,7 +124,7 @@ func InstallPkg(owner, repo, tag string, decorators ...func(*config) error) (err
 	if len(c.dstExeName) > 0 {
 		dst = filepath.Join(utils.HomeDir(), ".local", "bin", c.dstExeName)
 	}
-	if runtime.GOOS == "windows" {
+	if runtime.GOOS == "windows" && !strings.HasSuffix(dst, ".exe") {
 		dst = dst + ".exe"
 	}
 
@@ -157,17 +165,22 @@ func InstallPkg(owner, repo, tag string, decorators ...func(*config) error) (err
 	resp, err := grab.Get(filepath.Join(tmpDir, "."), downloadURL)
 	goerr.Check(err, "failed to download", downloadURL, tmpDir)
 
-	// Extract the archive
-	extracted := filepath.Join(tmpDir, "extracted")
-	fmt.Println(prefix, "|", "extracting", resp.Filename)
-	goerr.Check(archiver.Unarchive(resp.Filename, extracted),
-		"failed to extract archive", resp.Filename, extracted,
-	)
+	var src string
+	if c.naked {
+		src = resp.Filename
+	} else {
+		// Extract the archive
+		extracted := filepath.Join(tmpDir, "extracted")
+		fmt.Println(prefix, "|", "extracting", resp.Filename)
+		goerr.Check(archiver.Unarchive(resp.Filename, extracted),
+			"failed to extract archive", resp.Filename, extracted,
+		)
 
-	// Work out what the binary name is inside the archive
-	src := filepath.Join(extracted, c.exeName)
-	if runtime.GOOS == "windows" {
-		src = src + ".exe"
+		// Work out what the binary name is inside the archive
+		src = filepath.Join(extracted, c.exeName)
+		if runtime.GOOS == "windows" && !strings.HasSuffix(src, ".exe") {
+			src = src + ".exe"
+		}
 	}
 
 	// Check to make sure it matches our hash
@@ -201,12 +214,12 @@ func InstallPkg(owner, repo, tag string, decorators ...func(*config) error) (err
 }
 
 // MustInstallPkg does the same thing InstallPkg but panics instead of returning an error
-func MustInstallPkg(owner, repo, tag string, decorators ...func(*config) error) {
+func MustInstallPkg(owner, repo, tag string, decorators ...func(*Config) error) {
 	goerr.Check(InstallPkg(owner, repo, tag, decorators...))
 }
 
 // InstallPkgAsync does the same thing as InstallPkg but asynchronously.
-func InstallPkgAsync(owner, repo, tag string, decorators ...func(*config) error) *task.Task {
+func InstallPkgAsync(owner, repo, tag string, decorators ...func(*Config) error) *task.Task {
 	return task.New(func() { MustInstallPkg(owner, repo, tag, decorators...) })
 }
 

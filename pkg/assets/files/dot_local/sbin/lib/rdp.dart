@@ -58,7 +58,7 @@ Future<void> login(
     if (gateway?.isNotEmpty ?? false) {
       args.add('/g:"${gateway}"');
     }
-    await runOnHostIfGuest('mstsc.exe', args);
+    await runOnHostIfGuest('mstsc', args);
   } catch (e, st) {
     print(e);
     print(st);
