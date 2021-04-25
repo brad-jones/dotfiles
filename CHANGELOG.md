@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/brad-jones/dotfiles/compare/v1.5.0...v1.5.1) (2021-04-25)
+
+
+### Bug Fixes
+
+* wait for internet access before trying to do anything ([7cb215e](https://github.com/brad-jones/dotfiles/commit/7cb215ef0c0b0ef08e7809503131130fc7b53899))
+
 # [1.5.0](https://github.com/brad-jones/dotfiles/compare/v1.4.2...v1.5.0) (2021-04-25)
 
 
