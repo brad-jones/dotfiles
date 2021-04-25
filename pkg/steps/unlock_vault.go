@@ -31,7 +31,9 @@ const vaultKeyRepoHTTPS = "https://gitlab.com/brad-jones/vault-key.git"
 func UnlockVault(answers *survey.Answers) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
-	answers.VaultKeyPassword = utils.GetSecretFromKeychain("passphrase", "vault")
+	if runtime.GOOS == "windows" {
+		answers.VaultKeyPassword = utils.GetSecretFromKeychain("passphrase", "vault")
+	}
 
 	// If the tools for the vault exist already but we have no creds then we
 	// need to unlock the vault, grab the creds, close the vault, update the
