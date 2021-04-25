@@ -2,10 +2,11 @@ package steps
 
 import (
 	"fmt"
-	"os"
+	"path/filepath"
 	"runtime"
 
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
+	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
@@ -16,9 +17,6 @@ var ScheduledTaskError = goerr.New("failed")
 
 func MustInstallRunAtLogonScript() {
 	prefix := colorchooser.Sprint("install-run-at-logon-script")
-
-	exe, err := os.Executable()
-	goerr.Check(err, "failed to get path to current running exe")
 
 	if runtime.GOOS == "windows" {
 		ps := gopwsh.MustNew(gopwsh.Elevated(winsudo.Path()))
@@ -34,6 +32,8 @@ func MustInstallRunAtLogonScript() {
 		} else {
 			fmt.Println(prefix, "| task does not exist, creating...")
 		}
+
+		exe := filepath.Join(utils.HomeDir(), ".local", "bin", "dotfiles.exe")
 
 		if _, stderr := ps.MustExecute(
 			`$u = whoami;`,
