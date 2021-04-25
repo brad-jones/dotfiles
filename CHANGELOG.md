@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/brad-jones/dotfiles/compare/v1.5.2...v1.5.3) (2021-04-25)
+
+
+### Bug Fixes
+
+* logon script installer didn't work with the updater ([15deaaf](https://github.com/brad-jones/dotfiles/commit/15deaaf218a5961cd645d7dc10539ad4a567fab1))
+
 ## [1.5.2](https://github.com/brad-jones/dotfiles/compare/v1.5.1...v1.5.2) (2021-04-25)
 
 
