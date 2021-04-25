@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/brad-jones/dotfiles/compare/v1.5.1...v1.5.2) (2021-04-25)
+
+
+### Bug Fixes
+
+* replace ping with normal http call ([a6e8d09](https://github.com/brad-jones/dotfiles/commit/a6e8d0974e7e73bbf35a10c09d95342124f9188c))
+
 ## [1.5.1](https://github.com/brad-jones/dotfiles/compare/v1.5.0...v1.5.1) (2021-04-25)
 
 
