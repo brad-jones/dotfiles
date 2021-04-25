@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/brad-jones/dotfiles/compare/v1.4.2...v1.5.0) (2021-04-25)
+
+
+### Features
+
+* **wsl:** good enough for now ([f9fdcc0](https://github.com/brad-jones/dotfiles/commit/f9fdcc02801af50b5383a33bcd530ade409329ef))
+
 ## [1.4.2](https://github.com/brad-jones/dotfiles/compare/v1.4.1...v1.4.2) (2021-04-25)
 
 
