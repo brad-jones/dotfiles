@@ -23,7 +23,6 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/go-git/go-git/v5 v5.3.0
 	github.com/go-ole/go-ole v1.2.5 // indirect
-	github.com/go-ping/ping v0.0.0-20210407214646-e4e642a95741 // indirect
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/godbus/dbus/v5 v5.0.4 // indirect
 	github.com/golang/snappy v0.0.3 // indirect

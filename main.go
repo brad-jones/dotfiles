@@ -14,7 +14,7 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
 	"github.com/brad-jones/dotfiles/pkg/updater"
 	"github.com/brad-jones/goerr/v2"
-	"github.com/go-ping/ping"
+	"github.com/go-resty/resty/v2"
 	"github.com/urfave/cli/v2"
 )
 
@@ -79,17 +79,12 @@ func main() {
 			// Wait for network connectivity
 			// When run on logon sometimes the network stack isn't ready for us
 			goerr.Check(retry.Do(func() error {
-				pinger, err := ping.NewPinger("www.google.com")
+				r, err := resty.New().R().Get("https://www.google.com")
 				if err != nil {
 					return err
 				}
-				if runtime.GOOS == "windows" {
-					pinger.SetPrivileged(true)
-				}
-				pinger.Count = 1
-				err = pinger.Run()
-				if err != nil {
-					return err
+				if !r.IsSuccess() {
+					return goerr.New("not 200")
 				}
 				return nil
 			}, retry.OnRetry(func(n uint, err error) {
