@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/brad-jones/dotfiles/compare/v1.4.1...v1.4.2) (2021-04-25)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/AlecAivazis/survey/v2 from 2.2.9 to 2.2.12 ([#6](https://github.com/brad-jones/dotfiles/issues/6)) ([6f8d7fb](https://github.com/brad-jones/dotfiles/commit/6f8d7fb4649ce543d3f731c7c97621fb44ef8d23))
+
 ## [1.4.1](https://github.com/brad-jones/dotfiles/compare/v1.4.0...v1.4.1) (2021-04-21)
 
 
