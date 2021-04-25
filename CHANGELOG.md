@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/brad-jones/dotfiles/compare/v1.5.3...v1.5.4) (2021-04-25)
+
+
+### Bug Fixes
+
+* retry the entire vault unlocking ([cede457](https://github.com/brad-jones/dotfiles/commit/cede45758172c5495f5806cafad51f4bb65660c6))
+
 ## [1.5.3](https://github.com/brad-jones/dotfiles/compare/v1.5.2...v1.5.3) (2021-04-25)
 
 
