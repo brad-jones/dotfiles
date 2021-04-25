@@ -6,6 +6,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/avast/retry-go"
 	"github.com/brad-jones/dotfiles/pkg/assets"
 	"github.com/brad-jones/dotfiles/pkg/steps"
 	"github.com/brad-jones/dotfiles/pkg/survey"
@@ -13,6 +14,7 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
 	"github.com/brad-jones/dotfiles/pkg/updater"
 	"github.com/brad-jones/goerr/v2"
+	"github.com/go-ping/ping"
 	"github.com/urfave/cli/v2"
 )
 
@@ -73,6 +75,26 @@ func main() {
 			// On subsequent executions these answers will be filled
 			// automatically from cache and/or the unlocked secrets vault.
 			answers := survey.AskQuestions(c)
+
+			// Wait for network connectivity
+			// When run on logon sometimes the network stack isn't ready for us
+			goerr.Check(retry.Do(func() error {
+				pinger, err := ping.NewPinger("www.google.com")
+				if err != nil {
+					return err
+				}
+				if runtime.GOOS == "windows" {
+					pinger.SetPrivileged(true)
+				}
+				pinger.Count = 1
+				err = pinger.Run()
+				if err != nil {
+					return err
+				}
+				return nil
+			}, retry.OnRetry(func(n uint, err error) {
+				fmt.Printf("waiting for internet access (attempt: %v)...\n", n)
+			})), "timed out waiting for internet access")
 
 			// If the update flag has been provided then we will execute the
 			// self update process. This will download a new version of this
