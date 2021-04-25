@@ -126,7 +126,7 @@ func main() {
 			// The very next thing we do is unlock our secrets.
 			// We do this early on so that we may refer to secrets
 			// as required throughout the rest of the process.
-			steps.MustUnlockVault(answers)
+			goerr.Check(retry.Do(func() error { return steps.UnlockVault(answers) }), "failed to unlock vault")
 			steps.MustUnlockKeys(answers)
 
 			// This is the whole point right :)
