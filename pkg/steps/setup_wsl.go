@@ -11,7 +11,11 @@ func SetupWSL(answers *survey.Answers) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 	wsl.MustInstall(answers.Reset)
 	v := tools.GetVersion("fedora")
-	name := wsl.MustInstallFedora(v.No, v.Hash, answers.SudoPassword, true, true)
+	name := wsl.MustInstallFedora(v.No, v.Hash, answers.SudoPassword, true, answers.Reset)
 	wsl.MustInstallDotfiles(name, answers)
 	return
+}
+
+func MustSetupWSL(answers *survey.Answers) {
+	goerr.Check(SetupWSL(answers))
 }

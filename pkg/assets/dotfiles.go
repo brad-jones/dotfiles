@@ -14,6 +14,7 @@ func WriteDotfiles(withSecrets bool) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 
 	if !withSecrets {
+		WriteFolderToHome(".ssh")
 		WriteFolderToHome(".config/gopass")
 
 		if runtime.GOOS != "windows" {
@@ -27,16 +28,15 @@ func WriteDotfiles(withSecrets bool) (err error) {
 	}
 
 	WriteFolderToHome(".aws")
-	WriteFolderToHome(".ssh")
+	WriteFolderToHome(".local")
 	WriteFolderToHome("Projects")
-	WriteFolderToHome(".local/sbin")
 	WriteFileToHome(".gitconfig.tmpl")
 
 	if runtime.GOOS == "windows" {
 		WriteFolderToHome("AppData")
 		WriteFolderToHome("Documents")
 	} else {
-		WriteFileToHome(".bashrc")
+		WriteFileToHome(".bashrc.tmpl")
 		WriteFileToHome(".bash_profile")
 		WriteFileToHome(".bash_logout")
 	}

@@ -12,7 +12,6 @@ import (
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
 	"github.com/brad-jones/dotfiles/pkg/tools/winsudo"
 	"github.com/brad-jones/dotfiles/pkg/updater"
-	"github.com/brad-jones/goasync/v2/await"
 	"github.com/brad-jones/goerr/v2"
 	"github.com/urfave/cli/v2"
 )
@@ -86,7 +85,6 @@ func main() {
 					// effect making the rest of the instructions in this
 					// function redundant and possibly incompatible with the
 					// what the new version of the tool just executed.
-					time.Sleep(time.Second * 3)
 					os.Exit(0)
 				}
 				// However if the updater fails we can then run this version
@@ -94,7 +92,7 @@ func main() {
 				// useable state, in effect performing a rollback.
 			}
 
-			// There are small selection of configuration files that are
+			// There are a small selection of configuration files that are
 			// required to unlock the secrets vault & maybe others in the
 			// future (eg: scoop config say). Most dotfiles are installed
 			// after the vault in unlocked so that they can consume secrets.
@@ -120,24 +118,16 @@ func main() {
 
 			// Here we install (or update) most of the rest of our software
 			steps.MustInstallOrUpdate(answers)
-			await.MustFastAllOrError(
-				steps.InstallDartScriptsAsync(answers),
-				steps.InstallRunAtLogonScriptAsync(),
-			)
 
-			// Finally, on Windows systems we perform some recursion and we
-			// create a WSL instance in which we then execute ourselves or
-			// rather the linux version, embedded with-in, inside the new
-			// WSL instance.
+			// On Windows systems we perform some recursion and we create a WSL
+			// instance in which we then execute ourselves or rather the linux
+			// version, embedded with-in, inside the new WSL instance.
 			if runtime.GOOS == "windows" {
-				steps.SetupWSL(answers)
+				steps.MustSetupWSL(answers)
 			}
 
-			// When run at logon we want to wait here for a bit so it gives the
-			// user a chance to read what was printed to the console before the
-			// console window closes.
-			time.Sleep(time.Second * 3)
-
+			// Finally we make it so that we execute dotfiles --update on logon
+			steps.MustInstallRunAtLogonScript()
 			return
 		},
 	}).Run(os.Args))

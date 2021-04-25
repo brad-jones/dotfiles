@@ -89,7 +89,9 @@ func MustStartAgent() {
 	if utils.IsWSL() {
 		utils.KillProcByName("ssh-agent")
 		sock := filepath.Join(utils.HomeDir(), ".ssh/agent.sock")
-		goexec.MustRunBuffered("ssh-agent", "-a", sock)
+		os.Remove(sock)
+		goerr.Check(os.MkdirAll(filepath.Dir(sock), 0700), "failed to create socket dir")
+		goexec.MustRunPrefixed(prefix, "ssh-agent", "-a", sock)
 		goerr.Check(os.Setenv("SSH_AUTH_SOCK", sock), "failed to set SSH_AUTH_SOCK", sock)
 	}
 

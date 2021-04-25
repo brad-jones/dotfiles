@@ -8,22 +8,29 @@
 
 # Define our path as early as possible
 PATH="/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin";
-PATH="$PATH:$HOME/.dotnet";
-PATH="$PATH:$HOME/.goenv/bin";
-PATH="$PATH:$HOME/.linuxbrew/bin";
-PATH="$PATH:$HOME/.local/bin";
-PATH="$PATH:$HOME/.nodenv/bin";
-PATH="$PATH:$HOME/.pkenv/bin";
-PATH="$PATH:$HOME/.pub-cache/bin";
-PATH="$PATH:$HOME/.pyenv/bin";
-PATH="$PATH:$HOME/.rbenv/bin";
-PATH="$PATH:$HOME/.tfenv/bin";
+PATH="$HOME/.dart/current/bin:$PATH";
+PATH="$HOME/.dotnet:$PATH";
+PATH="$HOME/.goenv/bin:$PATH";
+PATH="$HOME/.local/bin:$PATH";
+PATH="$HOME/.nodenv/bin:$PATH";
+PATH="$HOME/.pkenv/bin:$PATH";
+PATH="$HOME/.pub-cache/bin:$PATH";
+PATH="$HOME/.pyenv/bin:$PATH";
+PATH="$HOME/.rbenv/bin:$PATH";
+PATH="$HOME/.tfenv/bin:$PATH";
+PATH="$HOME/.tfenv/bin:$PATH";
+{{ if .Runtime.IsWSL -}}
+PATH="/mnt/c/Users/$USER/.scoop/apps/vscode/current/bin:$PATH";
+{{ end }}
 
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc;
 
+# Use VsCode as our editor for all the things
+export EDITOR="code -w";
+
 # Setup the ssh-agent
-export SSH_AUTH_SOCK="$HOME/agent.sock";
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock";
 
 # Standardise UID & GID, UID is normally set but GID is not.
 # So we just do both here which makes writting scripts easier.
@@ -42,19 +49,18 @@ export AWS_VAULT_PASS_PREFIX="aws-vault";
 export AWS_VAULT_PASS_PASSWORD_STORE_DIR="$HOME/.password-store";
 
 # Setup some bash auto completion
-#complete -C "$HOME/.local/bin/aws_completer" aws;
+complete -C "$HOME/.local/bin/aws_completer" aws;
 #eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
 
 # Setup all our tool version managers
-#source "$HOME/.sdkman/bin/sdkman-init.sh";
-eval "$(brew shellenv)";
-#eval "$(nodenv init -)";
-#eval "$(pyenv init -)";
-#eval "$(rbenv init -)";
-#eval "$(goenv init -)";
-#PATH="$PATH:$GOROOT/bin";
-#PATH="$PATH:$GOPATH/bin";
+. "$HOME/.sdkman/bin/sdkman-init.sh";
+eval "$(nodenv init -)";
+eval "$(pyenv init -)";
+eval "$(rbenv init -)";
+eval "$(goenv init -)";
+PATH="$PATH:$GOROOT/bin";
+PATH="$PATH:$GOPATH/bin";
 
 # We have some scripts which add additional functionality to existing tools
 # so we ensure these tools appear on the PATH first.

@@ -71,6 +71,10 @@ func IsWSL() bool {
 }
 
 func KillProcByName(name string) {
+	found := false
+	if runtime.GOOS == "windows" && !strings.HasSuffix(name, ".exe") {
+		name = name + ".exe"
+	}
 	fmt.Println(colorchooser.Sprint("kill-proc"), "|", "looking for", name)
 
 	procs, err := process.Processes()
@@ -78,21 +82,39 @@ func KillProcByName(name string) {
 
 	for _, p := range procs {
 		pName, err := p.Name()
-		goerr.Check(err, "failed to get proc name")
+		if err != nil {
+			if strings.Contains(err.Error(), "couldn't find pid") {
+				continue
+			}
+			goerr.Check(err, "failed to get proc name")
+		}
 
 		if pName == name {
-			pChildren, err := p.Children()
-			goerr.Check(err, "failed to get proc children", pName)
-
-			for _, v := range pChildren {
-				goerr.Check(v.Kill(), "failed to kill proc child", pName)
+			var killChildren func(p *process.Process)
+			killChildren = func(p *process.Process) {
+				pChildren, err := p.Children()
+				if err != nil {
+					if err.Error() != "process does not have children" {
+						goerr.Check(err, "failed to get proc children", pName)
+					}
+					return
+				}
+				for _, v := range pChildren {
+					killChildren(v)
+					goerr.Check(v.Kill(), "failed to kill proc child", pName)
+				}
 			}
-
+			killChildren(p)
 			goerr.Check(p.Kill(), "failed to kill proc parent", pName)
+			found = true
 		}
 	}
 
-	fmt.Println(colorchooser.Sprint("kill-proc"), "|", name, "has been slayed")
+	if found {
+		fmt.Println(colorchooser.Sprint("kill-proc"), "|", name, "has been slayed")
+	} else {
+		fmt.Println(colorchooser.Sprint("kill-proc"), "|", name, "not running")
+	}
 }
 
 func RunElevatedNix(prefix, sudoPassword, cmd string, args ...string) {
