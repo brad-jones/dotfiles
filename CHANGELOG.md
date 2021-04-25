@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/brad-jones/dotfiles/compare/v1.5.4...v1.5.5) (2021-04-25)
+
+
+### Bug Fixes
+
+* cant grab the vault password from inside wsl ([2c5cdf2](https://github.com/brad-jones/dotfiles/commit/2c5cdf2874f33452518c1dce2ead1d256869407a))
+
 ## [1.5.4](https://github.com/brad-jones/dotfiles/compare/v1.5.3...v1.5.4) (2021-04-25)
 
 
