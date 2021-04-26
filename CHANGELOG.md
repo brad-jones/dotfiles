@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/brad-jones/dotfiles/compare/v1.5.6...v1.5.7) (2021-04-26)
+
+
+### Bug Fixes
+
+* ensure the latest version of npm is installed also ([20ec960](https://github.com/brad-jones/dotfiles/commit/20ec96012a99add83592db2ab5f664619d17f0da))
+
 ## [1.5.6](https://github.com/brad-jones/dotfiles/compare/v1.5.5...v1.5.6) (2021-04-26)
 
 
