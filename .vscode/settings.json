@@ -39,6 +39,7 @@
 		"Pkgs",
 		"archiver",
 		"blang",
+		"dependabot",
 		"deps",
 		"distro",
 		"dotfile",

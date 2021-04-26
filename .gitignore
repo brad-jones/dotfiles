@@ -230,3 +230,5 @@ $RECYCLE.BIN/
 
 bin/*
 !pkg/assets/files/AppData/Local/gopass/gopass_native_host.exe
+pkg/assets/files/dot_local/sbin/.dart_tool/
+pkg/assets/files/dot_local/sbin/.packages
