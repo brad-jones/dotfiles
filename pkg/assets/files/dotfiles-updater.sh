@@ -19,6 +19,21 @@ unzip "$tmpFolderAWS/awscliv2.zip" -d "$tmpFolderAWS/extracted";
 $tmpFolderAWS/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin --update;
 ~/.local/bin/aws --version;
 
+# Install Deno
+# ------------------------------------------------------------------------------
+if [ -z "$(command -v asdf)" ]; then
+    rm -rf ~/.asdf;
+	sudo dnf install curl git;
+	git clone https://github.com/asdf-vm/asdf.git ~/.asdf;
+	cd ~/.asdf && git checkout "$(git describe --abbrev=0 --tags)" && cd -;
+    . "$HOME/.asdf/asdf.sh";
+	asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git;
+fi
+asdf update;
+asdf plugin update deno;
+asdf install deno latest;
+asdf global deno $(asdf latest deno);
+
 # Install Dartlang
 # ------------------------------------------------------------------------------
 if [ -z "$(command -v dart)" ]; then

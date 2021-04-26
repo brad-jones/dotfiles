@@ -58,6 +58,8 @@ eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
 
 # Setup all our tool version managers
+. "$HOME/.asdf/asdf.sh";
+. "$HOME/.asdf/completions/asdf.bash";
 . "$HOME/.sdkman/bin/sdkman-init.sh";
 eval "$(nodenv init -)";
 eval "$(pyenv init -)";
