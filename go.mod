@@ -26,7 +26,7 @@ require (
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/godbus/dbus/v5 v5.0.4 // indirect
 	github.com/golang/snappy v0.0.3 // indirect
-	github.com/google/go-github/v35 v35.0.0
+	github.com/google/go-github/v35 v35.1.0
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gosimple/slug v1.9.0
 	github.com/hpcloud/tail v1.0.0
