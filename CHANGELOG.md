@@ -1,3 +1,11 @@
+## [1.5.6](https://github.com/brad-jones/dotfiles/compare/v1.5.5...v1.5.6) (2021-04-26)
+
+
+### Bug Fixes
+
+* ignore some of the dart files that should not have been comitted ([95bb41b](https://github.com/brad-jones/dotfiles/commit/95bb41be57e3db82706518974db1791841d603f8))
+* **deps:** bump github.com/google/go-github/v35 from 35.0.0 to 35.1.0 ([#7](https://github.com/brad-jones/dotfiles/issues/7)) ([e60fadd](https://github.com/brad-jones/dotfiles/commit/e60faddd5944b867f222a8a8dc4b772374d98836))
+
 ## [1.5.5](https://github.com/brad-jones/dotfiles/compare/v1.5.4...v1.5.5) (2021-04-25)
 
 
