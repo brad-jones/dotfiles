@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/brad-jones/dotfiles/compare/v1.5.7...v1.6.0) (2021-04-26)
+
+
+### Features
+
+* added deno into the linux install ([547f729](https://github.com/brad-jones/dotfiles/commit/547f72921e4e37bd96fe15d82e4951737635b78c))
+
 ## [1.5.7](https://github.com/brad-jones/dotfiles/compare/v1.5.6...v1.5.7) (2021-04-26)
 
 
