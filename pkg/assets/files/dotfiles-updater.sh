@@ -65,6 +65,7 @@ fi
 nodeV="$(echo "$(~/.nodenv/bin/nodenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
 ~/.nodenv/bin/nodenv install -s $nodeV;
 ~/.nodenv/bin/nodenv global $nodeV;
+~/.nodenv/shims/npm install --global npm;
 ~/.nodenv/shims/npm install --global yarn;
 ~/.nodenv/shims/npm install --global pnpm;
 ~/.nodenv/bin/nodenv rehash;
