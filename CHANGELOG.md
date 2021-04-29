@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/brad-jones/dotfiles/compare/v1.6.1...v1.7.0) (2021-04-29)
+
+
+### Bug Fixes
+
+* deno dnf install command in the linux dotfile-updater script ([989f5e2](https://github.com/brad-jones/dotfiles/commit/989f5e257e3b7350485968f1415b3a9e9604d200))
+
+
+### Features
+
+* added docker into WSL via Podman ([f1b44db](https://github.com/brad-jones/dotfiles/commit/f1b44db7d2c826bce782bfff5dd9dad02e9eefec))
+
 ## [1.6.1](https://github.com/brad-jones/dotfiles/compare/v1.6.0...v1.6.1) (2021-04-29)
 
 
