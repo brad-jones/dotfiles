@@ -13,7 +13,7 @@ require (
 	github.com/bmatcuk/doublestar/v3 v3.0.0
 	github.com/brad-jones/goasync/v2 v2.1.2
 	github.com/brad-jones/goerr/v2 v2.1.3
-	github.com/brad-jones/goexec/v2 v2.1.6
+	github.com/brad-jones/goexec/v2 v2.1.7
 	github.com/brad-jones/goprefix/v2 v2.0.5
 	github.com/brad-jones/gopwsh v1.1.0
 	github.com/cavaliercoder/grab v2.0.0+incompatible
