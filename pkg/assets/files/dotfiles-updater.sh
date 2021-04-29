@@ -31,7 +31,7 @@ $tmpFolderAWS/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin --update
 # ------------------------------------------------------------------------------
 if [ -z "$(command -v asdf)" ]; then
     rm -rf ~/.asdf;
-	sudo dnf install curl git;
+	sudo dnf install -y curl git;
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf;
 	cd ~/.asdf && git checkout "$(git describe --abbrev=0 --tags)" && cd -;
     . "$HOME/.asdf/asdf.sh";
@@ -152,34 +152,3 @@ if ! [ -d "$HOME/.sdkman" ]; then
     curl "https://get.sdkman.io?rcupdate=false" | bash;
 fi
 bash ~/.local/bin/update-sdkman;
-
-# Install Docker
-# ------------------------------------------------------------------------------
-#if ! [ -x "$(command -v docker)" ]; then
-#    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo;
-#    sudo dnf install -y docker-ce docker-ce-cli containerd.io grubby;
-#    sudo grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0";
-#    sudo systemctl enable docker;
-#    sudo usermod -aG docker $USER;
-#
-#    # When running docker inside a hyper-v vm sometimes we get IP clashes because
-#    # the default switch for hyper-v also likes to make use of the 172.x range.
-#    # see: https://stackoverflow.com/questions/44003663
-#    # also: https://github.com/moby/moby/pull/29376
-#    dockerConfig=$(cat <<'EOF'
-#{
-#    "experimental": true,
-#    "max-concurrent-uploads": 1,
-#    "default-address-pools": [
-#        {
-#            "base": "10.10.0.0/16",
-#            "size": 24
-#        }
-#    ]
-#}
-#EOF
-#)
-#
-#    sudo mkdir -p /etc/docker;
-#    sudo sh -c "echo '$dockerConfig' > /etc/docker/daemon.json";
-#fi
