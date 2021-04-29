@@ -5,6 +5,7 @@ import (
 	"runtime"
 	"text/template"
 
+	"github.com/brad-jones/dotfiles/pkg/tools/gopass"
 	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goerr/v2"
 )
@@ -13,7 +14,9 @@ var tmplOptions = []string{
 	"missingkey=error",
 }
 
-var tmplFuncMap = template.FuncMap{}
+var tmplFuncMap = template.FuncMap{
+	"GetSecret": gopass.GetSecret,
+}
 
 type tmplData struct {
 	Runtime struct {

@@ -25,7 +25,7 @@ PATH="/mnt/c/Windows/System32/WindowsPowerShell/v1.0:$PATH";
 PATH="/mnt/c/Program Files/Mozilla Firefox:$PATH";
 PATH="/mnt/c/Program Files/Google/Chrome/Application:$PATH";
 PATH="/mnt/c/Users/$USER/.scoop/apps/vscode/current/bin:$PATH";
-{{ end }}
+{{ end -}}
 
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc;
@@ -71,6 +71,23 @@ PATH="$PATH:$GOPATH/bin";
 # We have some scripts which add additional functionality to existing tools
 # so we ensure these tools appear on the PATH first.
 PATH="$HOME/.local/sbin/bin:$PATH";
+
+{{ if .Runtime.IsWSL -}}
+# Tell Podman where to find our auth file
+export REGISTRY_AUTH_FILE="$HOME/.config/containers/auth.json";
+
+# Without systemd, the $XDG_RUNTIME_DIR is not available for podman (& other
+# systemd`y things) to use for temporary files. So we create it here.
+if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+  export XDG_RUNTIME_DIR=/run/user/$UID
+  if [[ ! -d "$XDG_RUNTIME_DIR" ]]; then
+    export XDG_RUNTIME_DIR=/tmp/$USER-runtime
+    if [[ ! -d "$XDG_RUNTIME_DIR" ]]; then
+      mkdir -m 0700 "$XDG_RUNTIME_DIR"
+    fi
+  fi
+fi
+{{ end -}}
 
 # Rdp shortcuts
 alias rdp-xero-bastion-paas-prod='bash -c "rdp -g \"rdgw-prod.xero-support.com\" -h \"msrds.vpc-807ec9e4.inbound.xero-support.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';

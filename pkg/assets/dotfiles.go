@@ -5,6 +5,7 @@ import (
 	"runtime"
 
 	"github.com/brad-jones/dotfiles/pkg/tools/scoop"
+	"github.com/brad-jones/dotfiles/pkg/utils"
 	"github.com/brad-jones/goasync/v2/task"
 	"github.com/brad-jones/goerr/v2"
 )
@@ -39,6 +40,10 @@ func WriteDotfiles(withSecrets bool) (err error) {
 		WriteFileToHome(".bashrc.tmpl")
 		WriteFileToHome(".bash_profile")
 		WriteFileToHome(".bash_logout")
+	}
+
+	if utils.IsWSL() {
+		WriteFolderToHome(".config/containers")
 	}
 
 	return

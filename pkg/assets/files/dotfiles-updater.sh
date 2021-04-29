@@ -4,6 +4,14 @@ set -euxo pipefail;
 # Source our bashrc file
 [ -f ~/.bashrc ] && set +u && . ~/.bashrc && set -u;
 
+# Install Docker (Podman)
+# ------------------------------------------------------------------------------
+sudo dnf install -y podman;
+sudo dnf reinstall -y shadow-utils;
+if ! [ -x "/usr/bin/docker" ]; then
+	sudo ln -s "/usr/bin/podman" "/usr/bin/docker";
+fi
+
 # Install awscli
 # ------------------------------------------------------------------------------
 if ! [ -x "$HOME/.local/bin/aws" ]; then
