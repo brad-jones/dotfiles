@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/brad-jones/dotfiles/compare/v1.6.0...v1.6.1) (2021-04-29)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/brad-jones/goexec/v2 from 2.1.6 to 2.1.7 ([#11](https://github.com/brad-jones/dotfiles/issues/11)) ([899b439](https://github.com/brad-jones/dotfiles/commit/899b439fbf7f608ef749637962da4671307d3f09))
+
 # [1.6.0](https://github.com/brad-jones/dotfiles/compare/v1.5.7...v1.6.0) (2021-04-26)
 
 
