@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/brad-jones/dotfiles/compare/v1.7.1...v1.7.2) (2021-04-30)
+
+
+### Bug Fixes
+
+* add deno bin path ([5f44608](https://github.com/brad-jones/dotfiles/commit/5f446085aeebc6be1121b4ce7715f2f792d32a68))
+
 ## [1.7.1](https://github.com/brad-jones/dotfiles/compare/v1.7.0...v1.7.1) (2021-04-30)
 
 
