@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/brad-jones/dotfiles/compare/v1.7.0...v1.7.1) (2021-04-30)
+
+
+### Bug Fixes
+
+* updates to vscode settings ([18f6cb3](https://github.com/brad-jones/dotfiles/commit/18f6cb3bff9a9f4081f2c56bada9fff98bc4c947))
+
 # [1.7.0](https://github.com/brad-jones/dotfiles/compare/v1.6.1...v1.7.0) (2021-04-29)
 
 
