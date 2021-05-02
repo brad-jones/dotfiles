@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/brad-jones/dotfiles/compare/v1.7.2...v1.7.3) (2021-05-02)
+
+
+### Bug Fixes
+
+* set default git branch to master ([f76e3c1](https://github.com/brad-jones/dotfiles/commit/f76e3c1f7772f2ec54ddfa5c0b756ee5a98a80d0))
+
 ## [1.7.2](https://github.com/brad-jones/dotfiles/compare/v1.7.1...v1.7.2) (2021-04-30)
 
 
