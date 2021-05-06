@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/brad-jones/dotfiles/compare/v1.7.3...v1.7.4) (2021-05-06)
+
+
+### Bug Fixes
+
+* add choco into my windows path ([0e8efe3](https://github.com/brad-jones/dotfiles/commit/0e8efe3b89bc87b61f2e19db7a97aabcadc917d6))
+
 ## [1.7.3](https://github.com/brad-jones/dotfiles/compare/v1.7.2...v1.7.3) (2021-05-02)
 
 
