@@ -1,3 +1,12 @@
+## [1.7.5](https://github.com/brad-jones/dotfiles/compare/v1.7.4...v1.7.5) (2021-05-09)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/brad-jones/gopwsh from 1.1.0 to 1.1.1 ([#15](https://github.com/brad-jones/dotfiles/issues/15)) ([e099814](https://github.com/brad-jones/dotfiles/commit/e099814a9f268a32fd84689af835e0512e57b082))
+* **deps:** bump github.com/google/go-github/v35 from 35.1.0 to 35.2.0 ([#20](https://github.com/brad-jones/dotfiles/issues/20)) ([bd4db77](https://github.com/brad-jones/dotfiles/commit/bd4db77c1bcd79a55144507af3de0cc9ffa3db33))
+* **deps:** bump github.com/shirou/gopsutil/v3 from 3.21.3 to 3.21.4 ([#14](https://github.com/brad-jones/dotfiles/issues/14)) ([e73d511](https://github.com/brad-jones/dotfiles/commit/e73d51188d5f4c83a4341b20356b2677caf1ce14))
+
 ## [1.7.4](https://github.com/brad-jones/dotfiles/compare/v1.7.3...v1.7.4) (2021-05-06)
 
 
