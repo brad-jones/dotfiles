@@ -4,6 +4,9 @@ set -euxo pipefail;
 # Source our bashrc file
 [ -f ~/.bashrc ] && set +u && . ~/.bashrc && set -u;
 
+# Update the entire system
+sudo dnf update -y;
+
 # Install Docker (Podman)
 # ------------------------------------------------------------------------------
 sudo dnf install -y podman;
