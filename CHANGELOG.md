@@ -1,3 +1,10 @@
+## [1.7.6](https://github.com/brad-jones/dotfiles/compare/v1.7.5...v1.7.6) (2021-05-09)
+
+
+### Bug Fixes
+
+* add dnf update to the start of the linux updater script ([b673d71](https://github.com/brad-jones/dotfiles/commit/b673d715abd966e77ca07c24bb956ea5b7baa8c8))
+
 ## [1.7.5](https://github.com/brad-jones/dotfiles/compare/v1.7.4...v1.7.5) (2021-05-09)
 
 
