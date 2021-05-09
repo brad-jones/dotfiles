@@ -15,7 +15,7 @@ require (
 	github.com/brad-jones/goerr/v2 v2.1.3
 	github.com/brad-jones/goexec/v2 v2.1.7
 	github.com/brad-jones/goprefix/v2 v2.0.5
-	github.com/brad-jones/gopwsh v1.1.0
+	github.com/brad-jones/gopwsh v1.1.1
 	github.com/cavaliercoder/grab v2.0.0+incompatible
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/dsnet/compress v0.0.1 // indirect
