@@ -44,9 +44,9 @@ func AllVersions() map[string]*Version {
 			hashWin: "136ac9437a248786a997b7a563e17383ec6779d58e01ccb9ca07fc9e2ebc70b5",
 		},
 		"gopass": {
-			no:      "v1.9.2",
-			hashLin: "a55885a50259b623dc58f734d3f2634e3564feae1d3eba0ec8b79da645ab1d55",
-			hashWin: "047e4c48aa7f828102b71855f5705ded935d6559d4c5cca178220879b7fb1f5e",
+			no:      "v1.12.6",
+			hashLin: "efb3b2196a7a29ae43d49dbff760c7be5af2f636206bd56a8345ebe56091b620",
+			hashWin: "5b10fa700e0661f9cb50f444fc84d3d5e6852dedce3e5367830a2f01d541943b",
 		},
 		"fedora": {
 			no:      "33.20210226.0",

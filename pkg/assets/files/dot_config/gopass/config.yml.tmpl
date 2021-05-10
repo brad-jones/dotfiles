@@ -1,23 +1,15 @@
-root:
-  askformore: false
-  autoclip: false
-  autoprint: false
-  autoimport: true
-  autosync: true
-  check_recipient_hash: false
-  cliptimeout: 45
-  concurrency: 1
-  editrecipients: false
-  nocolor: false
-  noconfirm: true
-  nopager: false
-  notifications: true
-  {{ if eq .Runtime.GOOS "windows" -}}
-  path: gpgcli-gitcli-fs+file:///C:%5CUsers%5Cbrad.jones%5C.password-store
-  {{ else -}}
-  path: gpgcli-gitcli-fs+file:///home/brad.jones/.password-store
-  {{ end -}}
-  recipient_hash: {}
-  safecontent: false
-  usesymbols: false
+autoclip: false
+autoimport: true
+cliptimeout: 45
+exportkeys: true
+nocolor: false
+nopager: false
+notifications: true
+parsing: true
+{{ if eq .Runtime.GOOS "windows" -}}
+path: C:\Users\brad.jones\.password-store
+{{ else -}}
+path: /home/brad.jones/.password-store
+{{ end -}}
+safecontent: false
 mounts: {}

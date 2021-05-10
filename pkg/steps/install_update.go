@@ -23,6 +23,12 @@ import (
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
 )
 
+// TODO: Install SessionManagerPlugin
+// https://s3.amazonaws.com/session-manager-downloads/plugin/latest/windows/SessionManagerPluginSetup.exe
+// https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip
+// https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb
+// https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm
+
 func MustInstallOrUpdate(answers *survey.Answers) {
 	await.MustFastAllOrError(
 		chrome.InstallAsync(),
