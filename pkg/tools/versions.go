@@ -35,9 +35,9 @@ func AllVersions() map[string]*Version {
 
 	for k, v := range map[string]*version{
 		"aws-vault": {
-			no:      "v5.4.4",
-			hashWin: "0c93108f1cf1b920a84808e664245d272a2179fc931485d3c6f6989c350e6efa",
-			hashLin: "216695e63583296fd7b4202f86479af8da3a7fb00929a22952e9d4bc95fd0d66",
+			no:      "v6.3.1",
+			hashWin: "acba56d994a5666b16c92928299aeb52d5691ddb3ddc76015ef20bfde3d29108",
+			hashLin: "84cfab75012eb272add8b09cb2d295941b977cf2bf58b3fb3caa4c4adac6f17f",
 		},
 		"gsudo": {
 			no:      "v0.7.3",

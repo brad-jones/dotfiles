@@ -7,70 +7,181 @@ cli_follow_urlparam = false
 [profile bjc]
 region = ap-southeast-2
 
-# XERO PAAS Accounts
+# XERO PAAS Identity
 # ------------------------------------------------------------------------------
 [profile xero-ps-paas-identity]
 region = ap-southeast-2
+source_profile = xero-ps-paas-identity
 mfa_serial = arn:aws:iam::477275408388:mfa/brad.jones@xero.com
 mfa_token_provider = "gopass otp -o 2fa/aws/brad.jones@xero.com"
 
-[profile xero-ps-paas-prod]
-region = us-east-1
-source_profile = xero-ps-paas-identity
-role_arn = arn:aws:iam::966283773129:role/Developer
-
+# XERO PAAS SVC
+# ------------------------------------------------------------------------------
 [profile xero-ps-paas-svc]
-region = ap-southeast-2
-source_profile = xero-ps-paas-identity
+include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::640077214053:role/Developer
+region = ap-southeast-2
 
+[profile xero-ps-paas-svc-rdp]
+include_profile = xero-ps-paas-svc
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::640077214053:role/RemoteConnectRDP
+
+[profile xero-ps-paas-svc-shell]
+include_profile = xero-ps-paas-svc
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::640077214053:role/RemoteConnectShell
+
+# XERO PAAS PROD
+# ------------------------------------------------------------------------------
+[profile xero-ps-paas-prod]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::966283773129:role/Developer
+region = us-east-1
+
+[profile xero-ps-paas-prod-rdp]
+include_profile = xero-ps-paas-prod
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::966283773129:role/RemoteConnectRDP
+
+[profile xero-ps-paas-prod-shell]
+include_profile = xero-ps-paas-prod
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::966283773129:role/RemoteConnectShell
+
+# XERO PAAS UAT
+# ------------------------------------------------------------------------------
 [profile xero-ps-paas-uat]
-region = us-west-2
-source_profile = xero-ps-paas-identity
+include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::192337955983:role/Developer
+region = us-west-2
 
+[profile xero-ps-paas-uat-rdp]
+include_profile = xero-ps-paas-uat
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::192337955983:role/RemoteConnectRDP
+
+[profile xero-ps-paas-uat-shell]
+include_profile = xero-ps-paas-uat
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::192337955983:role/RemoteConnectShell
+
+# XERO PAAS TEST
+# ------------------------------------------------------------------------------
 [profile xero-ps-paas-test]
-region = ap-southeast-2
-source_profile = xero-ps-paas-identity
+include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::046921848075:role/Developer
-
-[profile xero-ps-paas-dev]
 region = ap-southeast-2
-source_profile = xero-ps-paas-identity
-role_arn = arn:aws:iam::769423770222:role/Developer
 
-# XERO BP DevOps Accounts
+[profile xero-ps-paas-test-rdp]
+include_profile = xero-ps-paas-test
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::046921848075:role/RemoteConnectRDP
+
+[profile xero-ps-paas-test-shell]
+include_profile = xero-ps-paas-test
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::046921848075:role/RemoteConnectShell
+
+# XERO PAAS DEV
+# ------------------------------------------------------------------------------
+[profile xero-ps-paas-dev]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::769423770222:role/Developer
+region = ap-southeast-2
+
+[profile xero-ps-paas-dev-rdp]
+include_profile = xero-ps-paas-dev
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::769423770222:role/RemoteConnectRDP
+
+[profile xero-ps-paas-dev-shell]
+include_profile = xero-ps-paas-dev
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::769423770222:role/RemoteConnectShell
+
+# XERO BPDevOps TEST
 # ------------------------------------------------------------------------------
 [profile xero-pay-devops-test]
-region = ap-southeast-2
-source_profile = xero-ps-paas-identity
+include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::243997632406:role/X-AdminAccess
+region = ap-southeast-2
 
-# XERO Payroll Accounts
+[profile xero-pay-devops-test-rdp]
+include_profile = xero-pay-devops-test
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::243997632406:role/RemoteConnectRDP
+
+[profile xero-pay-devops-test-shell]
+include_profile = xero-pay-devops-test
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::243997632406:role/RemoteConnectShell
+
+# XERO Payroll PROD
 # ------------------------------------------------------------------------------
 [profile xero-payroll-prod]
-region = us-east-1
-source_profile = xero-ps-paas-identity
+include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::557935033251:role/X-AdminAccess
-
-[profile xero-payroll-uat]
-region = us-west-2
-source_profile = xero-ps-paas-identity
-role_arn = arn:aws:iam::721874215166:role/X-AdminAccess
-
-[profile xero-payroll-test]
-region = ap-southeast-2
-source_profile = xero-ps-paas-identity
-role_arn = arn:aws:iam::244668436958:role/X-AdminAccess
-
-# XERO Product Ladder Accounts
-# ------------------------------------------------------------------------------
-[profile xero-pay-provisioning-prod]
 region = us-east-1
-source_profile = xero-ps-paas-identity
-role_arn = arn:aws:iam::169392980917:role/X-AdminAccess
 
-[profile xero-pay-provisioning-uat]
+[profile xero-payroll-prod-rdp]
+include_profile = xero-payroll-prod
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::557935033251:role/RemoteConnectRDP
+
+[profile xero-payroll-prod-shell]
+include_profile = xero-payroll-prod
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::557935033251:role/RemoteConnectShell
+
+# XERO Payroll UAT
+# ------------------------------------------------------------------------------
+[profile xero-payroll-uat]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::721874215166:role/X-AdminAccess
 region = us-west-2
-source_profile = xero-ps-paas-identity
-role_arn = arn:aws:iam::415069618321:role/X-AdminAccess
+
+[profile xero-payroll-uat-rdp]
+include_profile = xero-payroll-uat
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::721874215166:role/RemoteConnectRDP
+
+[profile xero-payroll-uat-shell]
+include_profile = xero-payroll-uat
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::721874215166:role/RemoteConnectShell
+
+# XERO Payroll TEST
+# ------------------------------------------------------------------------------
+[profile xero-payroll-test]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::244668436958:role/X-AdminAccess
+region = ap-southeast-2
+
+[profile xero-payroll-test-rdp]
+include_profile = xero-payroll-test
+role_session_name = brad.jones@xero.com_0
+role_arn = arn:aws:iam::244668436958:role/RemoteConnectRDP
+
+[profile xero-payroll-test-shell]
+include_profile = xero-payroll-test
+role_session_name = brad.jones@xero.com_0
+session_tags = SSMSessionRunAs=brad.jones
+transitive_session_tags = SSMSessionRunAs
+role_arn = arn:aws:iam::244668436958:role/RemoteConnectShell
