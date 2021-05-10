@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/brad-jones/dotfiles/compare/v1.8.0...v1.8.1) (2021-05-10)
+
+
+### Bug Fixes
+
+* disable gopass bin cp cmds for now ([e4ccf51](https://github.com/brad-jones/dotfiles/commit/e4ccf51b834cbf43a038eaee0d4ea1da6b8b3d34))
+
 # [1.8.0](https://github.com/brad-jones/dotfiles/compare/v1.7.7...v1.8.0) (2021-05-10)
 
 
