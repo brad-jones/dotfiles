@@ -1,3 +1,10 @@
+## [1.7.7](https://github.com/brad-jones/dotfiles/compare/v1.7.6...v1.7.7) (2021-05-10)
+
+
+### Bug Fixes
+
+* pyenv has changed the way it does it's init ([1e5cec3](https://github.com/brad-jones/dotfiles/commit/1e5cec3319317ab38711ae1cd715ef459c10a82a))
+
 ## [1.7.6](https://github.com/brad-jones/dotfiles/compare/v1.7.5...v1.7.6) (2021-05-09)
 
 
