@@ -1,6 +1,9 @@
 package gopass
 
 import (
+	"encoding/base64"
+	"io/fs"
+	"io/ioutil"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -47,6 +50,22 @@ func Path() string {
 func GetSecret(key string) string {
 	return strings.TrimSpace(
 		goexec.MustRunBuffered(Path(), "show", "-o", key).StdOut,
+	)
+}
+
+// Returns a binary secret from the vault
+func GetBinarySecret(key string) []byte {
+	out := goexec.MustRunBuffered(Path(), "show", key+".b64").StdOut
+	b64 := strings.TrimSpace(strings.Join(strings.Split(out, "\n")[1:], ""))
+	plainTxt, err := base64.StdEncoding.DecodeString(b64)
+	goerr.Check(err, "failed to decode base64 bytes")
+	return plainTxt
+}
+
+func WriteBinarySecret(key, dst string, perm fs.FileMode) {
+	goerr.Check(
+		ioutil.WriteFile(dst, GetBinarySecret(key), perm),
+		"failed to write secret", key, dst,
 	)
 }
 
