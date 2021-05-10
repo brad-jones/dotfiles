@@ -16,12 +16,16 @@ import (
 	"github.com/brad-jones/goerr/v2"
 	"github.com/brad-jones/goexec/v2"
 	"github.com/brad-jones/goprefix/v2/pkg/colorchooser"
+	"github.com/gosimple/slug"
 )
 
 func UnlockKeys(answers *survey.Answers) (err error) {
 	defer goerr.Handle(func(e error) { err = e })
 	prefix := colorchooser.Sprint("unlock-keys")
 
+	if len(answers.SudoPassword) == 0 {
+		answers.SudoPassword = gopass.GetSecret(fmt.Sprintf("sudo/%s", slug.Make(utils.GetComputerName())))
+	}
 	ssh.MustInstall(answers.SudoPassword)
 	ssh.MustStartAgent()
 
