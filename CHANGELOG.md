@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/brad-jones/dotfiles/compare/v1.8.2...v1.8.3) (2021-05-10)
+
+
+### Bug Fixes
+
+* grab sudo passwd for ssh install ([58af729](https://github.com/brad-jones/dotfiles/commit/58af729b1a828fd1f9075a6453174ae7779f35ae))
+
 ## [1.8.2](https://github.com/brad-jones/dotfiles/compare/v1.8.1...v1.8.2) (2021-05-10)
 
 
