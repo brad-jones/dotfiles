@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/brad-jones/dotfiles/compare/v1.8.3...v1.8.4) (2021-05-10)
+
+
+### Bug Fixes
+
+* reenable unlock keys ([1d81a00](https://github.com/brad-jones/dotfiles/commit/1d81a0027f2ae98e7ae8fb1a80cd8f9245a2c891))
+
 ## [1.8.3](https://github.com/brad-jones/dotfiles/compare/v1.8.2...v1.8.3) (2021-05-10)
 
 
