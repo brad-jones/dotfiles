@@ -1,7 +1,6 @@
 package steps
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -39,7 +38,6 @@ func MustInstallOrUpdate(answers *survey.Answers) {
 			updateLinux()
 		}),
 	)
-	installDartScripts()
 }
 
 func InstallOrUpdateAsync(answers *survey.Answers) *task.Task {
@@ -63,6 +61,7 @@ func updateWindows() {
 		"adoptopenjdk-hotspot": "*",
 		"aws":                  "*",
 		"curl":                 "*",
+		"dart":                 "*",
 		"deno":                 "*",
 		"git":                  "*",
 		"gitkraken":            "*",
@@ -100,18 +99,4 @@ func updateLinux() {
 	assets.WriteFile("dotfiles-updater.sh", tmpFile)
 	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd("bash", goexec.Args(tmpFile), goexec.Cwd(utils.HomeDir())))
 
-}
-
-func installDartScripts() {
-	prefix := colorchooser.Sprint("dart-scripts")
-	fmt.Println(prefix, "|", "restoring deps")
-	scriptsDir := filepath.Join(utils.HomeDir(), ".local", "sbin")
-	goexec.MustRunPrefixedCmd(prefix, goexec.MustCmd(pubPath(), goexec.Args("get"), goexec.Cwd(scriptsDir)))
-}
-
-func pubPath() string {
-	if runtime.GOOS == "windows" {
-		return filepath.Join(scoop.Path(), "apps", "dart", "current", "bin", "pub.bat")
-	}
-	return filepath.Join(utils.HomeDir(), ".dart", "current", "bin", "pub")
 }

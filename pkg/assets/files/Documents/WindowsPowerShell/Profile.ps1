@@ -1,8 +1,7 @@
 . $env:USERPROFILE\Documents\WindowsPowerShell\utils.ps1;
 
 # Define our path as early as possible
-SetEnv -Key "Path" -Value ( -join ("$env:USERPROFILE\.local\sbin\bin;",
-	"C:\Windows\System32;",
+SetEnv -Key "Path" -Value ( -join ("C:\Windows\System32;",
 	"C:\Windows;",
 	"C:\Windows\System32\wbem;",
 	"C:\Program Files\Mozilla Firefox;",

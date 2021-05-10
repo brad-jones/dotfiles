@@ -1,3 +1,0 @@
-#!/usr/bin/env dart
-import 'package:scripts/aws.dart' as aws;
-Future<void> main(List<String> argv) => aws.main(argv);

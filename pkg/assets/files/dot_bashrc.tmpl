@@ -71,10 +71,6 @@ eval "$(goenv init -)";
 PATH="$PATH:$GOROOT/bin";
 PATH="$PATH:$GOPATH/bin";
 
-# We have some scripts which add additional functionality to existing tools
-# so we ensure these tools appear on the PATH first.
-PATH="$HOME/.local/sbin/bin:$PATH";
-
 {{ if .Runtime.IsWSL -}}
 # Tell Podman where to find our auth file
 export REGISTRY_AUTH_FILE="$HOME/.config/containers/auth.json";
@@ -91,57 +87,3 @@ if [[ -z "$XDG_RUNTIME_DIR" ]]; then
   fi
 fi
 {{ end -}}
-
-# Rdp shortcuts
-alias rdp-xero-bastion-paas-prod='bash -c "rdp -g \"rdgw-prod.xero-support.com\" -h \"msrds.vpc-807ec9e4.inbound.xero-support.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-bastion-payroll-prod='bash -c "rdp -g \"rdgw-prod.xero-support.com\" -h \"msrds.vpc-89263bee.inbound.xero-support.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-bastion-payroll-test='bash -c "rdp -g \"rdgw-test.xero-support.com\" -h \"msrds.vpc-94dd34f0.inbound.xero-support.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-bastion-payroll-uat='bash -c "rdp -g \"rdgw-uat.xero-support.com\" -h \"msrds.vpc-95b542f2.inbound.xero-support.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-
-alias rdp-xero-payroll-test-pod1='bash -c "rdp -h \"pod.pod1.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod2='bash -c "rdp -h \"pod.pod2.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod3='bash -c "rdp -h \"pod.pod3.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod4='bash -c "rdp -h \"pod.pod4.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod5='bash -c "rdp -h \"pod.pod5.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod6='bash -c "rdp -h \"pod.pod6.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod7='bash -c "rdp -h \"pod.pod7.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod8='bash -c "rdp -h \"pod.pod8.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod9='bash -c "rdp -h \"pod.pod9.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod10='bash -c "rdp -h \"pod.pod10.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod11='bash -c "rdp -h \"pod.pod11.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod12='bash -c "rdp -h \"pod.pod12.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod13='bash -c "rdp -h \"pod.pod13.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod15='bash -c "rdp -h \"pod.pod15.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-alias rdp-xero-payroll-test-pod16='bash -c "rdp -h \"pod.pod16.people.xero-test.com\" -u \"XOAWSMAN\brad.jones\" -p \"$(gopass websites/xero.okta.com/brad.jones@xero.com)\""';
-
-alias rdp-xero-payroll-test-pod1-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod1-B26-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod2-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod2-B40-branch15\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod3-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod3-B44-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod4-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod4-B18-branch48\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod5-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod5-B30-pod5\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod6-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod6-B34-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod7-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod7-B94-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod8-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod8-B32-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod9-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod9-B29-branch48\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod10-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod10-B81-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod11-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod11-B14-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod12-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod12-B76-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod13-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod13-B11-branch44\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod15-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod15-B3-branch4\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-alias rdp-xero-payroll-test-pod16-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"podserver-pod16-B33-<default>\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-devops.pem)\""';
-
-alias rdp-xero-payroll-test-pod1-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod1-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod2-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod2-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod3-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod3-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod4-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod4-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod5-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod5-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod6-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod6-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod7-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod7-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod8-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod8-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod9-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod9-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod10-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod10-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod11-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod11-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod12-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod12-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod13-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod13-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod15-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod15-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
-alias rdp-xero-payroll-test-pod16-db-admin='bash -c "rdp --profile \"xero-payroll-test\" --ec2 \"pod16-db-instance\" --key \"$(gopass bin cat keys/ssh/xero-payroll-test/payroll-dev-public.pem)\""';
