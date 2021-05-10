@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/brad-jones/dotfiles/compare/v1.8.1...v1.8.2) (2021-05-10)
+
+
+### Bug Fixes
+
+* unlock vault logic changes ([1dce77c](https://github.com/brad-jones/dotfiles/commit/1dce77cb250146fce4e4d8ba2d5102e8bedac996))
+
 ## [1.8.1](https://github.com/brad-jones/dotfiles/compare/v1.8.0...v1.8.1) (2021-05-10)
 
 
