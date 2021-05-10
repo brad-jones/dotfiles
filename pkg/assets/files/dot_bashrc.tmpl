@@ -26,7 +26,7 @@ PATH="/mnt/c/Windows/System32/WindowsPowerShell/v1.0:$PATH";
 PATH="/mnt/c/Program Files/Mozilla Firefox:$PATH";
 PATH="/mnt/c/Program Files/Google/Chrome/Application:$PATH";
 PATH="/mnt/c/Users/$USER/.scoop/apps/vscode/current/bin:$PATH";
-{{ end -}}
+{{ end }}
 
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc;
@@ -63,6 +63,8 @@ eval "$(gopass completion bash)";
 . "$HOME/.asdf/completions/asdf.bash";
 . "$HOME/.sdkman/bin/sdkman-init.sh";
 eval "$(nodenv init -)";
+export PYENV_ROOT="$HOME/.pyenv";
+eval "$(pyenv init --path)";
 eval "$(pyenv init -)";
 eval "$(rbenv init -)";
 eval "$(goenv init -)";
