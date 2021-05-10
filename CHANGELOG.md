@@ -1,3 +1,12 @@
+# [1.8.0](https://github.com/brad-jones/dotfiles/compare/v1.7.7...v1.8.0) (2021-05-10)
+
+
+### Features
+
+* remove old dart scripts ([aff5247](https://github.com/brad-jones/dotfiles/commit/aff5247b4b90bb36573ea745ad533cb1ddf15b8b))
+* upgrade aws-vault ([945742f](https://github.com/brad-jones/dotfiles/commit/945742f57c3fe725ab6e79f41e7ffa786e170d9a))
+* upgrade gopass ([938cc9d](https://github.com/brad-jones/dotfiles/commit/938cc9d5d5d4375ea87f121ba0c51f0623137899))
+
 ## [1.7.7](https://github.com/brad-jones/dotfiles/compare/v1.7.6...v1.7.7) (2021-05-10)
 
 
