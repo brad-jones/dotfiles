@@ -9,7 +9,7 @@
         <param name="buildSettings" value="PREFER_VCS" />
         <param name="credentialsStorageType" value="credentialsJSON" />
         <param name="enabled" value="true" />
-        <param name="rootId" value="Test1_GithubComBradJonesDotfiles" />
+        <param name="rootId" value="Test1_GithubComBradJonesTeamcityPlayground" />
         <param name="showChanges" value="true" />
       </parameters>
     </extension>
