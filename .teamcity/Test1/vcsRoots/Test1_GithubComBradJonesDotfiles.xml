@@ -8,6 +8,7 @@
   <param name="ignoreKnownHosts" value="true" />
   <param name="secure:password" value="credentialsJSON:39fd150f-810a-420f-831e-091bae70ae4a" />
   <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="teamcity:branchSpec" value="+:refs/heads/*" />
   <param name="url" value="https://github.com/brad-jones/dotfiles.git" />
   <param name="useAlternates" value="true" />
   <param name="username" value="brad-jones" />
