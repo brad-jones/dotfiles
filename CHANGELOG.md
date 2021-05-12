@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/brad-jones/dotfiles/compare/v1.8.4...v1.8.5) (2021-05-12)
+
+
+### Bug Fixes
+
+* update the gopass browser binary ([797aca0](https://github.com/brad-jones/dotfiles/commit/797aca06c7a9f0cd2e0cee4c4ea4982774b6e1f3))
+
 ## [1.8.4](https://github.com/brad-jones/dotfiles/compare/v1.8.3...v1.8.4) (2021-05-10)
 
 
