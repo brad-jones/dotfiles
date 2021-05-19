@@ -40,7 +40,7 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/shirou/gopsutil/v3 v3.21.4
-	github.com/tidwall/gjson v1.7.5
+	github.com/tidwall/gjson v1.8.0
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/urfave/cli/v2 v2.3.0
