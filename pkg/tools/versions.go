@@ -53,10 +53,10 @@ func AllVersions() map[string]*Version {
 			hashWin: "b623a59f936d953071b79683beff2d082b1848beeda6d645a5f01fd31226b988",
 		},
 		"https://dot.net/v1/dotnet-install.sh": {
-			hash: "c96360abc54d74454105df45cba5d6ac78c8d46859d9a1c2164df2a4dd09af6c",
+			hash: "d998926533a32537fada686ac41918b67e3e97a169a43c99cfd4100711767145",
 		},
 		"https://dot.net/v1/dotnet-install.ps1": {
-			hash: "8b8fe64d51d2aed4ece74fadd20098cece7a82c04656da9b0841baaedd079a2c",
+			hash: "b78bbd8f33ee82e1c2f56466e49eb46a66402ee6a71a77b198ecb5b60245e625",
 		},
 		"https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi": {
 			hashWin: "d872c2ef8f86798daedc295c49a31fb75fb7ba7e46f0660036ff16e55f0926fd",
@@ -71,8 +71,8 @@ func AllVersions() map[string]*Version {
 func DotnetVersions() []string {
 	return []string{
 		"latest",
-		"3.1.408",
-		"2.1.815",
+		"3.1.409",
+		"2.1.816",
 	}
 }
 
