@@ -8,6 +8,8 @@
 		"@semantic-release/exec": "^5.0.0",
 		"@semantic-release/git": "^9.0.0",
 		"@semantic-release/release-notes-generator": "^9.0.2",
+		"@swc/core": "^1.2.58",
+		"@swc/helpers": "^0.2.12",
 		"@types/node": "^15.6.1",
 		"@types/yargs": "^17.0.0",
 		"dotenv": "^10.0.0",
@@ -21,6 +23,7 @@
 		"replace-in-file": "^6.2.0",
 		"semantic-release": "^17.4.3",
 		"ts-node": "^10.0.0",
+		"tslib": "^2.2.0",
 		"tslog": "^3.2.0",
 		"typescript": "^4.2.4",
 		"yargs": "^17.0.1"

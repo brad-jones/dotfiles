@@ -1,8 +1,8 @@
 import got from "got";
 import * as fs from "fs";
 import yargs from "yargs";
+import execa from "execa";
 import { Logger } from "tslog";
-import * as execa from "execa";
 import * as hasha from "hasha";
 import * as readline from "readline";
 import { replaceInFile } from "replace-in-file";
@@ -26,7 +26,8 @@ const config = yargs(process.argv.slice(2))
 		default:
 			process.env["COMMIT_URL"] ??
 			"https://github.com/owner/project/commit/hash",
-	}).argv;
+	})
+	.parseSync();
 
 // >>> LOGGING
 // -----------------------------------------------------------------------------
@@ -49,16 +50,23 @@ const logger = new Logger({
  */
 async function exe(
 	log: Logger,
-	args?: readonly string[],
+	args: readonly string[],
 	options?: execa.Options
 ) {
 	const proc = execa(args[0], args.slice(1), options);
-	readline
-		.createInterface(proc.stdout)
-		.on("line", (line: string) => log.info(line));
-	readline
-		.createInterface(proc.stderr)
-		.on("line", (line: string) => log.warn(line));
+
+	if (proc.stdout !== null) {
+		readline
+			.createInterface(proc.stdout)
+			.on("line", (line: string) => log.info(line));
+	}
+
+	if (proc.stderr !== null) {
+		readline
+			.createInterface(proc.stderr)
+			.on("line", (line: string) => log.warn(line));
+	}
+
 	return await proc;
 }
 
@@ -229,7 +237,7 @@ export async function prepareRelease() {
 module.exports[config._[0]]
 	.apply(null)
 	.then(() => process.exit(0))
-	.catch((e) => {
+	.catch((e: unknown) => {
 		logger.error(e);
 		process.exit(1);
 	});

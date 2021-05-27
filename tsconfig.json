@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"lib": ["es2020"],
+		"module": "commonjs",
+		"target": "es2020",
+		"strict": true,
+		"skipLibCheck": true,
+		"importHelpers": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"ts-node": {
+		"transpileOnly": true,
+		"transpiler": "ts-node/transpilers/swc-experimental"
+	}
+}
