@@ -1,3 +1,10 @@
+## [1.8.7](https://github.com/brad-jones/dotfiles/compare/v1.8.6...v1.8.7) (2021-05-27)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/go-git/go-git/v5 from 5.3.0 to 5.4.1 ([#40](https://github.com/brad-jones/dotfiles/issues/40)) ([a7db825](https://github.com/brad-jones/dotfiles/commit/a7db82517f1c0389fe602088cf74e74f6c7bfa7b))
+
 ## [1.8.6](https://github.com/brad-jones/dotfiles/compare/v1.8.5...v1.8.6) (2021-05-19)
 
 
