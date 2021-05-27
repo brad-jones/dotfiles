@@ -57,6 +57,7 @@ export AWS_VAULT_PASS_PASSWORD_STORE_DIR="$HOME/.password-store";
 complete -C "$HOME/.local/bin/aws_completer" aws;
 eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
+eval "$(kubectl completion bash)";
 
 # Setup all our tool version managers
 . "$HOME/.asdf/asdf.sh";
