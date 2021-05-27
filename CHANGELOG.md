@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/brad-jones/dotfiles/compare/v1.9.0...v1.9.1) (2021-05-27)
+
+
+### Bug Fixes
+
+* windows powershell profile typo ([fe791ba](https://github.com/brad-jones/dotfiles/commit/fe791ba6c41b152dcc18509d6a8417bc618d55f1))
+
 # [1.9.0](https://github.com/brad-jones/dotfiles/compare/v1.8.7...v1.9.0) (2021-05-27)
 
 
