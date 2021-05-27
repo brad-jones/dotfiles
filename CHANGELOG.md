@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/brad-jones/dotfiles/compare/v1.9.3...v1.9.4) (2021-05-27)
+
+
+### Bug Fixes
+
+* make sure bash-completion package is installed ([0cbbd5f](https://github.com/brad-jones/dotfiles/commit/0cbbd5f5ba85e421e5037cb3babdee64a55945d7))
+
 ## [1.9.3](https://github.com/brad-jones/dotfiles/compare/v1.9.2...v1.9.3) (2021-05-27)
 
 
