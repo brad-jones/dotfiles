@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/brad-jones/dotfiles/compare/v1.9.2...v1.9.3) (2021-05-27)
+
+
+### Bug Fixes
+
+* add kubectl autocomplete ([baba06b](https://github.com/brad-jones/dotfiles/commit/baba06b53e197ee01cd5ea623e0f29b0240105d2))
+
 ## [1.9.2](https://github.com/brad-jones/dotfiles/compare/v1.9.1...v1.9.2) (2021-05-27)
 
 
