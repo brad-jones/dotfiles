@@ -1,0 +1,37 @@
+# see: https://github.dev.xero.com/Xero/Payroll/tree/master/project/Paycycle.MVC3/deployment
+contexts:
+  - name: xero-payroll-xfectwo/test
+    context:
+      cluster: ap-southeast-2.k8s-paas-test-rua.xero-support.com
+      user: ap-southeast-2.k8s-paas-test-rua.xero-support.com
+      namespace: xero-payroll-xfectwo
+
+  - name: xero-payroll-xfectwo/uat
+    context:
+      cluster: us-west-2.k8s-paas-uat-rua.xero-support.com
+      user: us-west-2.k8s-paas-uat-rua.xero-support.com
+      namespace: xero-payroll-xfectwo
+
+  - name: xero-payroll-xfectwo/prod
+    context:
+      cluster: us-east-1.k8s-paas-prod-rua.xero-support.com
+      user: us-east-1.k8s-paas-prod-rua.xero-support.com
+      namespace: xero-payroll-xfectwo
+
+  - name: xero-payroll-xfectwo/svc/ap-southeast-2
+    context:
+      cluster: ap-southeast-2.k8s-paas-svc-rua.xero-support.com
+      user: ap-southeast-2.k8s-paas-svc-rua.xero-support.com
+      namespace: xero-payroll-xfectwo
+
+  - name: xero-payroll-xfectwo/svc/us-west-2
+    context:
+      cluster: us-west-2.k8s-paas-svc-rua.xero-support.com
+      user: us-west-2.k8s-paas-svc-rua.xero-support.com
+      namespace: xero-payroll-xfectwo
+
+  - name: xero-payroll-xfectwo/svc/us-east-1
+    context:
+      cluster: us-east-1.k8s-paas-svc-rua.xero-support.com
+      user: us-east-1.k8s-paas-svc-rua.xero-support.com
+      namespace: xero-payroll-xfectwo

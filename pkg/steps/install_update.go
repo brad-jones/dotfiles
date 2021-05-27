@@ -76,6 +76,7 @@ func updateWindows() {
 		"jq":                   "*",
 		"kotlin":               "*",
 		"ktlint":               "*",
+		"kubectl":              "*",
 		"maven":                "*",
 		"nodejs":               "*",
 		"nuget":                "*",

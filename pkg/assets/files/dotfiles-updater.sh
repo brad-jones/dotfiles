@@ -155,3 +155,13 @@ if ! [ -d "$HOME/.sdkman" ]; then
     curl "https://get.sdkman.io?rcupdate=false" | bash;
 fi
 bash ~/.local/bin/update-sdkman;
+
+# Install Kubectl
+# ------------------------------------------------------------------------------
+cd ~/.local/bin \
+&& curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+&& curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" \
+&& echo "$(<kubectl.sha256) kubectl" | sha256sum --check \
+&& chmod +x kubectl \
+&& rm kubectl.sha256 \
+&& cd -;

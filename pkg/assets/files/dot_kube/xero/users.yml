@@ -1,0 +1,89 @@
+# Xero K8 Users
+#
+# One user per cluster, source AWS profile is xero-ps-paas-identity.
+# No need to assume another Developer or X-AccessAdmin role in any
+# of the other accounts.
+#
+# see: https://paas.xero.dev/docs/kubernetes/local-setup#aws-cli-or-aws-iam-authenticator
+users:
+  # PaaS Accounts
+  # ----------------------------------------------------------------------------
+  - name: ap-southeast-2.k8s-paas-test-rua.xero-support.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1alpha1
+        command: aws
+        args:
+          - "--region"
+          - ap-southeast-2
+          - eks
+          - get-token
+          - "--cluster-name"
+          - ap-southeast-2_k8s-paas-test-rua_xero-support_com
+
+  - name: us-west-2.k8s-paas-uat-rua.xero-support.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1alpha1
+        command: aws
+        args:
+          - "--region"
+          - us-west-2
+          - eks
+          - get-token
+          - "--cluster-name"
+          - us-west-2_k8s-paas-uat-rua_xero-support_com
+
+  - name: us-east-1.k8s-paas-prod-rua.xero-support.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1alpha1
+        command: aws
+        args:
+          - "--region"
+          - us-east-1
+          - eks
+          - get-token
+          - "--cluster-name"
+          - us-east-1_k8s-paas-prod-rua_xero-support_com
+
+  # PaaS Shared Services
+  # ----------------------------------------------------------------------------
+  - name: ap-southeast-2.k8s-paas-svc-rua.xero-support.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1alpha1
+        command: aws
+        args:
+          - "--region"
+          - ap-southeast-2
+          - eks
+          - get-token
+          - "--cluster-name"
+          - ap-southeast-2_k8s-paas-svc-rua_xero-support_com
+
+  - name: us-west-2.k8s-paas-svc-rua.xero-support.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1alpha1
+        command: aws
+        args:
+          - "--region"
+          - us-west-2
+          - eks
+          - get-token
+          - "--cluster-name"
+          - us-west-2_k8s-paas-svc-rua_xero-support_com
+
+  - name: us-east-1.k8s-paas-svc-rua.xero-support.com
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1alpha1
+        command: aws
+        args:
+          - "--region"
+          - us-east-1
+          - eks
+          - get-token
+          - "--cluster-name"
+          - us-east-1_k8s-paas-svc-rua_xero-support_com

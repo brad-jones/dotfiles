@@ -29,6 +29,7 @@ func WriteDotfiles(withSecrets bool) (err error) {
 	}
 
 	WriteFolderToHome(".aws")
+	WriteFolderToHome(".kube")
 	WriteFolderToHome(".local")
 	WriteFolderToHome("Projects")
 	WriteFileToHome(".gitconfig.tmpl")

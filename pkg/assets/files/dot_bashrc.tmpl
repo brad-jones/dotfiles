@@ -71,6 +71,13 @@ eval "$(goenv init -)";
 PATH="$PATH:$GOROOT/bin";
 PATH="$PATH:$GOPATH/bin";
 
+# Setup kubectl
+KUBECONFIG="$HOME/.kube/config.yml";
+KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/clusters.yml";
+KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/users.yml";
+KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/xero-payroll-xfectwo.yml";
+export KUBECONFIG;
+
 {{ if .Runtime.IsWSL -}}
 # Tell Podman where to find our auth file
 export REGISTRY_AUTH_FILE="$HOME/.config/containers/auth.json";

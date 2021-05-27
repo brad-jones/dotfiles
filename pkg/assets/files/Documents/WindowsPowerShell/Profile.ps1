@@ -6,6 +6,7 @@ SetEnv -Key "Path" -Value ( -join ("C:\Windows\System32;",
 	"C:\Windows\System32\wbem;",
 	"C:\Program Files\Mozilla Firefox;",
 	"C:\Windows\System32\WindowsPowerShell\v1.0;",
+	"$env:USERPROFILE\.scoop\apps\kubectl\current\bin;",
 	"C:\Program Files\Docker\Docker\resources\bin;",
 	"C:\ProgramData\DockerDesktop\version-bin;",
 	"C:\Program Files\xop\bin;",
@@ -63,3 +64,10 @@ SetEnv -Key "AWS_VAULT_BACKEND" -Value "pass";
 SetEnv -Key "AWS_VAULT_PASS_CMD" -Value "gopass";
 SetEnv -Key "AWS_VAULT_PASS_PREFIX" -Value "aws-vault";
 SetEnv -Key "AWS_VAULT_PASS_PASSWORD_STORE_DIR" -Value "$env:USERPROFILE\.password-store";
+
+# Setup kubectl
+$KUBECONFIG="$env:USERPROFILE\.kube\config.yml";
+$KUBECONFIG="$KUBECONFIG:$env:USERPROFILE\.kube\xero\clusters.yml";
+$KUBECONFIG="$KUBECONFIG:$env:USERPROFILE\.kube\xero\users.yml";
+$KUBECONFIG="$KUBECONFIG:$env:USERPROFILE\.kube\xero\xero-payroll-xfectwo.yml";
+SetEnv -Key "KUBECONFIG" -Value $KUBECONFIG;
