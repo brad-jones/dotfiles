@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/brad-jones/dotfiles/compare/v1.8.7...v1.9.0) (2021-05-27)
+
+
+### Features
+
+* added kubectl ([302b98c](https://github.com/brad-jones/dotfiles/commit/302b98c00f823bba8ce760e99ef041e10a375958))
+
 ## [1.8.7](https://github.com/brad-jones/dotfiles/compare/v1.8.6...v1.8.7) (2021-05-27)
 
 
