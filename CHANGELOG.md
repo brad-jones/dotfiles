@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/brad-jones/dotfiles/compare/v1.9.1...v1.9.2) (2021-05-27)
+
+
+### Bug Fixes
+
+* use semi colon on windows for KUBECONFIG env var ([42f875e](https://github.com/brad-jones/dotfiles/commit/42f875e2a86471bc836d1efc71af530569c37a30))
+
 ## [1.9.1](https://github.com/brad-jones/dotfiles/compare/v1.9.0...v1.9.1) (2021-05-27)
 
 
