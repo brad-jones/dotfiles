@@ -120,3 +120,7 @@ challenging due to things like the Registry urgh...
 And I couldn't help but feel that it's a bit of a cop out to just discard that
 part of ones environment setup. For me I wanted something 100% automated.
 _(Or as close as possible to this that I can get.)_
+
+## TODO
+
+- https://github.com/banga/git-split-diffs
