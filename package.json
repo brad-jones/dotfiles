@@ -23,7 +23,7 @@
 		"replace-in-file": "^6.2.0",
 		"semantic-release": "^17.4.3",
 		"ts-node": "^10.0.0",
-		"tslib": "^2.2.0",
+		"tslib": "^2.3.0",
 		"tslog": "^3.2.0",
 		"typescript": "^4.3.2",
 		"yargs": "^17.0.1"
