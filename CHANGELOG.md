@@ -1,3 +1,12 @@
+## [1.9.5](https://github.com/brad-jones/dotfiles/compare/v1.9.4...v1.9.5) (2021-06-21)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/go-git/go-git/v5 from 5.4.1 to 5.4.2 ([#48](https://github.com/brad-jones/dotfiles/issues/48)) ([d902552](https://github.com/brad-jones/dotfiles/commit/d902552ffaa30bf9867d78d1060007c7f589459a))
+* **deps:** bump github.com/google/go-github/v35 from 35.2.0 to 35.3.0 ([#53](https://github.com/brad-jones/dotfiles/issues/53)) ([44088ab](https://github.com/brad-jones/dotfiles/commit/44088abca0ad7bd8e9adae81853eaee5b68f118f))
+* **deps:** bump github.com/shirou/gopsutil/v3 from 3.21.4 to 3.21.5 ([#45](https://github.com/brad-jones/dotfiles/issues/45)) ([b2c0a76](https://github.com/brad-jones/dotfiles/commit/b2c0a765238bb178a1e8ab7a64832d2215b82385))
+
 ## [1.9.4](https://github.com/brad-jones/dotfiles/compare/v1.9.3...v1.9.4) (2021-05-27)
 
 
