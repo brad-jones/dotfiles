@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/ActiveState/termtest/expect v0.7.0
-	github.com/AlecAivazis/survey/v2 v2.2.12
+	github.com/AlecAivazis/survey/v2 v2.2.13
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/Netflix/go-expect v0.0.0-20210429232723-e923ed2d1db5 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20210512092938-c05353c2d58c // indirect
@@ -53,7 +53,6 @@ require (
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
-	golang.org/x/term v0.0.0-20210503060354-a79de5458b56 // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )
