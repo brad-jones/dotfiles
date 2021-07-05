@@ -1,3 +1,10 @@
+## [1.9.8](https://github.com/brad-jones/dotfiles/compare/v1.9.7...v1.9.8) (2021-07-05)
+
+
+### Bug Fixes
+
+* disable vscode workspace trust ([d2dd7b6](https://github.com/brad-jones/dotfiles/commit/d2dd7b6186cf1e1d6705823a4482520616eb3eda))
+
 ## [1.9.7](https://github.com/brad-jones/dotfiles/compare/v1.9.6...v1.9.7) (2021-07-05)
 
 
