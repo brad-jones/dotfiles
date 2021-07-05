@@ -21,5 +21,13 @@
 	"window.titleBarStyle": "native",
 	"window.zoomLevel": 0,
 	"workbench.iconTheme": "vscode-icons",
-	"workbench.startupEditor": "newUntitledFile"
+	"workbench.startupEditor": "newUntitledFile",
+	"redhat.telemetry.enabled": false,
+	"security.workspace.trust.enabled": false,
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	}
 }
