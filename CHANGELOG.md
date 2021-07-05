@@ -1,3 +1,11 @@
+## [1.9.6](https://github.com/brad-jones/dotfiles/compare/v1.9.5...v1.9.6) (2021-07-05)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/AlecAivazis/survey/v2 from 2.2.12 to 2.2.13 ([#66](https://github.com/brad-jones/dotfiles/issues/66)) ([6c34bbd](https://github.com/brad-jones/dotfiles/commit/6c34bbded8876f4acd8feb1d636ebbb3a93eec86))
+* **deps:** bump github.com/shirou/gopsutil/v3 from 3.21.5 to 3.21.6 ([#70](https://github.com/brad-jones/dotfiles/issues/70)) ([bd4e2e8](https://github.com/brad-jones/dotfiles/commit/bd4e2e8ccb5a2663c77a34d35aa332e603420a39))
+
 ## [1.9.5](https://github.com/brad-jones/dotfiles/compare/v1.9.4...v1.9.5) (2021-06-21)
 
 
