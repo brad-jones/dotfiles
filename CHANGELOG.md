@@ -1,3 +1,10 @@
+## [1.9.7](https://github.com/brad-jones/dotfiles/compare/v1.9.6...v1.9.7) (2021-07-05)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/tidwall/gjson from 1.8.0 to 1.8.1 ([#69](https://github.com/brad-jones/dotfiles/issues/69)) ([3a46048](https://github.com/brad-jones/dotfiles/commit/3a46048cf5ea86174897415630b70bd3b3c91e66))
+
 ## [1.9.6](https://github.com/brad-jones/dotfiles/compare/v1.9.5...v1.9.6) (2021-07-05)
 
 
