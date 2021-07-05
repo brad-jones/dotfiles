@@ -42,10 +42,9 @@ require (
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
-	github.com/shirou/gopsutil/v3 v3.21.5
+	github.com/shirou/gopsutil/v3 v3.21.6
 	github.com/tidwall/gjson v1.8.0
 	github.com/tidwall/pretty v1.1.1 // indirect
-	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	github.com/urfave/cli/v2 v2.3.0
 	github.com/xi2/xz v0.0.0-20171230120015-48954b6210f8 // indirect
