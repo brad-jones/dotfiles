@@ -166,3 +166,7 @@ cd ~/.local/bin \
 && chmod +x kubectl \
 && rm kubectl.sha256 \
 && cd -;
+
+# Install Dprint
+# ------------------------------------------------------------------------------
+curl -fsSL https://dprint.dev/install.sh | sh;
