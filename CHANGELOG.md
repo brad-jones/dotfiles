@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/brad-jones/dotfiles/compare/v1.9.8...v1.10.0) (2021-07-08)
+
+
+### Features
+
+* added dprint ([66ada56](https://github.com/brad-jones/dotfiles/commit/66ada56358816a491240054e3d4756ba4819f23f))
+
 ## [1.9.8](https://github.com/brad-jones/dotfiles/compare/v1.9.7...v1.9.8) (2021-07-05)
 
 
