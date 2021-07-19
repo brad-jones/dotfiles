@@ -8,7 +8,7 @@
 		"@semantic-release/exec": "^5.0.0",
 		"@semantic-release/git": "^9.0.0",
 		"@semantic-release/release-notes-generator": "^9.0.3",
-		"@swc/core": "^1.2.62",
+		"@swc/core": "^1.2.65",
 		"@swc/helpers": "^0.2.12",
 		"@types/node": "^15.14.0",
 		"@types/yargs": "^17.0.1",
