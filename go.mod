@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/ActiveState/termtest/expect v0.7.0
-	github.com/AlecAivazis/survey/v2 v2.2.13
+	github.com/AlecAivazis/survey/v2 v2.2.15
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/Netflix/go-expect v0.0.0-20210429232723-e923ed2d1db5 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20210512092938-c05353c2d58c // indirect
