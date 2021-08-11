@@ -28,7 +28,7 @@ require (
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/google/go-github/v35 v35.3.0
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/gosimple/slug v1.9.0
+	github.com/gosimple/slug v1.10.0
 	github.com/hpcloud/tail v1.0.0
 	github.com/kevinburke/ssh_config v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
