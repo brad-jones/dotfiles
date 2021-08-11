@@ -1,3 +1,12 @@
+## [1.10.1](https://github.com/brad-jones/dotfiles/compare/v1.10.0...v1.10.1) (2021-08-11)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/AlecAivazis/survey/v2 from 2.2.13 to 2.2.16 ([#104](https://github.com/brad-jones/dotfiles/issues/104)) ([e5c7aa9](https://github.com/brad-jones/dotfiles/commit/e5c7aa9436d144d723718e5e8c40c5e3143444fb))
+* **deps:** bump github.com/gosimple/slug from 1.9.0 to 1.10.0 ([#94](https://github.com/brad-jones/dotfiles/issues/94)) ([77e1925](https://github.com/brad-jones/dotfiles/commit/77e19254737cc47c4646f3c7f5013bb575a925d1))
+* **deps:** bump github.com/shirou/gopsutil/v3 from 3.21.6 to 3.21.7 ([#99](https://github.com/brad-jones/dotfiles/issues/99)) ([0116c58](https://github.com/brad-jones/dotfiles/commit/0116c58afce01d0a714392b552aa25f27cb2a79e))
+
 # [1.10.0](https://github.com/brad-jones/dotfiles/compare/v1.9.8...v1.10.0) (2021-07-08)
 
 
