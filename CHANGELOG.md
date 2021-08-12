@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/brad-jones/dotfiles/compare/v1.10.1...v1.10.2) (2021-08-12)
+
+
+### Bug Fixes
+
+* **deps:** bump go, node & node modules ([0c15207](https://github.com/brad-jones/dotfiles/commit/0c1520724d6ffe4f80ea0ccf041e7aa1a6d74565))
+
 ## [1.10.1](https://github.com/brad-jones/dotfiles/compare/v1.10.0...v1.10.1) (2021-08-11)
 
 
