@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/brad-jones/dotfiles/compare/v1.10.2...v1.10.3) (2021-08-12)
+
+
+### Bug Fixes
+
+* **podman:** remove the docker alias so we can use docker desktop too ([f0581e3](https://github.com/brad-jones/dotfiles/commit/f0581e3053f91729c6e978970035c2f0f47d8322))
+
 ## [1.10.2](https://github.com/brad-jones/dotfiles/compare/v1.10.1...v1.10.2) (2021-08-12)
 
 
