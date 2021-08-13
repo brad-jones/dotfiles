@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/brad-jones/dotfiles/compare/v1.11.0...v1.11.1) (2021-08-13)
+
+
+### Bug Fixes
+
+* need to remove this as I deleted the folder ([6a19e55](https://github.com/brad-jones/dotfiles/commit/6a19e551343ef9e9f2d5d228de36c81db82a116d))
+
 # [1.11.0](https://github.com/brad-jones/dotfiles/compare/v1.10.3...v1.11.0) (2021-08-13)
 
 
