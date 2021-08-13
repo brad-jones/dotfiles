@@ -8,19 +8,8 @@
 
 # Define our path as early as possible
 PATH="/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin";
-PATH="$HOME/.dart/current/bin:$PATH";
-PATH="$HOME/.dotnet:$PATH";
-PATH="$HOME/.goenv/bin:$PATH";
 PATH="$HOME/.local/bin:$PATH";
-PATH="$HOME/.nodenv/bin:$PATH";
-PATH="$HOME/.pkenv/bin:$PATH";
-PATH="$HOME/.pub-cache/bin:$PATH";
-PATH="$HOME/.pyenv/bin:$PATH";
-PATH="$HOME/.rbenv/bin:$PATH";
-PATH="$HOME/.tfenv/bin:$PATH";
-PATH="$HOME/.tfenv/bin:$PATH";
 PATH="$HOME/.dprint/bin:$PATH";
-PATH="$HOME/.asdf/installs/deno/1.9.2/bin:$PATH";
 {{ if .Runtime.IsWSL -}}
 PATH="/mnt/c/Windows/System32:$PATH";
 PATH="/mnt/c/Windows/System32/WindowsPowerShell/v1.0:$PATH";
@@ -31,6 +20,9 @@ PATH="/mnt/c/Users/$USER/.scoop/apps/vscode/current/bin:$PATH";
 
 # Source global definitions
 [ -f /etc/bashrc ] && . /etc/bashrc;
+
+# Configure the ASDF Tool Version Manager
+. "$HOME/.asdf/asdf.sh";
 
 # Use VsCode as our editor for all the things
 export EDITOR="code -w";
@@ -46,11 +38,6 @@ export GID="$(id -g)" &> /dev/null || true;
 # see: https://dprint.dev/install/
 export DPRINT_INSTALL="$HOME/.dprint";
 
-# Tell goenv where to install go, personally I prefer all my tools and
-# config to be hidden (ie: start with a dot) and all my actual data
-# folders/files to be unhidden.
-export GOENV_GOPATH_PREFIX="$HOME/.go";
-
 # Configure aws-vault to use gopass to store our idenities
 export AWS_VAULT_BACKEND="pass";
 export AWS_VAULT_PASS_CMD="gopass";
@@ -58,23 +45,11 @@ export AWS_VAULT_PASS_PREFIX="aws-vault";
 export AWS_VAULT_PASS_PASSWORD_STORE_DIR="$HOME/.password-store";
 
 # Setup some bash auto completion
-complete -C "$HOME/.local/bin/aws_completer" aws;
+. "$HOME/.asdf/completions/asdf.bash";
+complete -C "$HOME/.asdf/shims/aws_completer" aws;
 eval "$(aws-vault --completion-script-bash)";
 eval "$(gopass completion bash)";
 eval "$(kubectl completion bash)";
-
-# Setup all our tool version managers
-. "$HOME/.asdf/asdf.sh";
-. "$HOME/.asdf/completions/asdf.bash";
-. "$HOME/.sdkman/bin/sdkman-init.sh";
-eval "$(nodenv init -)";
-export PYENV_ROOT="$HOME/.pyenv";
-eval "$(pyenv init --path)";
-eval "$(pyenv init -)";
-eval "$(rbenv init -)";
-eval "$(goenv init -)";
-PATH="$PATH:$GOROOT/bin";
-PATH="$PATH:$GOPATH/bin";
 
 # Setup kubectl
 KUBECONFIG="$HOME/.kube/config.yml";

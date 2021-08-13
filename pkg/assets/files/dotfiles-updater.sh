@@ -7,166 +7,166 @@ set -euxo pipefail;
 # Update the entire system
 sudo dnf update -y;
 
-# Install Docker (Podman)
-# ------------------------------------------------------------------------------
+echo ">>> Install Docker (Podman)";
+echo "------------------------------------------------------------------------------";
 sudo dnf install -y podman;
 sudo dnf reinstall -y shadow-utils;
 #if ! [ -x "/usr/bin/docker" ]; then
 #	sudo ln -s "/usr/bin/podman" "/usr/bin/docker";
 #fi
+echo "";
 
-# Install awscli
-# ------------------------------------------------------------------------------
-if ! [ -x "$HOME/.local/bin/aws" ]; then
-    rm -rf ~/.local/aws-cli ~/.local/bin/aws;
-fi
-tmpFolderAWS="/tmp/$(uuidgen)";
-mkdir -p $tmpFolderAWS;
-function finish {
-	rm -rf $tmpFolderAWS;
-}
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "$tmpFolderAWS/awscliv2.zip";
-unzip "$tmpFolderAWS/awscliv2.zip" -d "$tmpFolderAWS/extracted";
-$tmpFolderAWS/extracted/aws/install -i ~/.local/aws-cli -b ~/.local/bin --update;
-~/.local/bin/aws --version;
-
-# Install Deno
-# ------------------------------------------------------------------------------
+echo ">>> Install the ASDF Tool Version Manager";
+echo "------------------------------------------------------------------------------";
 if [ -z "$(command -v asdf)" ]; then
     rm -rf ~/.asdf;
 	sudo dnf install -y curl git;
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf;
 	cd ~/.asdf && git checkout "$(git describe --abbrev=0 --tags)" && cd -;
     . "$HOME/.asdf/asdf.sh";
-	asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git;
 fi
 asdf update;
+echo "";
+
+echo ">>> Install awscli";
+echo "------------------------------------------------------------------------------";
+asdf plugin add awscli https://github.com/MetricMike/asdf-awscli.git || true;
+asdf plugin update awscli;
+asdf install awscli latest;
+asdf global awscli latest;
+echo "";
+
+echo ">>> Install dotnet";
+echo "------------------------------------------------------------------------------";
+asdf plugin add dotnet-core https://github.com/emersonsoares/asdf-dotnet-core.git || true;
+asdf plugin update dotnet-core;
+asdf install dotnet-core latest;
+asdf global dotnet-core latest;
+echo "";
+
+echo ">>> Install Deno";
+echo "------------------------------------------------------------------------------";
+asdf plugin add deno https://github.com/asdf-community/asdf-deno.git || true;
 asdf plugin update deno;
 asdf install deno latest;
-asdf global deno $(asdf latest deno);
+asdf global deno latest;
+asdf exec deno install -A -f -n udd https://deno.land/x/udd/main.ts;
+asdf reshim deno latest;
+echo "";
 
-# Install Dartlang
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v dart)" ]; then
-    rm -rf ~/.dart && mkdir ~/.dart;
-fi
-tmpFolderDart="/tmp/$(uuidgen)";
-mkdir -p $tmpFolderDart;
-function finish {
-	rm -rf $tmpFolderDart;
-}
-curl "https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip" -o "$tmpFolderDart/dartsdk.zip";
-unzip "$tmpFolderDart/dartsdk.zip" -d "$tmpFolderDart/extracted";
-dartV="$(cat "$tmpFolderDart/extracted/dart-sdk/version")";
-if ! [ -d "$HOME/.dart/$dartV" ]; then
-	mv "$tmpFolderDart/extracted/dart-sdk" "$HOME/.dart/$dartV";
-	ln -s "$HOME/.dart/$dartV" "$HOME/.dart/current";
-fi
+echo ">>> Install Dartlang";
+echo "------------------------------------------------------------------------------";
+asdf plugin add dart https://github.com/patoconnor43/asdf-dart.git || true;
+asdf plugin update dart;
+asdf install dart latest;
+asdf global dart latest;
+echo "";
 
-# Install Golang
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v goenv)" ]; then
-    rm -rf ~/.goenv;
-    git clone https://github.com/syndbg/goenv.git ~/.goenv;
-    cd ~/.goenv && src/configure && make -C src && cd -;
-fi
-cd ~/.goenv && git pull && cd -;
-goV="$(echo "$(~/.goenv/bin/goenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
-~/.goenv/bin/goenv install -s $goV;
-~/.goenv/bin/goenv global $goV;
-~/.goenv/bin/goenv rehash;
+echo ">>> Install Golang";
+echo "------------------------------------------------------------------------------";
+asdf plugin add golang https://github.com/kennyp/asdf-golang.git || true;
+asdf plugin update golang;
+asdf install golang latest;
+asdf global golang latest;
+asdf exec go install golang.org/x/tools/gopls@latest;
+asdf reshim golang latest;
+echo "";
 
-# Install Nodejs
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v nodenv)" ]; then
-    rm -rf ~/.nodenv;
-    git clone https://github.com/nodenv/nodenv.git ~/.nodenv;
-    mkdir -p ~/.nodenv/plugins;
-    git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build;
-    git clone https://github.com/nodenv/nodenv-update.git ~/.nodenv/plugins/nodenv-update;
-    git clone https://github.com/nodenv/node-build-update-defs.git ~/.nodenv/plugins/node-build-update-defs;
-    cd ~/.nodenv && src/configure && make -C src && cd -;
-fi
-~/.nodenv/bin/nodenv update;
-nodeV="$(echo "$(~/.nodenv/bin/nodenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
-~/.nodenv/bin/nodenv install -s $nodeV;
-~/.nodenv/bin/nodenv global $nodeV;
-~/.nodenv/shims/npm install --global npm;
-~/.nodenv/shims/npm install --global yarn;
-~/.nodenv/shims/npm install --global pnpm;
-~/.nodenv/bin/nodenv rehash;
+echo ">>> Install Nodejs";
+echo "------------------------------------------------------------------------------";
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true;
+asdf plugin update nodejs;
+asdf install nodejs latest;
+asdf global nodejs latest;
+asdf exec npm install --global npm;
+asdf exec npm install --global yarn;
+asdf exec npm install --global pnpm;
+echo "";
 
-# Install Ruby
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v rbenv)" ]; then
-    sudo dnf install -y gcc bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel;
-    rm -rf ~/.rbenv;
-    git clone https://github.com/rbenv/rbenv.git ~/.rbenv;
-    cd ~/.rbenv && src/configure && make -C src && cd -;
-    mkdir -p ~/.rbenv/plugins;
-    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build;
-fi
-cd ~/.rbenv && git pull && cd -;
-cd ~/.rbenv/plugins/ruby-build && git pull && cd -;
-rubyV="$(echo "$(~/.rbenv/bin/rbenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
-~/.rbenv/bin/rbenv install -s $rubyV;
-~/.rbenv/bin/rbenv global $rubyV;
-~/.rbenv/bin/rbenv rehash;
+echo ">>> Install Ruby";
+echo "------------------------------------------------------------------------------";
+sudo dnf install -y gcc make bzip2 openssl-devel libyaml-devel libffi-devel readline-devel zlib-devel gdbm-devel ncurses-devel
+asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git || true;
+asdf plugin update ruby;
+asdf install ruby latest;
+asdf global ruby latest;
+echo "";
 
-# Install Python
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v pyenv)" ]; then
-    sudo dnf install -y make gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel;
-    rm -rf ~/.pyenv;
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv;
-    cd ~/.pyenv && src/configure && make -C src && cd -;
-fi
-cd ~/.pyenv && git pull && cd -;
-pythonV="$(echo "$(~/.pyenv/bin/pyenv install --list)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
-~/.pyenv/bin/pyenv install -s $pythonV;
-~/.pyenv/bin/pyenv global $pythonV;
-~/.pyenv/bin/pyenv rehash;
+echo ">>> Install Python";
+echo "------------------------------------------------------------------------------";
+sudo dnf install -y make gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel xz-devel;
+asdf plugin add python https://github.com/danhper/asdf-python.git || true;
+asdf plugin update python;
+asdf install python latest;
+asdf global python latest;
+echo "";
 
-# Install Packer
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v pkenv)" ]; then
-    rm -rf ~/.pkenv;
-    git clone https://github.com/iamhsa/pkenv.git ~/.pkenv;
-fi
-cd ~/.pkenv && git pull && cd -;
-packerV="$(echo "$(~/.pkenv/bin/pkenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
-~/.pkenv/bin/pkenv install $packerV;
-~/.pkenv/bin/pkenv use $packerV;
+echo ">>> Install Packer";
+echo "------------------------------------------------------------------------------";
+asdf plugin add packer https://github.com/asdf-community/asdf-hashicorp.git || true;
+asdf plugin update packer;
+asdf install packer latest;
+asdf global packer latest;
+echo "";
 
-# Install Terraform
-# ------------------------------------------------------------------------------
-if [ -z "$(command -v tfenv)" ]; then
-    rm -rf ~/.tfenv;
-    git clone https://github.com/tfutils/tfenv.git ~/.tfenv;
-fi
-cd ~/.tfenv && git pull && cd -;
-tfV="$(echo "$(~/.tfenv/bin/tfenv list-remote)" | awk '{$1=$1};1' | grep '^[0-9]' | grep -v '[a-zA-Z]' | sed '/-/!{s/$/_/}' | sort -V | sed 's/_$//' | tail -n1)";
-~/.tfenv/bin/tfenv install $tfV;
-~/.tfenv/bin/tfenv use $tfV;
+echo ">>> Install Terraform";
+echo "------------------------------------------------------------------------------";
+asdf plugin add terraform https://github.com/asdf-community/asdf-hashicorp.git || true;
+asdf plugin update terraform;
+asdf install terraform latest;
+asdf global terraform latest;
+echo "";
 
-# Install Java / Kotlin
-# ------------------------------------------------------------------------------
-if ! [ -d "$HOME/.sdkman" ]; then
-    curl "https://get.sdkman.io?rcupdate=false" | bash;
-fi
-bash ~/.local/bin/update-sdkman;
+echo ">>> Install Java";
+echo "------------------------------------------------------------------------------";
+asdf plugin add java https://github.com/halcyon/asdf-java.git || true;
+asdf plugin update java;
+javaV="$(asdf list-all java corretto | grep -v "corretto-musl" | tail -n 1)";
+asdf install java ${javaV};
+asdf global java ${javaV};
+echo "";
 
-# Install Kubectl
-# ------------------------------------------------------------------------------
-sudo dnf install -y bash-completion;
-cd ~/.local/bin \
-&& curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
-&& curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256" \
-&& echo "$(<kubectl.sha256) kubectl" | sha256sum --check \
-&& chmod +x kubectl \
-&& rm kubectl.sha256 \
-&& cd -;
+echo ">>> Install Maven";
+echo "------------------------------------------------------------------------------";
+asdf plugin add maven https://github.com/halcyon/asdf-maven.git || true;
+asdf plugin update maven;
+asdf install maven latest;
+asdf global maven latest;
+echo "";
 
-# Install Dprint
-# ------------------------------------------------------------------------------
+echo ">>> Install Kotlin";
+echo "------------------------------------------------------------------------------";
+asdf plugin add kotlin https://github.com/asdf-community/asdf-kotlin.git || true;
+asdf plugin update kotlin;
+asdf install kotlin latest;
+asdf global kotlin latest;
+echo "";
+
+echo ">>> Install Kubectl";
+echo "------------------------------------------------------------------------------";
+asdf plugin add kubectl https://github.com/asdf-community/asdf-kubectl.git || true;
+asdf plugin update kubectl;
+asdf install kubectl latest;
+asdf global kubectl latest;
+echo "";
+
+echo ">>> Install task";
+echo "------------------------------------------------------------------------------";
+asdf plugin add task https://github.com/particledecay/asdf-task.git || true;
+asdf plugin update task;
+asdf install task latest;
+asdf global task latest;
+echo "";
+
+echo ">>> Install batect";
+echo "------------------------------------------------------------------------------";
+asdf plugin add batect https://github.com/johnlayton/asdf-batect.git || true;
+asdf plugin update batect;
+asdf install batect latest;
+asdf global batect latest;
+echo "";
+
+echo ">>> Install Dprint";
+echo "------------------------------------------------------------------------------";
 curl -fsSL https://dprint.dev/install.sh | sh;
+echo "";
