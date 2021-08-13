@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/brad-jones/dotfiles/compare/v1.10.3...v1.11.0) (2021-08-13)
+
+
+### Features
+
+* **asdf:** fully swapped over to thsi awesome toll manager ([ef6a5a0](https://github.com/brad-jones/dotfiles/commit/ef6a5a0bf35de4475ffc5f9be0f1fa5c8b18e260))
+
 ## [1.10.3](https://github.com/brad-jones/dotfiles/compare/v1.10.2...v1.10.3) (2021-08-12)
 
 
