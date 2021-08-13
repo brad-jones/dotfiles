@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euxo pipefail;
+set -euo pipefail;
 
 # Source our bashrc file
 [ -f ~/.bashrc ] && set +u && . ~/.bashrc && set -u;
