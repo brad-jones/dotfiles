@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/brad-jones/dotfiles/compare/v1.11.1...v1.11.2) (2021-08-13)
+
+
+### Bug Fixes
+
+* we do not need debug mode on here ([e70ce42](https://github.com/brad-jones/dotfiles/commit/e70ce423aeec94771e0ac186c8b6d086449ff036))
+
 ## [1.11.1](https://github.com/brad-jones/dotfiles/compare/v1.11.0...v1.11.1) (2021-08-13)
 
 
