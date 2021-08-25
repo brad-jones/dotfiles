@@ -56,7 +56,7 @@ func AllVersions() map[string]*Version {
 			hash: "d998926533a32537fada686ac41918b67e3e97a169a43c99cfd4100711767145",
 		},
 		"https://dot.net/v1/dotnet-install.ps1": {
-			hash: "b78bbd8f33ee82e1c2f56466e49eb46a66402ee6a71a77b198ecb5b60245e625",
+			hash: "db76db3455b522fb548ba22724f4b33e3d6a0ceffde020f619564451e3a9eb2b",
 		},
 		"https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi": {
 			hashWin: "d872c2ef8f86798daedc295c49a31fb75fb7ba7e46f0660036ff16e55f0926fd",
