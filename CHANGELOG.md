@@ -1,3 +1,10 @@
+## [1.11.3](https://github.com/brad-jones/dotfiles/compare/v1.11.2...v1.11.3) (2021-08-25)
+
+
+### Bug Fixes
+
+* **dotnet:** bump powershell installer script hash ([e04162d](https://github.com/brad-jones/dotfiles/commit/e04162d9b14e77219e2eb9efe7d9e5149a148045))
+
 ## [1.11.2](https://github.com/brad-jones/dotfiles/compare/v1.11.1...v1.11.2) (2021-08-13)
 
 
