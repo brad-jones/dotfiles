@@ -1,3 +1,10 @@
+## [1.11.4](https://github.com/brad-jones/dotfiles/compare/v1.11.3...v1.11.4) (2021-08-27)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/AlecAivazis/survey/v2 from 2.2.16 to 2.3.1 ([#126](https://github.com/brad-jones/dotfiles/issues/126)) ([976792c](https://github.com/brad-jones/dotfiles/commit/976792c1dee9622599fc9d51e3405f5241070573))
+
 ## [1.11.3](https://github.com/brad-jones/dotfiles/compare/v1.11.2...v1.11.3) (2021-08-25)
 
 
