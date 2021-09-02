@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Config
 preferences: {}
-current-context: xero-payroll-xfectwo/test
+current-context: time/test

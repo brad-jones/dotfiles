@@ -69,5 +69,5 @@ SetEnv -Key "AWS_VAULT_PASS_PASSWORD_STORE_DIR" -Value "$env:USERPROFILE\.passwo
 $KUBECONFIG="$env:USERPROFILE\.kube\config.yml";
 $KUBECONFIG="$KUBECONFIG;$env:USERPROFILE\.kube\xero\clusters.yml";
 $KUBECONFIG="$KUBECONFIG;$env:USERPROFILE\.kube\xero\users.yml";
-$KUBECONFIG="$KUBECONFIG;$env:USERPROFILE\.kube\xero\xero-payroll-xfectwo.yml";
+$KUBECONFIG="$KUBECONFIG;$env:USERPROFILE\.kube\xero\time.yml";
 SetEnv -Key "KUBECONFIG" -Value $KUBECONFIG;

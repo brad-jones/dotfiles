@@ -55,7 +55,7 @@ eval "$(kubectl completion bash)";
 KUBECONFIG="$HOME/.kube/config.yml";
 KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/clusters.yml";
 KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/users.yml";
-KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/xero-payroll-xfectwo.yml";
+KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/time.yml";
 export KUBECONFIG;
 
 {{ if .Runtime.IsWSL -}}
