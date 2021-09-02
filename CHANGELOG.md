@@ -1,3 +1,12 @@
+## [1.11.7](https://github.com/brad-jones/dotfiles/compare/v1.11.6...v1.11.7) (2021-09-02)
+
+
+### Bug Fixes
+
+* **deps:** bump github.com/shirou/gopsutil/v3 from 3.21.7 to 3.21.8 ([#141](https://github.com/brad-jones/dotfiles/issues/141)) ([0a51df5](https://github.com/brad-jones/dotfiles/commit/0a51df59c611b60fb0575778ef2ea7089697eef2))
+* **deps:** bump github.com/tidwall/gjson from 1.8.1 to 1.9.0 ([#140](https://github.com/brad-jones/dotfiles/issues/140)) ([7cd5793](https://github.com/brad-jones/dotfiles/commit/7cd5793cd83cb62b58aabf69104157b311991289))
+* **dotnet:** dont install dotnet on linux now that we are usign asdf ([5c1f139](https://github.com/brad-jones/dotfiles/commit/5c1f1398e908ee2d2bc31ef32d7cf6b86d57928d))
+
 ## [1.11.6](https://github.com/brad-jones/dotfiles/compare/v1.11.5...v1.11.6) (2021-09-02)
 
 
