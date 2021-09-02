@@ -1,3 +1,10 @@
+## [1.11.5](https://github.com/brad-jones/dotfiles/compare/v1.11.4...v1.11.5) (2021-09-02)
+
+
+### Bug Fixes
+
+* **aws:** updated my aws config with some new accounts ([9b2e513](https://github.com/brad-jones/dotfiles/commit/9b2e513534de67f9710dc667af696935e0b729e4))
+
 ## [1.11.4](https://github.com/brad-jones/dotfiles/compare/v1.11.3...v1.11.4) (2021-08-27)
 
 
