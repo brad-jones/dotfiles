@@ -1,3 +1,10 @@
+## [1.11.6](https://github.com/brad-jones/dotfiles/compare/v1.11.5...v1.11.6) (2021-09-02)
+
+
+### Bug Fixes
+
+* **k8s:** added new namespace to config ([5db43fd](https://github.com/brad-jones/dotfiles/commit/5db43fd818ac9be744401eaeabeb0493f7413b61))
+
 ## [1.11.5](https://github.com/brad-jones/dotfiles/compare/v1.11.4...v1.11.5) (2021-09-02)
 
 
