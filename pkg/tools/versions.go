@@ -71,8 +71,10 @@ func AllVersions() map[string]*Version {
 func DotnetVersions() []string {
 	return []string{
 		"latest",
-		"3.1.409",
-		"2.1.816",
+		"3.1.412",
+		"3.0.103",
+		"2.2.207",
+		"2.1.818",
 	}
 }
 

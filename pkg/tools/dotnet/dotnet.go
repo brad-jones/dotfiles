@@ -21,6 +21,11 @@ import (
 var HashInvalid = goerr.New("the downloaded installer script did not match it's expected hash")
 
 func MustInstall(versions ...string) {
+	// Using asdf on linux now
+	if runtime.GOOS != "windows" {
+		return
+	}
+
 	prefix := colorchooser.Sprint("install-dotnet")
 
 	downloadDir, err := ioutil.TempDir("", "bradsDotFiles")
