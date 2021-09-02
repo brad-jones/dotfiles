@@ -185,3 +185,36 @@ role_session_name = brad.jones@xero.com_0
 session_tags = SSMSessionRunAs=brad.jones
 transitive_session_tags = SSMSessionRunAs
 role_arn = arn:aws:iam::244668436958:role/RemoteConnectShell
+
+# XERO Time TEST
+# ------------------------------------------------------------------------------
+[profile xero-pay-time-test]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::595210718630:role/Developer
+region = ap-southeast-2
+
+[profile xero-pay-time-test-iam]
+include_profile = xero-pay-time-test
+role_arn = arn:aws:iam::595210718630:role/IAMAdmin
+
+# XERO Time UAT
+# ------------------------------------------------------------------------------
+[profile xero-pay-time-uat]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::012870462664:role/ReadOnly
+region = us-west-2
+
+[profile xero-pay-time-uat-iam]
+include_profile = xero-pay-time-uat
+role_arn = arn:aws:iam::012870462664:role/IAMAdmin
+
+# XERO Time PROD
+# ------------------------------------------------------------------------------
+[profile xero-pay-time-prod]
+include_profile = xero-ps-paas-identity
+role_arn = arn:aws:iam::237727840751:role/ReadOnly
+region = us-east-1
+
+[profile xero-pay-time-prod-iam]
+include_profile = xero-pay-time-prod
+role_arn = arn:aws:iam::237727840751:role/IAMAdmin
