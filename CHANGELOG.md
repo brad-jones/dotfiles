@@ -1,3 +1,10 @@
+## [1.11.8](https://github.com/brad-jones/dotfiles/compare/v1.11.7...v1.11.8) (2021-09-02)
+
+
+### Bug Fixes
+
+* **bump:** update all the node packages ([fac333d](https://github.com/brad-jones/dotfiles/commit/fac333d3e07e4e9c550c4708ce83681fa662ae04))
+
 ## [1.11.7](https://github.com/brad-jones/dotfiles/compare/v1.11.6...v1.11.7) (2021-09-02)
 
 
