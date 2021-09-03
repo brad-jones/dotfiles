@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/brad-jones/dotfiles/compare/v1.12.0...v1.12.1) (2021-09-03)
+
+
+### Bug Fixes
+
+* updated windows terminal config so wsl is now the default ([9f62c35](https://github.com/brad-jones/dotfiles/commit/9f62c358467aaf66dc4e84de15cb8d4c522c243d))
+
 # [1.12.0](https://github.com/brad-jones/dotfiles/compare/v1.11.8...v1.12.0) (2021-09-03)
 
 
