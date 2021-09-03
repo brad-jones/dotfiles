@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/brad-jones/dotfiles/compare/v1.11.8...v1.12.0) (2021-09-03)
+
+
+### Features
+
+* added k9s a cool kube cli tool ([f3133e3](https://github.com/brad-jones/dotfiles/commit/f3133e36d4f507afae63b03e38a7575955ece0af))
+
 ## [1.11.8](https://github.com/brad-jones/dotfiles/compare/v1.11.7...v1.11.8) (2021-09-02)
 
 
