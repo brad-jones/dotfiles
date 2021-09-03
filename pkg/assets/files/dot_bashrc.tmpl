@@ -58,6 +58,10 @@ KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/users.yml";
 KUBECONFIG="$KUBECONFIG:$HOME/.kube/xero/time.yml";
 export KUBECONFIG;
 
+# Setup some aliases for kubes such that we don't have to worry about auth.
+kubectl() { aws-vault exec xero-ps-paas-identity -- kubectl "$@"; }
+k9s() { aws-vault exec xero-ps-paas-identity -- k9s "$@"; }
+
 {{ if .Runtime.IsWSL -}}
 # Tell Podman where to find our auth file
 export REGISTRY_AUTH_FILE="$HOME/.config/containers/auth.json";

@@ -150,6 +150,14 @@ asdf install kubectl latest;
 asdf global kubectl latest;
 echo "";
 
+echo ">>> Install k9s";
+echo "------------------------------------------------------------------------------";
+asdf plugin add k9s https://github.com/looztra/asdf-k9s.git || true;
+asdf plugin update k9s;
+asdf install k9s latest;
+asdf global k9s latest;
+echo "";
+
 echo ">>> Install task";
 echo "------------------------------------------------------------------------------";
 asdf plugin add task https://github.com/particledecay/asdf-task.git || true;
