@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/brad-jones/dotfiles/compare/v1.12.1...v1.12.2) (2021-09-08)
+
+
+### Bug Fixes
+
+* **dotnet:** make sure dotnet installed via asdf works with vscode and others ([7f247b7](https://github.com/brad-jones/dotfiles/commit/7f247b7eb9ab9eba1e1df71fa9ba167dc15f1372))
+
 ## [1.12.1](https://github.com/brad-jones/dotfiles/compare/v1.12.0...v1.12.1) (2021-09-03)
 
 
