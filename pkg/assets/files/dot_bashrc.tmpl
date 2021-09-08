@@ -78,3 +78,18 @@ if [[ -z "$XDG_RUNTIME_DIR" ]]; then
   fi
 fi
 {{ end -}}
+
+# Configure dotnet to work correctly with VsCode when installed via ASDF.
+# see: https://github.com/OmniSharp/omnisharp-vscode/issues/2970#issuecomment-541516806
+function set-dotnet-vars {
+  DOTNET_BASE="$(dotnet --info | grep "Base Path" | awk '{print $3}')";
+  DOTNET_ROOT="$(echo "${DOTNET_BASE}" | sed -E "s/^(.*)(\/sdk\/[^\/]+\/)$/\1/")";
+  export MSBuildSDKsPath="${DOTNET_BASE}Sdks/";
+  export DOTNET_ROOT="$DOTNET_ROOT";
+  export PATH="$DOTNET_ROOT:$PATH";
+}
+
+# This will work for the globally installed version of dotnet.
+# You would have to re-execute this when changing versions.
+# TODO: Get this added to the ASDF shim.
+set-dotnet-vars;
