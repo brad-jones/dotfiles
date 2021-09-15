@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/brad-jones/dotfiles/compare/v1.12.2...v1.12.3) (2021-09-15)
+
+
+### Bug Fixes
+
+* **aws:** added new roles ([2c7b98b](https://github.com/brad-jones/dotfiles/commit/2c7b98b55ff4167a26fc10d1c90421b91d9a7598))
+
 ## [1.12.2](https://github.com/brad-jones/dotfiles/compare/v1.12.1...v1.12.2) (2021-09-08)
 
 
