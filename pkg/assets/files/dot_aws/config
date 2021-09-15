@@ -204,6 +204,10 @@ include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::012870462664:role/ReadOnly
 region = us-west-2
 
+[profile xero-pay-time-uat-dev]
+include_profile = xero-pay-time-uat
+role_arn = arn:aws:iam::012870462664:role/Developer
+
 [profile xero-pay-time-uat-iam]
 include_profile = xero-pay-time-uat
 role_arn = arn:aws:iam::012870462664:role/IAMAdmin
@@ -214,6 +218,10 @@ role_arn = arn:aws:iam::012870462664:role/IAMAdmin
 include_profile = xero-ps-paas-identity
 role_arn = arn:aws:iam::237727840751:role/ReadOnly
 region = us-east-1
+
+[profile xero-pay-time-prod-dev]
+include_profile = xero-pay-time-prod
+role_arn = arn:aws:iam::237727840751:role/Developer
 
 [profile xero-pay-time-prod-iam]
 include_profile = xero-pay-time-prod
