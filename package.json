@@ -10,7 +10,7 @@
 		"@semantic-release/release-notes-generator": "^9.0.3",
 		"@swc/core": "^1.2.84",
 		"@swc/helpers": "^0.2.13",
-		"@types/node": "^16.7.10",
+		"@types/node": "^16.9.4",
 		"@types/yargs": "^17.0.2",
 		"dotenv": "^10.0.0",
 		"execa": "^5.1.1",
